@@ -104,12 +104,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Libs\box2d-2.4.1\include;C:\Libs\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Libs\box2d-2.4.1\include;C:\Libs\SFML-2.5.1\include;C:\Users\ADMIN\Desktop\Лабы\Программирование\librarbees\box2d-2.4.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Libs\box2d-2.4.1\lib;C:\Libs\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Libs\box2d-2.4.1\lib;C:\Libs\SFML-2.5.1\lib;C:\Users\ADMIN\Desktop\Лабы\Программирование\librarbees\box2d-2.4.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;sfml-system-d.lib;sfml-network-d.lib;box2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
@@ -122,20 +122,66 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Libs\box2d-2.4.1\include;C:\Libs\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Libs\box2d-2.4.1\include;C:\Libs\SFML-2.5.1\include;C:\Users\ADMIN\Desktop\Лабы\Программирование\librarbees\box2d-2.4.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Libs\box2d-2.4.1\lib;C:\Libs\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Libs\box2d-2.4.1\lib;C:\Libs\SFML-2.5.1\lib;C:\Users\ADMIN\Desktop\Лабы\Программирование\librarbees\box2d-2.4.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;sfml-system-d.lib;sfml-network-d.lib;box2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Arrow.cpp" />
+    <ClCompile Include="Audio.cpp" />
+    <ClCompile Include="Bomb.cpp" />
+    <ClCompile Include="Drawable.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="HidingEnemy.cpp" />
+    <ClCompile Include="Layer.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Manager.cpp" />
+    <ClCompile Include="Medal.cpp" />
+    <ClCompile Include="Medal1.cpp" />
+    <ClCompile Include="Medal2.cpp" />
+    <ClCompile Include="Medal3.cpp" />
+    <ClCompile Include="Medal4.cpp" />
+    <ClCompile Include="Medal5.cpp" />
+    <ClCompile Include="Medal6.cpp" />
+    <ClCompile Include="Medal7.cpp" />
+    <ClCompile Include="Medal8.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="WalkingEnemy.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Arrow.h" />
+    <ClInclude Include="Audio.h" />
+    <ClInclude Include="Bomb.h" />
+    <ClInclude Include="Drawable.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="HidingEnemy.h" />
+    <ClInclude Include="Layer.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="Manager.h" />
+    <ClInclude Include="Medal.h" />
+    <ClInclude Include="Medal1.h" />
+    <ClInclude Include="Medal2.h" />
+    <ClInclude Include="Medal3.h" />
+    <ClInclude Include="Medal4.h" />
+    <ClInclude Include="Medal5.h" />
+    <ClInclude Include="Medal6.h" />
+    <ClInclude Include="Medal7.h" />
+    <ClInclude Include="Medal8.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="WalkingEnemy.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
