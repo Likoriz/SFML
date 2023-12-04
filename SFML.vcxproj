@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -138,6 +138,7 @@
     <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Bomb.cpp" />
+    <ClCompile Include="Box.cpp" />
     <ClCompile Include="Drawable.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -156,13 +157,19 @@
     <ClCompile Include="Medal7.cpp" />
     <ClCompile Include="Medal8.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="PlatformDisappearing.cpp" />
+    <ClCompile Include="PlatformFalling.cpp" />
+    <ClCompile Include="PlatformSliding.cpp" />
+    <ClCompile Include="PlatformUsual.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Skills.cpp" />
     <ClCompile Include="WalkingEnemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="Bomb.h" />
+    <ClInclude Include="Box.h" />
     <ClInclude Include="Drawable.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="GameObject.h" />
@@ -180,7 +187,12 @@
     <ClInclude Include="Medal7.h" />
     <ClInclude Include="Medal8.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="PlatformDisappearing.h" />
+    <ClInclude Include="PlatformFalling.h" />
+    <ClInclude Include="PlatformSliding.h" />
+    <ClInclude Include="PlatformUsual.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Skills.h" />
     <ClInclude Include="WalkingEnemy.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
