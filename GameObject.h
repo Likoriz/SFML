@@ -1,12 +1,15 @@
 #pragma once
 #include "Object.h"
-#include "Drawable.h"
+#include "MyDrawable.h"
+#include <vector>
 class GameObject
 {
 private:
-	Drawable** drawables;
-	Object** objects;
+	std::vector<MyDrawable> drawables;
+	std::vector<Object> objects;
 public:
-	Drawable** GetDrawables;
+	MyDrawable** GetDrawables;
+	void addDrawable(MyDrawable object_);
+	void addObject(Object object_);
 };
 

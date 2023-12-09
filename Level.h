@@ -1,19 +1,20 @@
 #pragma once
 #include "Layer.h"
-
-class Drawable;
+#include "MyDrawable.h"
 
 class Level
 {
 private:
-	int width, heigth, tileWidth, tileHeigth;
+	int width, height, tileWidth, tileHeight;
+	int firstTileID;
 	sf::Rect<float> drawBounds;
 	sf::Texture tilesetImage;
 	std::vector<Layer> layers;
 public:
 	bool loadFromFile(std::string fileName);
-	Drawable getDrawable(std::string name);
-	std::vector<Drawable> getDrawables(std::string name);
+	MyDrawable getDrawable(std::string name);
+	std::vector<MyDrawable> getDrawables(std::string name);
+	//void addDrawable(Drawable object_);
 	sf::Vector2i getTileSize();
 	void draw(sf::RenderWindow& window);
 };

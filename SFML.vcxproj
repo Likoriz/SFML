@@ -139,7 +139,7 @@
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="Box.cpp" />
-    <ClCompile Include="Drawable.cpp" />
+    <ClCompile Include="MyDrawable.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="HidingEnemy.cpp" />
@@ -163,6 +163,10 @@
     <ClCompile Include="PlatformUsual.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Skills.cpp" />
+    <ClCompile Include="tinystr.cpp" />
+    <ClCompile Include="tinyxml.cpp" />
+    <ClCompile Include="tinyxmlerror.cpp" />
+    <ClCompile Include="tinyxmlparser.cpp" />
     <ClCompile Include="WalkingEnemy.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -170,7 +174,7 @@
     <ClInclude Include="Audio.h" />
     <ClInclude Include="Bomb.h" />
     <ClInclude Include="Box.h" />
-    <ClInclude Include="Drawable.h" />
+    <ClInclude Include="MyDrawable.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="HidingEnemy.h" />
@@ -193,7 +197,8 @@
     <ClInclude Include="PlatformUsual.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Skills.h" />
-    <ClInclude Include="WalkingEnemy.h" />
+    <ClInclude Include="tinystr.h" />
+    <ClInclude Include="tinyxml.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
