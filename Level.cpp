@@ -191,15 +191,28 @@ bool Level::loadFromFile(string filename)
 						{
 							string propertyName = prop->Attribute("name");
 							string propertyValue = prop->Attribute("value");
-							std::map<string, string>tmpProperties={propertyName, propertyValue};
+							std::map<string, string>tmpProperties = { propertyName, propertyValue };
 							object.setProperties(tmpProperties);
 
 							prop = prop->NextSiblingElement("property");
 						}
 				}
-			manager.addObject(object);
+
+				manager.addObject(object);
+				objectElement = objectElement->NextSiblingElement("object");
 			}
-			
+			objectGroupElement = objectGroupElement->NextSiblingElement("objectgroup");
 		}
 	}
+	else
+		cout << "No object layers found!" << endl;
+
+	return true;
+}
+
+void Level::draw(sf::RenderWindow& window)
+{
+	for (int layer = 0; layer < layers.size(); layer++)
+		for (int tile = 0; tile < layers[layer].getTiles().size(); tile++)
+			window.draw(layers[layer].getTile(tile));
 }

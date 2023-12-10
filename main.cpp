@@ -9,25 +9,61 @@ int main()
     b2Vec2 gravity(0.0f, 1.0f);
     b2World world(gravity);
 
-    RenderWindow window(VideoMode(400, 400), L"Новый проект", Style::Default);
+    Vector2i screenSize(800, 600);
+
+    RenderWindow window;
+    window.create(VideoMode(screenSize.x, screenSize.y), "Game");
+
+    View view;
+    view.reset(FloatRect(0.0f, 0.0f, screenSize.x, screenSize.y));
+    view.setViewport(FloatRect(0.0f, 0.0f, 2.0f, 2.0f));
 
     window.setVerticalSyncEnabled(true);
-
-    CircleShape shape(100.f, 3);
-    shape.setPosition(100, 100);
-    shape.setFillColor(Color::Magenta);
 	
     while (window.isOpen())
     {
         Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == Event::Closed)
+            switch (event.type)
+            {
+            case Event::Closed:
                 window.close();
+                break;
+            case Event::KeyPressed:
+                switch (event.key.code)
+                {
+                case Keyboard::W://jump
+
+                    break;
+                case Keyboard::D://left
+
+                    break;
+                case Keyboard::A://right
+
+                    break;
+                case Keyboard::E://menu
+
+                    break;
+                case Event::MouseButtonPressed:
+                    switch (event.MouseButtonPressed)
+                    {
+                    case Mouse::Left://attack
+
+                        break;
+                    case Mouse::Right://shoot
+
+                        break;
+                    }
+                }
+            }
         }
 
-        window.clear(Color::Blue);
-        window.draw(shape);
+        world.Step(1.0f / 60.0f, 1, 1);
+
+        window.clear(Color::White);
+        manager->lvl.draw(window);
+        //window.draw(shape);
         window.display();
     }
     return 0;

@@ -15,3 +15,13 @@ void Layer::addTile(Sprite sprite)
 {
 	tiles.push_back(sprite);
 }
+
+sf::Sprite Layer::getTile(int tile)
+{
+	return tiles[tile];
+}
+
+std::vector<sf::Sprite> Layer::getTiles()
+{
+	return tiles;
+}

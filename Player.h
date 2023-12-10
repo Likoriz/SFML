@@ -17,10 +17,7 @@ public:
 	void destruct();
 	void attack();
 	void move();
-	void openSkills();
-	void closeSkills();
-	void openMedals();
-	void closeMedals();
+	void openMenu();
 	void receiveMedal();
 	void receiveSkill();
 };

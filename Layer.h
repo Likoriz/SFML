@@ -10,5 +10,7 @@ public:
 	void setOpacity(float opacity_);
 	int getOpacity();
 	void addTile(sf::Sprite sprite);
+	sf::Sprite getTile(int tile);
+	std::vector<sf::Sprite> getTiles();
 };
 
