@@ -2,22 +2,28 @@
 #include "Level.h"
 #include "Audio.h"
 #include "GameObject.h"
-struct MessageQ
-{
-	int a;
-};
+#include "Message.h"
+#include <list>
+#include <vector>
+
 
 class Manager
 {
 private:
+	
 	Level* lvl;
 	//Audio* audio;
-	GameObject** game;
-	MessageQ* queueOfMessages;
+	std::list<GameObject*> game;
+	std::list<Message> queueOfMessages;
+
 public:
-	void sendMSG();
-	void update();
+	std::vector<MyDrawable> getDrawables();
+	std::vector<Object> getObjects();
+	void addObject(MyDrawable* object);
+	void sendMSGAll();
+	void updateAll();
 	void startGame();
 	void endGame();
 };
+
 

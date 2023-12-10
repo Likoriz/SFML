@@ -16,7 +16,7 @@ int main()
     CircleShape shape(100.f, 3);
     shape.setPosition(100, 100);
     shape.setFillColor(Color::Magenta);
-
+	
     while (window.isOpen())
     {
         Event event;

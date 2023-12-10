@@ -191,15 +191,15 @@ bool Level::loadFromFile(string filename)
 						{
 							string propertyName = prop->Attribute("name");
 							string propertyValue = prop->Attribute("value");
-
-							object.setProperties(propertyName, propertyValue);
+							std::map<string, string>tmpProperties={propertyName, propertyValue};
+							object.setProperties(tmpProperties);
 
 							prop = prop->NextSiblingElement("property");
 						}
 				}
+			manager.addObject(object);
 			}
-
-			//objects
+			
 		}
 	}
 }

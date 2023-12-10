@@ -17,5 +17,11 @@ public:
 	void setType(std::string type_);
 	void setSprite(sf::Sprite sprite_);
 	void setRect(sf::Rect<int> rect_);
-	void setProperties(std::string propertyName, std::string propertyValue);
+	std::map<std::string, std::string> getProperties();
+	std::string getName();
+	std::string getType();
+	sf::Sprite getSprite();
+	sf::Rect<int> getRect();
+	std::map<std::string, std::string> getProperties();
+	void setProperties(std::map<std::string, std::string> properties);
 };
