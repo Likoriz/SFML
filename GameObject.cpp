@@ -18,8 +18,6 @@ void GameObject::setDrawable(MyDrawable* object)
 	drawable->setRect(object->getRect());
 	drawable->setSprite(object->getSprite());
 	drawable->setProperties(object->getProperties());
-	
-
 }
 
 GameObject::GameObject()

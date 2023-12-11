@@ -6,6 +6,16 @@
 using namespace std;
 using namespace sf;
 
+Level::Level()
+{
+	width = 0;
+	height = 0;
+	tileWidth = 0;
+	tileHeight = 0;
+	firstTileID = 0;
+	drawBounds = {0, 0, 0, 0};
+	vector<Layer> layers = {};
+}
 
 bool Level::loadFromFile(string filename)
 {
@@ -21,9 +31,9 @@ bool Level::loadFromFile(string filename)
 	map = levelFile.FirstChildElement("map");
 
 	width = atoi(map->Attribute("width"));
-	height = atoi(map->Attribute("heigth"));
+	height = atoi(map->Attribute("height"));
 	tileWidth = atoi(map->Attribute("tilewidth"));
-	tileHeight = atoi(map->Attribute("tileheigth"));
+	tileHeight = atoi(map->Attribute("tileheight"));
 
 	TiXmlElement* tilesetElement;
 	tilesetElement = map->FirstChildElement("tileset");
@@ -31,7 +41,7 @@ bool Level::loadFromFile(string filename)
 
 	TiXmlElement* image;
 	image = tilesetElement->FirstChildElement("image");
-	string imagepath = image->Attribute("source");
+	string imagepath = "Resources/tileset.png";/*image->Attribute("source");*/
 
 	Image img;
 
@@ -168,7 +178,7 @@ bool Level::loadFromFile(string filename)
 					sprite.setTextureRect(subRects[atoi(objectElement->Attribute("gid")) - firstTileID]);
 				}
 
-				MyDrawable* object;
+				MyDrawable* object = new MyDrawable();
 				object->setName(objectName);
 				object->setType(objectType);
 				object->setSprite(sprite);
@@ -183,7 +193,7 @@ bool Level::loadFromFile(string filename)
 				TiXmlElement* properties;
 				properties = objectElement->FirstChildElement("properties");
 
-				if (properties != nullptr)
+				if (properties != nullptr)///////////////////////////////////////////////////////////////////
 				{
 					TiXmlElement* prop;
 					prop = properties->FirstChildElement("property");
@@ -193,12 +203,13 @@ bool Level::loadFromFile(string filename)
 						{
 							string propertyName = prop->Attribute("name");
 							string propertyValue = prop->Attribute("value");
-							std::map<string, string>tmpProperties = { propertyName, propertyValue };
+							std::map<string, string>tmpProperties;
+							tmpProperties.emplace(propertyName, propertyValue);
 							object->setProperties(tmpProperties);
 
 							prop = prop->NextSiblingElement("property");
 						}
-				}
+				}////////////////////////////////////////////////////////////////////////////////////////////
 
 				Manager::getInstance()->addObject(object);
 				objectElement = objectElement->NextSiblingElement("object");

@@ -10,7 +10,7 @@ int main()
 	Manager* manager=Manager::getInstance();
     b2Vec2 gravity(0.0f, 1.0f);
     b2World world(gravity);
-	//Level lvl;
+
     Vector2i screenSize(800, 600);
 
     RenderWindow window;
@@ -21,6 +21,8 @@ int main()
     view.setViewport(FloatRect(0.0f, 0.0f, 2.0f, 2.0f));
 
     window.setVerticalSyncEnabled(true);
+
+    manager->getLevel()->loadFromFile("C:\\Users\\Диана\\source\\repos\\SFML\\Map\\map.tmx");
 	
     while (window.isOpen())
     {

@@ -22,6 +22,31 @@ void MyDrawable::setName(string name_)
 	name=name_;
 }
 
+string MyDrawable::getName()
+{
+	return name;
+}
+
+string MyDrawable::getType()
+{
+	return type;
+}
+
+Sprite MyDrawable::getSprite()
+{
+	return sprite;
+}
+
+Rect<int> MyDrawable::getRect()
+{
+	return rect;
+}
+
+map<string, string> MyDrawable::getProperties()
+{
+	return properties;
+}
+
 void MyDrawable::setType(string type_)
 {
 	type=type_;

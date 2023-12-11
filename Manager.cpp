@@ -16,6 +16,11 @@ Manager::~Manager()
 		delete x;
 }
 
+Manager::Manager()
+{
+	lvl = new Level();
+}
+
 Manager* Manager::getInstance()
 {
 	if(!instance)
