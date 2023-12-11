@@ -21,3 +21,17 @@ void GameObject::setDrawable(MyDrawable* object)
 	
 
 }
+
+GameObject::GameObject()
+{
+
+}
+
+GameObject::GameObject(const GameObject&)
+{
+}
+
+GameObject::~GameObject()
+{
+}
+

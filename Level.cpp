@@ -2,8 +2,10 @@
 #include <iostream>
 #include "SFML\Graphics.hpp"
 #include "tinyxml.h"
+#include "Manager.h"
 using namespace std;
 using namespace sf;
+
 
 bool Level::loadFromFile(string filename)
 {
@@ -166,17 +168,17 @@ bool Level::loadFromFile(string filename)
 					sprite.setTextureRect(subRects[atoi(objectElement->Attribute("gid")) - firstTileID]);
 				}
 
-				MyDrawable object;
-				object.setName(objectName);
-				object.setType(objectType);
-				object.setSprite(sprite);
+				MyDrawable* object;
+				object->setName(objectName);
+				object->setType(objectType);
+				object->setSprite(sprite);
 
 				Rect<int> objectRect;
 				objectRect.top = y;
 				objectRect.left = x;
 				objectRect.height = height;
 				objectRect.width = width;
-				object.setRect(objectRect);
+				object->setRect(objectRect);
 
 				TiXmlElement* properties;
 				properties = objectElement->FirstChildElement("properties");
@@ -192,13 +194,13 @@ bool Level::loadFromFile(string filename)
 							string propertyName = prop->Attribute("name");
 							string propertyValue = prop->Attribute("value");
 							std::map<string, string>tmpProperties = { propertyName, propertyValue };
-							object.setProperties(tmpProperties);
+							object->setProperties(tmpProperties);
 
 							prop = prop->NextSiblingElement("property");
 						}
 				}
 
-				manager.addObject(object);
+				Manager::getInstance()->addObject(object);
 				objectElement = objectElement->NextSiblingElement("object");
 			}
 			objectGroupElement = objectGroupElement->NextSiblingElement("objectgroup");

@@ -4,17 +4,17 @@ using namespace sf;
 
 int MyDrawable::getPropertyInt(string name)
 {
-
+	return 0;
 }
 
 float MyDrawable::getPropertyFloat(string name)
 {
-
+	return 0;
 }
 
 string MyDrawable::getPropertyString(string name)
 {
-
+	return "a";
 }
 
 void MyDrawable::setName(string name_)

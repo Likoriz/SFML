@@ -1,14 +1,16 @@
 ﻿#include <SFML/Graphics.hpp>
 #include <box2d\box2d.h>
 #include <iostream>
+#include "Manager.h"
 
 using namespace sf;
 
 int main()
 {
+	Manager* manager=Manager::getInstance();
     b2Vec2 gravity(0.0f, 1.0f);
     b2World world(gravity);
-
+	//Level lvl;
     Vector2i screenSize(800, 600);
 
     RenderWindow window;
@@ -60,9 +62,9 @@ int main()
         }
 
         world.Step(1.0f / 60.0f, 1, 1);
-
         window.clear(Color::White);
-        manager->lvl.draw(window);
+        manager->getLevel()->draw(window);
+		//lvl.draw(window);
         //window.draw(shape);
         window.display();
     }

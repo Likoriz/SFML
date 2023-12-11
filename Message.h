@@ -9,7 +9,7 @@ struct Message
 {
 	MessageType type;
 	GameObject* sender;
-	union
+	union triggeredMessage
 	{
 		struct
 		{
@@ -20,14 +20,6 @@ struct Message
 			GameObject* target;
 			GameObject* killer;
 		} death;
-		struct
-		{
-			MyDrawable* targetToRender;
-		} render;
-		struct
-		{
-			std::vector<MyDrawable*> everyone;
-		} renderAll;
 		struct
 		{
 			GameObject* newObject;
@@ -45,6 +37,6 @@ struct Message
 		struct
 		{
 			GameObject* objectToDelete;
-		} create;
+		} destroy;
 	};
 };
