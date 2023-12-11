@@ -18,7 +18,7 @@ void Layer::addTile(Sprite sprite)
 
 sf::Sprite Layer::getTile(int tile)
 {
-    return sf::Sprite();
+    return tiles[tile];
 }
 
 std::vector<sf::Sprite> Layer::getTiles()

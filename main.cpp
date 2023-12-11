@@ -11,7 +11,7 @@ int main()
     b2Vec2 gravity(0.0f, 1.0f);
     b2World world(gravity);
 
-    Vector2i screenSize(800, 600);
+    Vector2i screenSize(900, 450);
 
     RenderWindow window;
     window.create(VideoMode(screenSize.x, screenSize.y), "Game");
@@ -22,7 +22,7 @@ int main()
 
     window.setVerticalSyncEnabled(true);
 
-    manager->getLevel()->loadFromFile("C:\\Users\\Диана\\source\\repos\\SFML\\Map\\map.tmx");
+    manager->getLevel()->loadFromFile("Map/map.tmx");
 	
     while (window.isOpen())
     {
@@ -64,10 +64,14 @@ int main()
         }
 
         world.Step(1.0f / 60.0f, 1, 1);
+
+        //view.setCenter(120 + screenSize.x / 4, 360 + screenSize.y / 4);
+        //window.setView(view);
+
         window.clear(Color::White);
+        
         manager->getLevel()->draw(window);
-		//lvl.draw(window);
-        //window.draw(shape);
+
         window.display();
     }
     return 0;

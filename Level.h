@@ -7,7 +7,7 @@ class Level
 private:
 	int width, height, tileWidth, tileHeight;
 	int firstTileID;
-	sf::Rect<float> drawBounds;
+	//sf::Rect<float> drawBounds;
 	sf::Texture tilesetImage;
 	std::vector<Layer> layers;
 public:

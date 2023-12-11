@@ -13,7 +13,7 @@ Level::Level()
 	tileWidth = 0;
 	tileHeight = 0;
 	firstTileID = 0;
-	drawBounds = {0, 0, 0, 0};
+	//drawBounds = { 0, 0, 0, 0 };
 	vector<Layer> layers = {};
 }
 
@@ -135,7 +135,7 @@ bool Level::loadFromFile(string filename)
 
 		layerElement = layerElement->NextSiblingElement("layer");
 	}
-
+#pragma region OBJECTS
 	TiXmlElement* objectGroupElement;
 
 	if (map->FirstChildElement("objectgroup") != nullptr)
@@ -211,12 +211,13 @@ bool Level::loadFromFile(string filename)
 						}
 				}////////////////////////////////////////////////////////////////////////////////////////////
 
-				Manager::getInstance()->addObject(object);
+				//Manager::getInstance()->addObject(object);
 				objectElement = objectElement->NextSiblingElement("object");
 			}
 			objectGroupElement = objectGroupElement->NextSiblingElement("objectgroup");
 		}
 	}
+#pragma endregion OBJECTS
 	else
 		cout << "No object layers found!" << endl;
 
@@ -225,7 +226,11 @@ bool Level::loadFromFile(string filename)
 
 void Level::draw(sf::RenderWindow& window)
 {
-	for (int layer = 0; layer < layers.size(); layer++)
-		for (int tile = 0; tile < layers[layer].getTiles().size(); tile++)
+	int layersSize = layers.size();
+	for (int layer = 0; layer < layersSize; layer++)
+	{
+		int tilesSize = layers[layer].getTiles().size();
+		for (int tile = 0; tile < tilesSize; tile++)
 			window.draw(layers[layer].getTile(tile));
+	}
 }
