@@ -2,6 +2,12 @@
 
 Object::Object(std::string name)
 {
+
+}
+
+Object::Object()
+{
+
 }
 
 Object::~Object()

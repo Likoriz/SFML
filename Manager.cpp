@@ -1,5 +1,6 @@
 #include "Manager.h"
 #include <vector>
+#include <iostream>
 using namespace std;
 //std::vector<MyDrawable> getDrawables()
 //{

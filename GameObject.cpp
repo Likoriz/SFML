@@ -18,11 +18,13 @@ void GameObject::setDrawable(MyDrawable* object)
 	drawable->setRect(object->getRect());
 	drawable->setSprite(object->getSprite());
 	drawable->setProperties(object->getProperties());
+	
 }
 
 GameObject::GameObject()
 {
-
+	drawable=new MyDrawable();
+	object=new Object();
 }
 
 GameObject::GameObject(const GameObject&)

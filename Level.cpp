@@ -211,7 +211,7 @@ bool Level::loadFromFile(string filename)
 						}
 				}////////////////////////////////////////////////////////////////////////////////////////////
 
-				//Manager::getInstance()->addObject(object);
+				Manager::getInstance()->addObject(object);
 				objectElement = objectElement->NextSiblingElement("object");
 			}
 			objectGroupElement = objectGroupElement->NextSiblingElement("objectgroup");

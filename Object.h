@@ -13,6 +13,7 @@ private:
 	bool isJumpable;
 public:
 	Object(std::string name);
+	Object();
 	~Object();
 	int getSpeed();
 	void setSpeed();
