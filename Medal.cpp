@@ -1,5 +1,6 @@
 #include "Medal.h"
 
-void Medal::showMenu()
+Medal::Medal()
 {
+	isCollected = false;
 }

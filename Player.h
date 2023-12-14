@@ -6,19 +6,28 @@
 class Player : public Entity
 {
 private:
-	bool weaponType;
+	enum Stat { HP = 0, DAMAGE, DEFENSE };
+	enum Skill { CLIMB = 0, DOUBLE, TRIPLE, DASH, WALL };
+
+	sf::Font font;
+	sf::Text text;
+
+	//bool weaponType;
 	Medal* activeMedals;
 	Medal* collectedMedals;
 	int coins;
-	Skills* tree;
-	int state;
-	b2FixtureDef fixtureDef;
+	Skills* skills;
+	//int state;
+	//b2FixtureDef fixtureDef;
 public:
+	Player();
+	void ShowInterface(sf::RenderWindow& window);
 	void destruct();
 	void attack();
 	void move();
 	void openMenu();
 	void receiveMedal();
-	void receiveSkill();
+	void receiveSkill(int skill);
+	void upgrade(int stat);
 };
 

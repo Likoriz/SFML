@@ -2,13 +2,14 @@
 class Skills
 {
 private:
-	//bool isAbleToClimb;
+	enum Skill { CLIMB = 0, DOUBLE, TRIPLE, DASH, WALL };
+	bool isAbleToClimb;
 	bool isAbleToDoubleJump;
-	//bool isAbleToTripleJump;
-	//bool isAbleToDash;
-	//bool isAbleToWallJump;
+	bool isAbleToTripleJump;
+	bool isAbleToDash;
+	bool isAbleToWallJump;
 public:
-	void giveSkill();
-	void draw();
+	Skills();
+	void setSkill(int skill);
 };
 

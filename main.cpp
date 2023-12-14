@@ -2,12 +2,13 @@
 #include <box2d\box2d.h>
 #include <iostream>
 #include "Manager.h"
+#include "Player.h"
 
 using namespace sf;
 
 int main()
 {
-	Manager* manager=Manager::getInstance();
+	Manager* manager = Manager::getInstance();
     b2Vec2 gravity(0.0f, 1.0f);
     b2World world(gravity);
 
@@ -46,7 +47,7 @@ int main()
                 case Keyboard::A://right
 
                     break;
-                case Keyboard::E://menu
+                case Keyboard::Escape://menu
 
                     break;
                 case Event::MouseButtonPressed:
@@ -71,6 +72,8 @@ int main()
         window.clear(Color::White);
         
         manager->getLevel()->draw(window);
+        Player player;
+        player.ShowInterface(window);
 
         window.display();
     }

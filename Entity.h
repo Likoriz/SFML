@@ -10,10 +10,20 @@ private:
 	int radius;
 public:
 	Entity(std::string name);
+	Entity() {};
 	virtual void destruct() = 0;
 	bool checkRadius();
 	virtual void attack() = 0;
 	virtual void move() = 0;
 
+	void setHP(int hp_);
+	void setDMG(int dmg);
+	void setDEF(int def);
+	void setRadius(int rad);
+
+	int getHP();
+	int getDMG();
+	int getDEF();
+	int getRadius();
 };
 

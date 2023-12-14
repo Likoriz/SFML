@@ -2,9 +2,9 @@
 class Medal
 {
 private:
-	bool medals[8];
+	bool isCollected;
 public:
+	Medal();
 	virtual void causeEffect() = 0;
-	void showMenu();
 };
 

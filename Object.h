@@ -8,6 +8,7 @@ private:
 	b2BodyDef bodyDef;
 	b2Body* body;
 	b2PolygonShape shape;
+	b2FixtureDef fixtureDef;
 	int speedY;
 	int speedX;
 	bool isJumpable;
