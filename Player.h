@@ -10,7 +10,6 @@ private:
 	enum Skill { CLIMB = 0, DOUBLE, TRIPLE, DASH, WALL };
 
 	sf::Font font;
-	sf::Text text;
 
 	//bool weaponType;
 	Medal* activeMedals;
@@ -29,5 +28,6 @@ public:
 	void receiveMedal();
 	void receiveSkill(int skill);
 	void upgrade(int stat);
+	void setText(sf::Text& text_);
 };
 

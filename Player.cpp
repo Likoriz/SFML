@@ -13,7 +13,7 @@ Player::Player()
 	setDEF(100);
 
 	//weaponType = 0;
-	coins = 0;
+	coins = 10;
 	//state = 0;
 
 	//activeMedals = new Medal();
@@ -21,17 +21,13 @@ Player::Player()
 
 	if (!font.loadFromFile("Resources/AmaticSC-Regular.ttf"))
 		cout << "Failed to load font!" << endl;
-	else
-	{
-		text.setFont(font);
-		text.setCharacterSize(24);
-		text.setFillColor(Color::Black);
-		text.setStyle(Text::Bold);
-	}
 }
 
 void Player::ShowInterface(sf::RenderWindow& window)
 {
+	Text text;
+	setText(text);
+
 	string hp = to_string(getHP());
 	text.setString("HP: " + hp);
 	text.setPosition(0, 0);
@@ -58,21 +54,66 @@ void Player::move()
 
 }
 
+void Player::setText(sf::Text& text_)
+{
+	text_.setFont(font);
+	text_.setCharacterSize(24);
+	text_.setFillColor(Color::Black);
+	text_.setStyle(Text::Bold);
+}
+
 void Player::menu(RenderWindow& window)
 {
 	Texture back;
 	back.loadFromFile("Resources/background.jpg");
 	Sprite backSprite;
 	backSprite.setTexture(back);
-	
-	RectangleShape bound(Vector2f(window.getSize().x - 200, window.getSize().y - 200));
+
+	RectangleShape bound;
+	bound.setSize(Vector2f(700, 250));
+	//bound.setSize(Vector2f(window.getSize().x - 200, window.getSize().y - 200));
 	bound.setOutlineColor(Color::Black);
 	bound.setOutlineThickness(5);
 	bound.setPosition(100, 100);
 	bound.setFillColor(Color::Transparent);
 
-	text.setString("MeNu");
-	text.setPosition(100, 100);
+	Text text, textHp, textCoins, textDmg, textDef;
+	string cCoins, hp, dmg, def;
+
+	text.setString("MENU");
+
+	setText(text);
+	setText(textCoins);
+	setText(textHp);
+	setText(textDmg);
+	setText(textDef);
+
+	text.setPosition(110, 110);
+	textCoins.setPosition(110, 150);
+	textHp.setPosition(110, 170);
+	textDmg.setPosition(110, 190);
+	textDef.setPosition(110, 210);
+
+	RectangleShape buttonHp;
+	buttonHp.setSize(Vector2f(20, 20));
+	buttonHp.setPosition(200, 175);
+	buttonHp.setOutlineColor(Color::Black);
+	buttonHp.setOutlineThickness(1);
+	buttonHp.setFillColor(Color::Green);
+
+	RectangleShape buttonDmg;
+	buttonDmg.setSize(Vector2f(20, 20));
+	buttonDmg.setPosition(200, 195);
+	buttonDmg.setOutlineColor(Color::Black);
+	buttonDmg.setOutlineThickness(1);
+	buttonDmg.setFillColor(Color::Green);
+
+	RectangleShape buttonDef;
+	buttonDef.setSize(Vector2f(20, 20));
+	buttonDef.setPosition(200, 215);
+	buttonDef.setOutlineColor(Color::Black);
+	buttonDef.setOutlineThickness(1);
+	buttonDef.setFillColor(Color::Green);
 
 	bool isPaused = true;
 	while (isPaused)
@@ -94,24 +135,58 @@ void Player::menu(RenderWindow& window)
 				}
 				break;
 			case Event::MouseButtonPressed:
-				if (event.mouseButton.button == Mouse::Left)
-				{
-					text.setString("MeNu");
-				}
+				Vector2f mouseCoords = window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });
+				if (event.mouseButton.button == Mouse::Left && buttonHp.getGlobalBounds().contains(mouseCoords))
+					upgrade(HP);
 				else
-					if (event.mouseButton.button == Mouse::Right)
-					{
-						text.setString("mEnU");
-					}
+					if (event.mouseButton.button == Mouse::Left && buttonDmg.getGlobalBounds().contains(mouseCoords))
+						upgrade(DAMAGE);
+					else
+						if (event.mouseButton.button == Mouse::Left && buttonDef.getGlobalBounds().contains(mouseCoords))
+							upgrade(DEFENSE);
 				break;
 			}
 		}
 
+		if (coins >= 2)
+		{
+			buttonHp.setFillColor(Color::Green);
+			buttonDmg.setFillColor(Color::Green);
+			buttonDef.setFillColor(Color::Green);
+		}
+		else
+		{
+			buttonHp.setFillColor(Color::Red);
+			buttonDmg.setFillColor(Color::Red);
+			buttonDef.setFillColor(Color::Red);
+		}
+
+		cCoins = to_string(coins);
+		textCoins.setString("Coins: " + cCoins);
+
+		hp = to_string(getHP());
+		textHp.setString("HP: " + hp);
+
+		dmg = to_string(getDMG());
+		textDmg.setString("DMG: " + dmg);
+
+		def = to_string(getDEF());
+		textDef.setString("DEF: " + def);
+
 		window.clear(Color::White);
-		
+
 		window.draw(backSprite);
 		window.draw(bound);
+
 		window.draw(text);
+		window.draw(textCoins);
+		window.draw(textHp);
+		window.draw(textDmg);
+		window.draw(textDef);
+
+		window.draw(buttonHp);
+		window.draw(buttonDmg);
+		window.draw(buttonDef);
 
 		window.display();
 	}
@@ -129,7 +204,8 @@ void Player::receiveSkill(int skill)
 
 void Player::upgrade(int stat)
 {
-	if (coins >= 3)
+	if (coins >= 2)
+	{
 		switch (stat)
 		{
 		case HP:
@@ -142,4 +218,7 @@ void Player::upgrade(int stat)
 			setDEF(getDEF() + 10);
 			break;
 		}
+
+		coins -= 2;
+	}
 }
