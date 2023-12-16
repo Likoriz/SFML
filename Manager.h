@@ -18,8 +18,11 @@ private:
 	Manager();
 	Manager(const Manager&);
 	~Manager();
-
+	bool pause;
 public:
+	void setPause(bool state);
+	bool getPause();
+
 	static Manager* getInstance();
 	static void Destroy();
 	//std::vector<MyDrawable> getDrawables();

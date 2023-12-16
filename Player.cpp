@@ -1,6 +1,7 @@
 #include "Player.h"
 #include <iostream>;
 #include <SFML/Graphics.hpp>
+//#include "Manager.h"
 
 using namespace std;
 using namespace sf;
@@ -57,9 +58,63 @@ void Player::move()
 
 }
 
-void Player::openMenu()
+void Player::menu(RenderWindow& window)
 {
+	Texture back;
+	back.loadFromFile("Resources/background.jpg");
+	Sprite backSprite;
+	backSprite.setTexture(back);
+	
+	RectangleShape bound(Vector2f(window.getSize().x - 200, window.getSize().y - 200));
+	bound.setOutlineColor(Color::Black);
+	bound.setOutlineThickness(5);
+	bound.setPosition(100, 100);
+	bound.setFillColor(Color::Transparent);
 
+	text.setString("MeNu");
+	text.setPosition(100, 100);
+
+	bool isPaused = true;
+	while (isPaused)
+	{
+		Event event;
+		while (window.pollEvent(event))
+		{
+			switch (event.type)
+			{
+			case Event::Closed:
+				window.close();
+				break;
+			case Event::KeyPressed:
+				switch (event.key.code)
+				{
+				case Keyboard::Escape:
+					isPaused = false;
+					break;
+				}
+				break;
+			case Event::MouseButtonPressed:
+				if (event.mouseButton.button == Mouse::Left)
+				{
+					text.setString("MeNu");
+				}
+				else
+					if (event.mouseButton.button == Mouse::Right)
+					{
+						text.setString("mEnU");
+					}
+				break;
+			}
+		}
+
+		window.clear(Color::White);
+		
+		window.draw(backSprite);
+		window.draw(bound);
+		window.draw(text);
+
+		window.display();
+	}
 }
 
 void Player::receiveMedal()

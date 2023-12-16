@@ -25,7 +25,7 @@ public:
 	void destruct();
 	void attack();
 	void move();
-	void openMenu();
+	void menu(sf::RenderWindow& window);
 	void receiveMedal();
 	void receiveSkill(int skill);
 	void upgrade(int stat);

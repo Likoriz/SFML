@@ -20,6 +20,7 @@ Manager::~Manager()
 Manager::Manager()
 {
 	lvl = new Level();
+	pause = false;
 }
 
 Manager* Manager::getInstance()
@@ -70,4 +71,14 @@ void Manager::endGame()
 Level* Manager::getLevel()
 {
 	return lvl;
+}
+
+bool Manager::getPause()
+{
+	return pause;
+}
+
+void Manager::setPause(bool state)
+{
+	pause = state;
 }
