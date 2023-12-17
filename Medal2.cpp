@@ -2,9 +2,11 @@
 
 Medal2::Medal2()
 {
+	setName("Invincibility");
 	setCollected(false);
 }
 
-void Medal2::causeEffect()
+void Medal2::causeEffect()//invincibility for ?dt??
 {
+
 }

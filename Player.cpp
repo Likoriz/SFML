@@ -6,6 +6,24 @@
 using namespace std;
 using namespace sf;
 
+#pragma region NOT READY
+void Player::destruct()
+{
+
+}
+
+void Player::attack()
+{
+
+}
+
+void Player::move()
+{
+
+}
+#pragma endregion NOT READY
+
+#pragma region 50/50
 Player::Player()
 {
 	setHP(100);
@@ -32,51 +50,14 @@ Player::Player()
 	allMedals[6] = new Medal7();
 	allMedals[7] = new Medal8();
 
-	activeMedals[0] = allMedals[0];
+	receiveMedal(0);
+	if (allMedals[0]->getCollected())
+		activeMedals[0] = allMedals[0];
 
 	skills = new Skills();
 
 	if (!font.loadFromFile("Resources/AmaticSC-Regular.ttf"))
 		cout << "Failed to load font!" << endl;
-}
-
-void Player::ShowInterface(sf::RenderWindow& window)
-{
-	Text text;
-	setText(text);
-
-	string hp = to_string(curHp);
-	text.setString("HP: " + hp);
-	text.setPosition(0, 0);
-	window.draw(text);
-
-	string cCoins = to_string(coins);
-	text.setString("Coins: " + cCoins);
-	text.setPosition(0, 20);
-	window.draw(text);
-}
-
-void Player::destruct()
-{
-
-}
-
-void Player::attack()
-{
-
-}
-
-void Player::move()
-{
-
-}
-
-void Player::setText(sf::Text& text_)
-{
-	text_.setFont(font);
-	text_.setCharacterSize(24);
-	text_.setFillColor(Color::Black);
-	text_.setStyle(Text::Bold);
 }
 
 void Player::menu(RenderWindow& window)
@@ -94,6 +75,7 @@ void Player::menu(RenderWindow& window)
 	bound.setPosition(100, 100);
 	bound.setFillColor(Color::Transparent);
 
+	#pragma region BASICS
 	Text text, textHp, textCoins, textDmg, textDef;
 	string cCoins, hp, dmg, def;
 
@@ -131,6 +113,58 @@ void Player::menu(RenderWindow& window)
 	buttonDef.setOutlineColor(Color::Black);
 	buttonDef.setOutlineThickness(1);
 	buttonDef.setFillColor(Color::Green);
+	#pragma endregion BASICS
+
+	#pragma region SKILLS
+	Text textSkills, textClimb, textDouble, textTriple, textDash, textWall;
+	string abClimb, abDouble, abTriple, abDash, abWall;
+
+	setText(textSkills);
+	setText(textClimb);
+	setText(textDouble);
+	setText(textTriple);
+	setText(textDash);
+	setText(textWall);
+
+	textSkills.setPosition(250, 150);
+	textClimb.setPosition(250, 190);
+	textDouble.setPosition(250, 210);
+	textTriple.setPosition(250, 230);
+	textDash.setPosition(250, 250);
+	textWall.setPosition(250, 270);
+
+	if (skills->getSkill(CLIMB))
+		abClimb = "YES";
+	else
+		abClimb = "NO";
+
+	if (skills->getSkill(DOUBLE))
+		abDouble = "YES";
+	else
+		abDouble = "NO";
+
+	if (skills->getSkill(TRIPLE))
+		abTriple = "YES";
+	else
+		abTriple = "NO";
+
+	if (skills->getSkill(DASH))
+		abDash = "YES";
+	else
+		abDash = "NO";
+
+	if (skills->getSkill(WALL))
+		abWall = "YES";
+	else
+		abWall = "NO";
+
+	textSkills.setString("SKILLS");
+	textClimb.setString("Climbing: " + abClimb);
+	textDouble.setString("Double Jumping: " + abDouble);
+	textTriple.setString("Triple Jumping: " + abTriple);
+	textDash.setString("Dashing: " + abDash);
+	textWall.setString("Wall Jumping: " + abWall);
+	#pragma endregion SKILLS
 
 	bool isPaused = true;
 	while (isPaused)
@@ -165,6 +199,7 @@ void Player::menu(RenderWindow& window)
 			}
 		}
 
+		#pragma region UPDATEBASICS
 		if (coins >= 2)
 		{
 			buttonHp.setFillColor(Color::Green);
@@ -189,12 +224,14 @@ void Player::menu(RenderWindow& window)
 
 		def = to_string(getDEF());
 		textDef.setString("DEF: " + def);
+		#pragma endregion UPDATEBASICS
 
 		window.clear(Color::White);
 
 		window.draw(backSprite);
 		window.draw(bound);
 
+		#pragma region DRAWBASICS
 		window.draw(text);
 		window.draw(textCoins);
 		window.draw(textHp);
@@ -204,9 +241,45 @@ void Player::menu(RenderWindow& window)
 		window.draw(buttonHp);
 		window.draw(buttonDmg);
 		window.draw(buttonDef);
+		#pragma endregion DRAWBASICS
+
+		#pragma region DRAWSKILLS
+		window.draw(textSkills);
+		window.draw(textClimb);
+		window.draw(textDouble);
+		window.draw(textTriple);
+		window.draw(textDash);
+		window.draw(textWall);
+		#pragma endregion DRAWSKILLS
 
 		window.display();
 	}
+}
+#pragma endregion 50/50
+
+#pragma region READY
+void Player::ShowInterface(sf::RenderWindow& window)
+{
+	Text text;
+	setText(text);
+
+	string hp = to_string(curHp);
+	text.setString("HP: " + hp);
+	text.setPosition(0, 0);
+	window.draw(text);
+
+	string cCoins = to_string(coins);
+	text.setString("Coins: " + cCoins);
+	text.setPosition(0, 20);
+	window.draw(text);
+}
+
+void Player::setText(sf::Text& text_)
+{
+	text_.setFont(font);
+	text_.setCharacterSize(24);
+	text_.setFillColor(Color::Black);
+	text_.setStyle(Text::Bold);
 }
 
 void Player::receiveMedal(int number)
@@ -246,3 +319,4 @@ Medal** Player::getActiveMedals()
 {
 	return activeMedals;
 }
+#pragma endregion READY

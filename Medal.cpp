@@ -1,4 +1,5 @@
 #include "Medal.h"
+using namespace std;
 
 Medal::Medal()
 {
@@ -13,4 +14,14 @@ bool Medal::getCollected()
 void Medal::setCollected(bool state)
 {
 	isCollected = state;
+}
+
+void Medal::setName(string name_)
+{
+	name = name_;
+}
+
+string Medal::getName()
+{
+	return name;
 }

@@ -11,5 +11,6 @@ private:
 public:
 	Skills();
 	void setSkill(int skill);
+	bool getSkill(int number);
 };
 

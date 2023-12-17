@@ -30,3 +30,22 @@ void Skills::setSkill(int skill)
 		break;
 	}
 }
+
+bool Skills::getSkill(int number)
+{
+	switch (number)
+	{
+	case CLIMB:
+		return isAbleToClimb;
+	case DOUBLE:
+		return isAbleToDoubleJump;
+	case TRIPLE:
+		return isAbleToTripleJump;
+	case DASH:
+		return isAbleToDash;
+	case WALL:
+		return isAbleToWallJump;
+	default:
+		return false;
+	}
+}

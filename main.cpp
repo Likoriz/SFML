@@ -84,7 +84,10 @@ int main()
 	if (manager->getPause() == false)
 	{
 		player.ShowInterface(window);
-		player.getActiveMedals()[0]->causeEffect();
+
+		for (int i = 0; i < 2; i++)
+			if (player.getActiveMedals()[i])
+				player.getActiveMedals()[i]->causeEffect();
 	}
 	else
 	{
