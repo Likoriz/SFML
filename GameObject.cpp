@@ -21,10 +21,14 @@ void GameObject::setDrawable(MyDrawable* object)
 	
 }
 
+void GameObject::setObject(Object* sourceObject)
+{
+	object=sourceObject;
+}
+
 GameObject::GameObject()
 {
 	drawable=new MyDrawable();
-	object=new Object();
 }
 
 GameObject::GameObject(const GameObject&)

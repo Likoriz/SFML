@@ -1,4 +1,5 @@
 #include "Manager.h"
+#include "GameObject.h"
 #include <vector>
 #include <iostream>
 using namespace std;
@@ -49,6 +50,7 @@ void Manager::addObject(MyDrawable* object)
 {
 	GameObject* newObject=new GameObject();
 	newObject->setDrawable(object);
+	newObject->setObject(new Object(object->getName(),object->getRect()));
 	game.push_back(newObject);
 }
 

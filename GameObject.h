@@ -11,6 +11,7 @@ private:
 	Object* object;
 public:
 	void setDrawable(MyDrawable* object);
+	void setObject(Object* sourceObject);
 	/*virtual void Update(float dt) = 0;
 	virtual void SendMessage(Message m) = 0;*/
 	GameObject();

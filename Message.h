@@ -1,6 +1,6 @@
 #pragma once
 enum class MessageType {Move,Death,Render,RenderAll,Create,DealDmg,TriggerEffect, Erase};
-#include "GameObject.h"
+class GameObject;
 #include <vector>
 class MyDrawable;
 

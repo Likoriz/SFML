@@ -1,7 +1,7 @@
 #pragma once
 #include "Level.h"
+class GameObject;
 #include "Audio.h"
-#include "GameObject.h"
 #include "Message.h"
 #include <list>
 #include <vector>
@@ -32,6 +32,7 @@ public:
 	void updateAll(float dt);
 	void startGame();
 	void endGame();
+	void getMessage();
 	Level* getLevel();
 };
 
