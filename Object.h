@@ -1,7 +1,6 @@
 #pragma once
-#include "box2d/box2d.h"
 #include "SFML/Graphics.hpp"
-#include "box2d/b2_polygon_shape.h"
+#include "box2d/box2d.h"
 #include <string>
 class Object
 {

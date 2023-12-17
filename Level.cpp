@@ -3,6 +3,7 @@
 #include "SFML\Graphics.hpp"
 #include "tinyxml.h"
 #include "Manager.h"
+#include "GameObject.h"
 using namespace std;
 using namespace sf;
 
@@ -171,7 +172,7 @@ bool Level::loadFromFile(string filename)
 				sprite.setTextureRect(Rect<int>(0, 0, 0, 0));
 				sprite.setPosition(x, y);
 
-				if (objectElement->Attribute("width") != nullptr)
+				if (objectElement->Attribute("gid") == nullptr)
 				{
 					width = atoi(objectElement->Attribute("width"));
 					height = atoi(objectElement->Attribute("height"));
@@ -237,5 +238,11 @@ void Level::draw(sf::RenderWindow& window)
 		int tilesSize = layers[layer].getTiles().size();
 		for (int tile = 0; tile < tilesSize; tile++)
 			window.draw(layers[layer].getTile(tile));
+	}
+	std::vector<GameObject*> gameObjects=Manager::getInstance()->getGame();
+	for(auto x:gameObjects)
+	{
+		window.draw(x->getDrawable()->getSprite());
+		cout<<x->getDrawable()->getName()<<" "<<x->getDrawable()->getSprite().getPosition().x<<" "<<x->getDrawable()->getSprite().getPosition().y<<"\n";
 	}
 }

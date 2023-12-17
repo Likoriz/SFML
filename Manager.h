@@ -3,6 +3,8 @@
 class GameObject;
 #include "Audio.h"
 #include "Message.h"
+#include "box2d/box2d.h"
+#include "box2d/b2_polygon_shape.h"
 #include <list>
 #include <vector>
 
@@ -10,10 +12,11 @@ class GameObject;
 class Manager
 {
 private:
+	b2World* world;
 	static Manager* instance;
 	Level* lvl;
 	//Audio* audio;
-	std::list<GameObject*> game;
+	std::vector<GameObject*> game;
 	std::list<Message*> queueOfMessages;
 	Manager();
 	Manager(const Manager&);
@@ -22,7 +25,6 @@ private:
 public:
 	void setPause(bool state);
 	bool getPause();
-
 	static Manager* getInstance();
 	static void Destroy();
 	//std::vector<MyDrawable> getDrawables();
@@ -32,7 +34,9 @@ public:
 	void updateAll(float dt);
 	void startGame();
 	void endGame();
+	std::vector<GameObject*> getGame();
 	void getMessage();
+	b2World* getWorld();
 	Level* getLevel();
 };
 

@@ -10,13 +10,12 @@ int main()
 {
 	Manager* manager = Manager::getInstance();
 
-	b2Vec2 gravity(0.0f, 1.0f);
-	b2World world(gravity);
+	
 
 	Vector2i screenSize(900, 450);
 
 	RenderWindow window;
-	window.create(VideoMode(screenSize.x, screenSize.y), "Game");
+	window.create(VideoMode(screenSize.x, screenSize.y), "JoJo's O Pixel Adventure");
 
 	View view;
 	view.reset(FloatRect(0.0f, 0.0f, screenSize.x, screenSize.y));
@@ -72,7 +71,7 @@ int main()
 			}
 		}
 
-	world.Step(1.0f / 60.0f, 1, 1);
+		Manager::getInstance()->getWorld()->Step(1.0f / 60.0f, 1, 1);
 
 	//view.setCenter(120 + screenSize.x / 4, 360 + screenSize.y / 4);
 	//window.setView(view);

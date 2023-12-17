@@ -22,6 +22,8 @@ Manager::Manager()
 {
 	lvl = new Level();
 	pause = false;
+	b2Vec2 gravity(0.0f, 1.0f);
+	world=new b2World(gravity);
 }
 
 Manager* Manager::getInstance()
@@ -68,6 +70,16 @@ void Manager::startGame()
 
 void Manager::endGame()
 {
+}
+
+std::vector<GameObject*> Manager::getGame()
+{
+	return game;
+}
+
+b2World* Manager::getWorld()
+{
+	return world;
 }
 
 Level* Manager::getLevel()

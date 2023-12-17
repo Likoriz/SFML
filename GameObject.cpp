@@ -39,3 +39,8 @@ GameObject::~GameObject()
 {
 }
 
+MyDrawable* GameObject::getDrawable()
+{
+	return drawable;
+}
+

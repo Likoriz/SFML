@@ -17,7 +17,7 @@ public:
 	GameObject();
 	GameObject(const GameObject&);
 	~GameObject();
-	//void addDrawable(MyDrawable* object_);
+	 MyDrawable* getDrawable();
 	//void addObject(Object* object_);
 };
 
