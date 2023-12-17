@@ -2,6 +2,7 @@
 
 Medal6::Medal6()
 {
+	setName("Medal");
 	setCollected(false);
 }
 

@@ -6,8 +6,6 @@
 #include "Medal4.h"
 #include "Medal5.h"
 #include "Medal6.h"
-#include "Medal7.h"
-#include "Medal8.h"
 #include "Skills.h"
 
 class Player : public Entity
@@ -18,14 +16,11 @@ private:
 
 	sf::Font font;
 
-	//bool weaponType;
 	int curHp;
 	Medal** activeMedals;
 	Medal** allMedals;
 	int coins;
 	Skills* skills;
-	//int state;
-	//b2FixtureDef fixtureDef;
 public:
 	Player();
 	void ShowInterface(sf::RenderWindow& window);
@@ -38,5 +33,8 @@ public:
 	void upgrade(int stat);
 	void setText(sf::Text& text_);
 	Medal** getActiveMedals();
+	void setButton(sf::RectangleShape& button, sf::Color color);
+	void offMedal(int number);
+	void onMedal(int number);
 };
 

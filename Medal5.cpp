@@ -2,6 +2,7 @@
 
 Medal5::Medal5()
 {
+	setName("Boost DEF");
 	setCollected(false);
 }
 

@@ -2,6 +2,7 @@
 
 Medal4::Medal4()
 {
+	setName("Boost DMG");
 	setCollected(false);
 }
 

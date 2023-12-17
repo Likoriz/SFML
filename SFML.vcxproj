@@ -154,8 +154,6 @@
     <ClCompile Include="Medal4.cpp" />
     <ClCompile Include="Medal5.cpp" />
     <ClCompile Include="Medal6.cpp" />
-    <ClCompile Include="Medal7.cpp" />
-    <ClCompile Include="Medal8.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="PlatformDisappearing.cpp" />
     <ClCompile Include="PlatformFalling.cpp" />
@@ -189,8 +187,6 @@
     <ClInclude Include="Medal4.h" />
     <ClInclude Include="Medal5.h" />
     <ClInclude Include="Medal6.h" />
-    <ClInclude Include="Medal7.h" />
-    <ClInclude Include="Medal8.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="PlatformDisappearing.h" />
     <ClInclude Include="PlatformFalling.h" />

@@ -78,12 +78,6 @@
     <ClCompile Include="Medal6.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Medal7.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Medal8.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Skills.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -171,12 +165,6 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Medal6.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Medal7.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Medal8.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Skills.h">
