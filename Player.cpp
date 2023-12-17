@@ -15,6 +15,8 @@ Player::Player()
 	//weaponType = 0;
 	coins = 10;
 	//state = 0;
+	//curHp = getHP();
+	curHp = 10;
 
 	activeMedals = new Medal * [2];
 	for (int i = 0; i < 2; i++)
@@ -30,6 +32,8 @@ Player::Player()
 	allMedals[6] = new Medal7();
 	allMedals[7] = new Medal8();
 
+	activeMedals[0] = allMedals[0];
+
 	skills = new Skills();
 
 	if (!font.loadFromFile("Resources/AmaticSC-Regular.ttf"))
@@ -41,7 +45,7 @@ void Player::ShowInterface(sf::RenderWindow& window)
 	Text text;
 	setText(text);
 
-	string hp = to_string(getHP());
+	string hp = to_string(curHp);
 	text.setString("HP: " + hp);
 	text.setPosition(0, 0);
 	window.draw(text);
@@ -177,7 +181,7 @@ void Player::menu(RenderWindow& window)
 		cCoins = to_string(coins);
 		textCoins.setString("Coins: " + cCoins);
 
-		hp = to_string(getHP());
+		hp = to_string(curHp);
 		textHp.setString("HP: " + hp);
 
 		dmg = to_string(getDMG());
@@ -205,9 +209,10 @@ void Player::menu(RenderWindow& window)
 	}
 }
 
-void Player::receiveMedal()
+void Player::receiveMedal(int number)
 {
-
+	if (number > -1 && number < 8)
+		allMedals[number]->setCollected(true);
 }
 
 void Player::receiveSkill(int skill)
@@ -223,6 +228,7 @@ void Player::upgrade(int stat)
 		{
 		case HP:
 			setHP(getHP() + 10);
+			curHp += 10;
 			break;
 		case DAMAGE:
 			setDMG(getDMG() + 10);
@@ -234,4 +240,9 @@ void Player::upgrade(int stat)
 
 		coins -= 2;
 	}
+}
+
+Medal** Player::getActiveMedals()
+{
+	return activeMedals;
 }

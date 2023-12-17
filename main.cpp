@@ -9,6 +9,7 @@ using namespace sf;
 int main()
 {
 	Manager* manager = Manager::getInstance();
+
 	b2Vec2 gravity(0.0f, 1.0f);
 	b2World world(gravity);
 
@@ -83,6 +84,7 @@ int main()
 	if (manager->getPause() == false)
 	{
 		player.ShowInterface(window);
+		player.getActiveMedals()[0]->causeEffect();
 	}
 	else
 	{

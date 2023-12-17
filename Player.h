@@ -19,6 +19,7 @@ private:
 	sf::Font font;
 
 	//bool weaponType;
+	int curHp;
 	Medal** activeMedals;
 	Medal** allMedals;
 	int coins;
@@ -32,9 +33,10 @@ public:
 	void attack();
 	void move();
 	void menu(sf::RenderWindow& window);
-	void receiveMedal();
+	void receiveMedal(int number);
 	void receiveSkill(int skill);
 	void upgrade(int stat);
 	void setText(sf::Text& text_);
+	Medal** getActiveMedals();
 };
 
