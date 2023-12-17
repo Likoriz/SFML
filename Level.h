@@ -15,7 +15,7 @@ public:
 	//MyDrawable getDrawable(std::string name);
 	//std::vector<MyDrawable> getDrawables(std::string name);
 	//void addDrawable(Drawable object_);
-	//sf::Vector2i getTileSize();
+	sf::Vector2i getTileSize();
 	void draw(sf::RenderWindow& window);
 	Level();
 };

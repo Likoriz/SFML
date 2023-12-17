@@ -1,4 +1,5 @@
 #pragma once
+
 class Medal
 {
 private:
@@ -6,5 +7,7 @@ private:
 public:
 	Medal();
 	virtual void causeEffect() = 0;
+	bool getCollected();
+	void setCollected(bool state);
 };
 

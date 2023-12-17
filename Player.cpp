@@ -16,7 +16,20 @@ Player::Player()
 	coins = 10;
 	//state = 0;
 
-	//activeMedals = new Medal();
+	activeMedals = new Medal * [2];
+	for (int i = 0; i < 2; i++)
+		activeMedals[i] = nullptr;
+
+	allMedals = new Medal * [8];
+	allMedals[0] = new Medal1();
+	allMedals[1] = new Medal2();
+	allMedals[2] = new Medal3();
+	allMedals[3] = new Medal4();
+	allMedals[4] = new Medal5();
+	allMedals[5] = new Medal6();
+	allMedals[6] = new Medal7();
+	allMedals[7] = new Medal8();
+
 	skills = new Skills();
 
 	if (!font.loadFromFile("Resources/AmaticSC-Regular.ttf"))

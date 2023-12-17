@@ -17,6 +17,11 @@ Level::Level()
 	vector<Layer> layers = {};
 }
 
+Vector2i Level::getTileSize()
+{
+	return Vector2i(tileWidth, tileHeight);
+}
+
 bool Level::loadFromFile(string filename)
 {
 	TiXmlDocument levelFile(filename.c_str());
