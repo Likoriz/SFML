@@ -170,7 +170,7 @@ bool Level::loadFromFile(string filename)
 				Sprite sprite;
 				sprite.setTexture(tilesetImage);
 				sprite.setTextureRect(Rect<int>(0, 0, 0, 0));
-				sprite.setPosition(x, y);
+				sprite.setPosition(x, y - tileHeight);
 
 				if (objectElement->Attribute("gid") == nullptr)
 				{
@@ -239,10 +239,11 @@ void Level::draw(sf::RenderWindow& window)
 		for (int tile = 0; tile < tilesSize; tile++)
 			window.draw(layers[layer].getTile(tile));
 	}
+
 	std::vector<GameObject*> gameObjects=Manager::getInstance()->getGame();
 	for(auto x:gameObjects)
 	{
 		window.draw(x->getDrawable()->getSprite());
-		cout<<x->getDrawable()->getName()<<" "<<x->getDrawable()->getSprite().getPosition().x<<" "<<x->getDrawable()->getSprite().getPosition().y<<"\n";
+		//cout<<x->getDrawable()->getName()<<" "<<x->getDrawable()->getSprite().getPosition().x<<" "<<x->getDrawable()->getSprite().getPosition().y<<"\n";
 	}
 }
