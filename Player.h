@@ -36,5 +36,6 @@ public:
 	void setButton(sf::RectangleShape& button, sf::Color color);
 	void offMedal(int number);
 	void onMedal(int number);
+	void SendMessage(Message m);
 };
 

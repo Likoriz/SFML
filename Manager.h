@@ -7,7 +7,8 @@ class GameObject;
 #include "box2d/b2_polygon_shape.h"
 #include <list>
 #include <vector>
-
+#include <chrono>
+#include <thread>
 
 class Manager
 {
@@ -21,8 +22,7 @@ private:
 	Manager();
 	Manager(const Manager&);
 	~Manager();
-	bool pause;
-	
+	bool pause;	
 public:
 	void setPause(bool state);
 	bool getPause();

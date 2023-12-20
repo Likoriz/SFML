@@ -6,7 +6,6 @@
 using namespace std;
 using namespace sf;
 
-#pragma region NOT READY
 void Player::destruct()
 {
 
@@ -19,11 +18,13 @@ void Player::attack()
 
 void Player::move()
 {
+	MyDrawable* playerDrawable = Manager::getInstance()->getByName("player")->getDrawable();
+	Object* playerBody = Manager::getInstance()->getByName("player")->getObject();
+	b2Vec2 position = playerBody->getBody()->GetPosition();
 
+	playerDrawable->getSprite().setPosition(position.x, position.y);
 }
-#pragma endregion NOT READY
 
-#pragma region 50/50
 Player::Player()
 {
 	setHP(100);
@@ -31,8 +32,8 @@ Player::Player()
 	setDEF(100);
 
 	coins = 10;
-	curHp = getHP();
-	//curHp = 10;
+	//curHp = getHP();
+	curHp = 10;
 
 	activeMedals = new Medal * [2];
 	for (int i = 0; i < 2; i++)
@@ -53,6 +54,11 @@ Player::Player()
 
 	if (!font.loadFromFile("Resources/AmaticSC-Regular.ttf"))
 		cout << "Failed to load font!" << endl;
+}
+
+void Player::SendMessage(Message m)
+{
+
 }
 
 void Player::menu(RenderWindow& window)
@@ -366,9 +372,7 @@ void Player::menu(RenderWindow& window)
 		window.display();
 	}
 }
-#pragma endregion 50/50
 
-#pragma region READY
 void Player::setButton(RectangleShape& button, Color color)
 {
 	button.setOutlineColor(Color::Black);
@@ -458,4 +462,3 @@ void Player::onMedal(int number)
 				break;
 			}
 }
-#pragma endregion READY

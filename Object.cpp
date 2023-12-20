@@ -73,3 +73,8 @@ bool Object::getJumpable()
 {
 	return false;
 }
+
+b2Body* Object::getBody()
+{
+	return body;
+}

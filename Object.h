@@ -19,6 +19,7 @@ public:
 	int getSpeed();
 	void setSpeed();
 	bool getJumpable();
+	b2Body* getBody();
 };
 
 enum namesOfObjects {block, fall, dissaper, death};

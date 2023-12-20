@@ -3,18 +3,15 @@
 #include <vector>
 #include <iostream>
 using namespace std;
-//std::vector<MyDrawable> getDrawables()
-//{
-//    return 0;
-//}
+using namespace std::chrono;
 
-Manager* Manager::instance=nullptr;
+Manager* Manager::instance = nullptr;
 
 Manager::~Manager()
 {
-	for(auto x:game)
+	for (auto x : game)
 		delete x;
-	for(auto x:queueOfMessages)
+	for (auto x : queueOfMessages)
 		delete x;
 }
 
@@ -23,21 +20,21 @@ Manager::Manager()
 	lvl = new Level();
 	pause = false;
 	b2Vec2 gravity(0.0f, 1.0f);
-	world=new b2World(gravity);
+	world = new b2World(gravity);
 }
 
 Manager* Manager::getInstance()
 {
-	if(!instance)
+	if (!instance)
 	{
-		instance=new Manager();
+		instance = new Manager();
 	}
 	return instance;
 }
 
 void Manager::Destroy()
 {
-	if(instance) delete instance;
+	if (instance) delete instance;
 }
 
 //std::vector<MyDrawable*> Manager::getDrawables()
@@ -50,14 +47,19 @@ void Manager::Destroy()
 
 void Manager::addObject(MyDrawable* object)
 {
-	GameObject* newObject=new GameObject();
+	GameObject* newObject = new GameObject();
 	newObject->setDrawable(object);
-	newObject->setObject(new Object(object->getName(),object->getRect()));
+	newObject->setObject(new Object(object->getName(), object->getRect()));
 	game.push_back(newObject);
 }
 
 void Manager::sendMSGAll(Message* message)
 {
+}
+
+void Manager::SendMessage(Message m)
+{
+
 }
 
 void Manager::updateAll(float dt)
@@ -89,10 +91,10 @@ Level* Manager::getLevel()
 
 GameObject* Manager::getByName(std::string name)
 {
-	std::vector<GameObject*> gameObjects=Manager::getInstance()->getGame();
-	for(auto x:gameObjects)
+	std::vector<GameObject*> gameObjects = Manager::getInstance()->getGame();
+	for (auto x : gameObjects)
 	{
-		if(x->getDrawable()->getName()==name)
+		if (x->getDrawable()->getName() == name)
 			return x;
 	}
 }

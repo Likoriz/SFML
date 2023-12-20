@@ -5,12 +5,11 @@
 #include "Player.h"
 
 using namespace sf;
+using namespace std::chrono;
 
 int main()
 {
 	Manager* manager = Manager::getInstance();
-
-	
 
 	Vector2i screenSize(900, 450);
 
@@ -25,8 +24,9 @@ int main()
 
 	manager->getLevel()->loadFromFile("Map/map.tmx");
 
-
 	Player player;
+	steady_clock::time_point lastTime = steady_clock::now();
+
 	while (window.isOpen())
 	{
 		Event event;
@@ -71,28 +71,36 @@ int main()
 
 		Manager::getInstance()->getWorld()->Step(1.0f / 60.0f, 1, 1);
 
-	//view.setCenter(120 + screenSize.x / 4, 360 + screenSize.y / 4);
-	//window.setView(view);
+		//view.setCenter(120 + screenSize.x / 4, 360 + screenSize.y / 4);
+		//window.setView(view);
+		steady_clock::time_point currentTime = steady_clock::now();
+		duration<double> time_span = duration_cast<duration<double>>(currentTime - lastTime);
 
-	window.clear(Color::White);
+		window.clear(Color::White);
 
-	manager->getLevel()->draw(window);
+		manager->getLevel()->draw(window);
 
-	if (manager->getPause() == false)
-	{
-		player.ShowInterface(window);
+		if (manager->getPause() == false)
+		{
+			player.ShowInterface(window);
 
-		for (int i = 0; i < 2; i++)
-			if (player.getActiveMedals()[i])
-				player.getActiveMedals()[i]->causeEffect();
-	}
-	else
-	{
-		player.menu(window);
-		manager->setPause(false);
-	}
+			if (time_span.count() > 10.0)
+			{
+				lastTime = currentTime;
+				for (int i = 0; i < 2; i++)
+					if (player.getActiveMedals()[i])
+						player.getActiveMedals()[i]->causeEffect();
+			}
 
-	window.display();
+			player.move();
+		}
+		else
+		{
+			player.menu(window);
+			manager->setPause(false);
+		}
+
+		window.display();
 	}
 
 	return 0;
