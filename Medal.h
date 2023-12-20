@@ -6,6 +6,7 @@ class Medal
 private:
 	bool isCollected;
 	std::string name;
+	float lastTimeTriggered;
 public:
 	Medal();
 	virtual void causeEffect() = 0;

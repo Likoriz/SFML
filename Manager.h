@@ -22,6 +22,7 @@ private:
 	Manager(const Manager&);
 	~Manager();
 	bool pause;
+	
 public:
 	void setPause(bool state);
 	bool getPause();
@@ -35,9 +36,10 @@ public:
 	void startGame();
 	void endGame();
 	std::vector<GameObject*> getGame();
-	void getMessage();
+	void SendMessage(Message m);
 	b2World* getWorld();
 	Level* getLevel();
+	GameObject* getByName(std::string name);
 };
 
 

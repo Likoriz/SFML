@@ -15,7 +15,7 @@ private:
 	enum Skill { CLIMB = 0, DOUBLE, TRIPLE, DASH, WALL };
 
 	sf::Font font;
-
+	
 	int curHp;
 	Medal** activeMedals;
 	Medal** allMedals;

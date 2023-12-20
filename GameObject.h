@@ -1,6 +1,7 @@
 #pragma once
 #include "Object.h"
 #include "MyDrawable.h"
+#include "Manager.h"
 class Message;
 
 #include <vector>

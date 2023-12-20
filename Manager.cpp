@@ -87,6 +87,16 @@ Level* Manager::getLevel()
 	return lvl;
 }
 
+GameObject* Manager::getByName(std::string name)
+{
+	std::vector<GameObject*> gameObjects=Manager::getInstance()->getGame();
+	for(auto x:gameObjects)
+	{
+		if(x->getDrawable()->getName()==name)
+			return x;
+	}
+}
+
 bool Manager::getPause()
 {
 	return pause;
