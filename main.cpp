@@ -52,8 +52,6 @@ int main()
 				case Keyboard::Escape://menu
 					if (manager->getPause() == false)
 						manager->setPause(true);
-					/*else
-						manager->setPause(false);*/
 					break;
 				}
 				break;
