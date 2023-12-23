@@ -26,7 +26,8 @@ int main()
 
 	Player player;
 	steady_clock::time_point lastTime = steady_clock::now();
-
+	Message M;
+	M.target=Manager::getInstance()->getByName("player");
 	while (window.isOpen())
 	{
 		Event event;
@@ -41,10 +42,12 @@ int main()
 				switch (event.key.code)
 				{
 				case Keyboard::W://jump
-
+					M.type=Move;
+					M.ctx.move.speedX=0.0f;
+					M.ctx.move.speedY=-15.0f;
 					break;
 				case Keyboard::D://left
-
+					
 					break;
 				case Keyboard::A://right
 
@@ -75,11 +78,11 @@ int main()
 		//window.setView(view);
 		steady_clock::time_point currentTime = steady_clock::now();
 		duration<double> time_span = duration_cast<duration<double>>(currentTime - lastTime);
-
+		
 		window.clear(Color::White);
 
 		manager->getLevel()->draw(window);
-
+		
 		if (manager->getPause() == false)
 		{
 			player.ShowInterface(window);
@@ -92,14 +95,14 @@ int main()
 						player.getActiveMedals()[i]->causeEffect();
 			}
 
-			player.move();
+			//player.move();
 		}
 		else
 		{
 			player.menu(window);
 			manager->setPause(false);
 		}
-
+		manager->sendMSGAll();
 		window.display();
 	}
 

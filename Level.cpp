@@ -244,6 +244,5 @@ void Level::draw(sf::RenderWindow& window)
 	for(auto x:gameObjects)
 	{
 		window.draw(x->getDrawable()->getSprite());
-		//cout<<x->getDrawable()->getName()<<" "<<x->getDrawable()->getSprite().getPosition().x<<" "<<x->getDrawable()->getSprite().getPosition().y<<"\n";
 	}
 }

@@ -2,11 +2,12 @@
 #include "Entity.h"
 class WalkingEnemy : public Entity
 {
-private:
+public:
 	void follow();
 	void leave();
 	void attack();
 	void destruct();
 	void move();
+	void sendMessage(Message m);
 };
 

@@ -1,23 +1,22 @@
 #pragma once
-enum MessageType {Move,Death,Render,Create,DealDmg,TriggerEffect, Erase};
+enum MessageType {Move,Death,Render,Create,DealDmg,Erase};
 class GameObject;
 #include <vector>
 class MyDrawable;
-
+#include "box2d/box2d.h"
 
 struct Message
 {
 	MessageType type;
-	GameObject* sender;
+	GameObject* target;
 	union triggeredMessage
 	{
 		struct
 		{
-			int xOld, yOld;
+			float speedX,speedY;
 		} move;
 		struct
 		{
-			GameObject* target;
 			GameObject* killer;
 		} death;
 		struct
@@ -27,13 +26,8 @@ struct Message
 		struct
 		{
 			float dmg;
-			GameObject* target;
 			GameObject* dealer;
 		} dealDmg;
-		struct
-		{
-			GameObject* target;
-		} triggerEffect;
 		struct
 		{
 			GameObject* objectToDelete;

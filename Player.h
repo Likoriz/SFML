@@ -15,7 +15,6 @@ private:
 	enum Skill { CLIMB = 0, DOUBLE, TRIPLE, DASH, WALL };
 
 	sf::Font font;
-	
 	int curHp;
 	Medal** activeMedals;
 	Medal** allMedals;
@@ -26,7 +25,7 @@ public:
 	void ShowInterface(sf::RenderWindow& window);
 	void destruct();
 	void attack();
-	void move();
+	//void move();
 	void menu(sf::RenderWindow& window);
 	void receiveMedal(int number);
 	void receiveSkill(int skill);
@@ -36,6 +35,6 @@ public:
 	void setButton(sf::RectangleShape& button, sf::Color color);
 	void offMedal(int number);
 	void onMedal(int number);
-	void SendMessage(Message m);
+	void sendMessage(Message m);
 };
 

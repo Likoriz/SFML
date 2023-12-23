@@ -11,6 +11,8 @@ void GameObject::setDrawable(MyDrawable* object)
 	
 }
 
+
+
 void GameObject::setObject(Object* sourceObject)
 {
 	object=sourceObject;

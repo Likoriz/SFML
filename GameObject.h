@@ -16,9 +16,10 @@ public:
 	void setObject(Object* sourceObject);
 	Object* getObject();
 	/*virtual void Update(float dt) = 0;*/
-	//virtual void SendMessage(Message m) = 0;
+	virtual void sendMessage(Message m)=0;
 	GameObject();
 	GameObject(const GameObject&);
 	~GameObject();
+	
 };
 

@@ -16,14 +16,10 @@ void Player::attack()
 
 }
 
-void Player::move()
-{
-	MyDrawable* playerDrawable = Manager::getInstance()->getByName("player")->getDrawable();
-	Object* playerBody = Manager::getInstance()->getByName("player")->getObject();
-	b2Vec2 position = playerBody->getBody()->GetPosition();
-
-	playerDrawable->getSprite().setPosition(position.x, position.y);
-}
+//void Player::move()
+//{
+//
+//}
 
 Player::Player()
 {
@@ -31,34 +27,55 @@ Player::Player()
 	setDMG(20);
 	setDEF(100);
 
-	coins = 10;
+	coins=10;
 	//curHp = getHP();
-	curHp = 10;
+	curHp=10;
 
-	activeMedals = new Medal * [2];
-	for (int i = 0; i < 2; i++)
-		activeMedals[i] = nullptr;
+	activeMedals=new Medal*[2];
+	for(int i=0; i<2; i++)
+		activeMedals[i]=nullptr;
 
-	allMedals = new Medal * [6];
-	allMedals[0] = new Medal1();
-	allMedals[1] = new Medal2();
-	allMedals[2] = new Medal3();
-	allMedals[3] = new Medal4();
-	allMedals[4] = new Medal5();
-	allMedals[5] = new Medal6();
+	allMedals=new Medal*[6];
+	allMedals[0]=new Medal1();
+	allMedals[1]=new Medal2();
+	allMedals[2]=new Medal3();
+	allMedals[3]=new Medal4();
+	allMedals[4]=new Medal5();
+	allMedals[5]=new Medal6();
 
 	receiveMedal(0);
 	receiveMedal(1);
 
-	skills = new Skills();
+	skills=new Skills();
 
-	if (!font.loadFromFile("Resources/AmaticSC-Regular.ttf"))
-		cout << "Failed to load font!" << endl;
+	if(!font.loadFromFile("Resources/AmaticSC-Regular.ttf"))
+		cout<<"Failed to load font!"<<endl;
 }
 
-void Player::SendMessage(Message m)
+void Player::sendMessage(Message m)
 {
-
+	switch(m.type)
+	{
+	case Move:
+	{
+		MyDrawable* playerDrawable=getDrawable();
+		Object* playerBody=getObject();
+		b2Vec2 speed={m.ctx.move.speedX, m.ctx.move.speedY};
+		playerBody->getBody()->SetLinearVelocity(speed);
+		b2Vec2 position=playerBody->getBody()->GetPosition();
+		playerDrawable->getSprite().setPosition(position.x, position.y);
+		break;
+	}
+	case DealDmg:
+	{
+		curHp=getHP()-m.ctx.dealDmg.dmg;
+		if(curHp>getHP())
+			curHp=getHP();
+		else if(curHp<0)
+			exit(0);
+		break;
+	}
+	}
 }
 
 void Player::menu(RenderWindow& window)
@@ -118,37 +135,37 @@ void Player::menu(RenderWindow& window)
 	textDash.setPosition(250, 210);
 	textWall.setPosition(250, 230);
 
-	if (skills->getSkill(CLIMB))
-		abClimb = "YES";
+	if(skills->getSkill(CLIMB))
+		abClimb="YES";
 	else
-		abClimb = "NO";
+		abClimb="NO";
 
-	if (skills->getSkill(DOUBLE))
-		abDouble = "YES";
+	if(skills->getSkill(DOUBLE))
+		abDouble="YES";
 	else
-		abDouble = "NO";
+		abDouble="NO";
 
-	if (skills->getSkill(TRIPLE))
-		abTriple = "YES";
+	if(skills->getSkill(TRIPLE))
+		abTriple="YES";
 	else
-		abTriple = "NO";
+		abTriple="NO";
 
-	if (skills->getSkill(DASH))
-		abDash = "YES";
+	if(skills->getSkill(DASH))
+		abDash="YES";
 	else
-		abDash = "NO";
+		abDash="NO";
 
-	if (skills->getSkill(WALL))
-		abWall = "YES";
+	if(skills->getSkill(WALL))
+		abWall="YES";
 	else
-		abWall = "NO";
+		abWall="NO";
 
 	textSkills.setString("SKILLS");
-	textClimb.setString("Climbing: " + abClimb);
-	textDouble.setString("Double Jumping: " + abDouble);
-	textTriple.setString("Triple Jumping: " + abTriple);
-	textDash.setString("Dashing: " + abDash);
-	textWall.setString("Wall Jumping: " + abWall);
+	textClimb.setString("Climbing: "+abClimb);
+	textDouble.setString("Double Jumping: "+abDouble);
+	textTriple.setString("Triple Jumping: "+abTriple);
+	textDash.setString("Dashing: "+abDash);
+	textWall.setString("Wall Jumping: "+abWall);
 #pragma endregion SKILLS
 
 #pragma region MEDALS
@@ -213,115 +230,115 @@ void Player::menu(RenderWindow& window)
 	setButton(button6, Color::Green);
 #pragma endregion MEDALS
 
-	bool isPaused = true;
-	while (isPaused)
+	bool isPaused=true;
+	while(isPaused)
 	{
 		Event event;
-		while (window.pollEvent(event))
+		while(window.pollEvent(event))
 		{
-			switch (event.type)
+			switch(event.type)
 			{
 			case Event::Closed:
 				window.close();
 				break;
 			case Event::KeyPressed:
-				switch (event.key.code)
+				switch(event.key.code)
 				{
 				case Keyboard::Escape:
-					isPaused = false;
+					isPaused=false;
 					break;
 				}
 				break;
 			case Event::MouseButtonPressed:
-				Vector2f mouseCoords = window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });
-				if (event.mouseButton.button == Mouse::Left)
-					if (buttonHp.getGlobalBounds().contains(mouseCoords))
+				Vector2f mouseCoords=window.mapPixelToCoords({event.mouseButton.x, event.mouseButton.y});
+				if(event.mouseButton.button==Mouse::Left)
+					if(buttonHp.getGlobalBounds().contains(mouseCoords))
 						upgrade(HP);
 					else
-						if (buttonDmg.getGlobalBounds().contains(mouseCoords))
+						if(buttonDmg.getGlobalBounds().contains(mouseCoords))
 							upgrade(DAMAGE);
 						else
-							if (buttonDef.getGlobalBounds().contains(mouseCoords))
+							if(buttonDef.getGlobalBounds().contains(mouseCoords))
 								upgrade(DEFENSE);
 							else
-								if (buttonA1.getGlobalBounds().contains(mouseCoords))
+								if(buttonA1.getGlobalBounds().contains(mouseCoords))
 									offMedal(0);
 								else
-									if (buttonA2.getGlobalBounds().contains(mouseCoords))
+									if(buttonA2.getGlobalBounds().contains(mouseCoords))
 										offMedal(1);
 									else
-										if (button1.getGlobalBounds().contains(mouseCoords))
+										if(button1.getGlobalBounds().contains(mouseCoords))
 											onMedal(0);
 										else
-											if (button2.getGlobalBounds().contains(mouseCoords))
+											if(button2.getGlobalBounds().contains(mouseCoords))
 												onMedal(1);
 											else
-												if (button3.getGlobalBounds().contains(mouseCoords))
+												if(button3.getGlobalBounds().contains(mouseCoords))
 													onMedal(2);
 												else
-													if (button4.getGlobalBounds().contains(mouseCoords))
+													if(button4.getGlobalBounds().contains(mouseCoords))
 														onMedal(3);
 													else
-														if (button5.getGlobalBounds().contains(mouseCoords))
+														if(button5.getGlobalBounds().contains(mouseCoords))
 															onMedal(4);
 														else
-															if (button6.getGlobalBounds().contains(mouseCoords))
+															if(button6.getGlobalBounds().contains(mouseCoords))
 																onMedal(5);
 				break;
 			}
 		}
 
 #pragma region UPDATEBASICS
-		cCoins = to_string(coins);
-		textCoins.setString("Coins: " + cCoins);
+		cCoins=to_string(coins);
+		textCoins.setString("Coins: "+cCoins);
 
-		hp = to_string(curHp);
-		textHp.setString("HP: " + hp);
+		hp=to_string(curHp);
+		textHp.setString("HP: "+hp);
 
-		dmg = to_string(getDMG());
-		textDmg.setString("DMG: " + dmg);
+		dmg=to_string(getDMG());
+		textDmg.setString("DMG: "+dmg);
 
-		def = to_string(getDEF());
-		textDef.setString("DEF: " + def);
+		def=to_string(getDEF());
+		textDef.setString("DEF: "+def);
 #pragma endregion UPDATEBASICS
 
 #pragma region UPDATEMEDALS
-		if (activeMedals[0])
+		if(activeMedals[0])
 			textA1.setString(activeMedals[0]->getName());
 		else
 			textA1.setString("None");
 
-		if (activeMedals[1])
+		if(activeMedals[1])
 			textA2.setString(activeMedals[1]->getName());
 		else
 			textA2.setString("None");
 
-		if (allMedals[0]->getCollected())
+		if(allMedals[0]->getCollected())
 			text1.setString(allMedals[0]->getName());
 		else
 			text1.setString("None");
 
-		if (allMedals[1]->getCollected())
+		if(allMedals[1]->getCollected())
 			text2.setString(allMedals[1]->getName());
 		else
 			text2.setString("None");
 
-		if (allMedals[2]->getCollected())
+		if(allMedals[2]->getCollected())
 			text3.setString(allMedals[2]->getName());
 		else
 			text3.setString("None");
 
-		if (allMedals[3]->getCollected())
+		if(allMedals[3]->getCollected())
 			text4.setString(allMedals[3]->getName());
 		else
 			text4.setString("None");
 
-		if (allMedals[4]->getCollected())
+		if(allMedals[4]->getCollected())
 			text5.setString(allMedals[4]->getName());
 		else
 			text5.setString("None");
 
-		if (allMedals[5]->getCollected())
+		if(allMedals[5]->getCollected())
 			text6.setString(allMedals[5]->getName());
 		else
 			text6.setString("None");
@@ -335,7 +352,7 @@ void Player::menu(RenderWindow& window)
 #pragma region DRAWBASICS
 		window.draw(text); window.draw(textCoins); window.draw(textHp); window.draw(textDmg); window.draw(textDef);
 
-		if (coins >= 2)
+		if(coins>=2)
 		{
 			window.draw(buttonHp); window.draw(buttonDmg); window.draw(buttonDef);
 		}
@@ -350,22 +367,22 @@ void Player::menu(RenderWindow& window)
 
 		window.draw(text1); window.draw(text2); window.draw(text3); window.draw(text4); window.draw(text5); window.draw(text6);
 
-		if (activeMedals[0])
+		if(activeMedals[0])
 			window.draw(buttonA1);
-		if (activeMedals[1])
+		if(activeMedals[1])
 			window.draw(buttonA2);
 
-		if (allMedals[0]->getCollected())
+		if(allMedals[0]->getCollected())
 			window.draw(button1);
-		if (allMedals[1]->getCollected())
+		if(allMedals[1]->getCollected())
 			window.draw(button2);
-		if (allMedals[2]->getCollected())
+		if(allMedals[2]->getCollected())
 			window.draw(button3);
-		if (allMedals[3]->getCollected())
+		if(allMedals[3]->getCollected())
 			window.draw(button4);
-		if (allMedals[4]->getCollected())
+		if(allMedals[4]->getCollected())
 			window.draw(button5);
-		if (allMedals[5]->getCollected())
+		if(allMedals[5]->getCollected())
 			window.draw(button6);
 #pragma endregion DRAWMEDALS
 
@@ -385,13 +402,13 @@ void Player::ShowInterface(sf::RenderWindow& window)
 	Text text;
 	setText(text);
 
-	string hp = to_string(curHp);
-	text.setString("HP: " + hp);
+	string hp=to_string(curHp);
+	text.setString("HP: "+hp);
 	text.setPosition(0, 0);
 	window.draw(text);
 
-	string cCoins = to_string(coins);
-	text.setString("Coins: " + cCoins);
+	string cCoins=to_string(coins);
+	text.setString("Coins: "+cCoins);
 	text.setPosition(0, 20);
 	window.draw(text);
 }
@@ -406,7 +423,7 @@ void Player::setText(sf::Text& text_)
 
 void Player::receiveMedal(int number)
 {
-	if (number > -1 && number < 8)
+	if(number>-1&&number<8)
 		allMedals[number]->setCollected(true);
 }
 
@@ -417,23 +434,23 @@ void Player::receiveSkill(int skill)
 
 void Player::upgrade(int stat)
 {
-	if (coins >= 2)
+	if(coins>=2)
 	{
-		switch (stat)
+		switch(stat)
 		{
 		case HP:
-			setHP(getHP() + 10);
-			curHp += 10;
+			setHP(getHP()+10);
+			curHp+=10;
 			break;
 		case DAMAGE:
-			setDMG(getDMG() + 10);
+			setDMG(getDMG()+10);
 			break;
 		case DEFENSE:
-			setDEF(getDEF() + 10);
+			setDEF(getDEF()+10);
 			break;
 		}
 
-		coins -= 2;
+		coins-=2;
 	}
 }
 
@@ -444,21 +461,21 @@ Medal** Player::getActiveMedals()
 
 void Player::offMedal(int number)
 {
-	if (number > -1 && number < 2)
-		activeMedals[number] = nullptr;
+	if(number>-1&&number<2)
+		activeMedals[number]=nullptr;
 }
 
 void Player::onMedal(int number)
 {
-	for (int i = 0; i < 2; i++)
-		if (activeMedals[i] && activeMedals[i]->getName() == allMedals[number]->getName())
+	for(int i=0; i<2; i++)
+		if(activeMedals[i]&&activeMedals[i]->getName()==allMedals[number]->getName())
 			return;
 
-	for (int i = 0; i < 2; i++)
-		if (allMedals[number]->getCollected())
-			if (!activeMedals[i] && number > -1 && number < 6)
+	for(int i=0; i<2; i++)
+		if(allMedals[number]->getCollected())
+			if(!activeMedals[i]&&number>-1&&number<6)
 			{
-				activeMedals[i] = allMedals[number];
+				activeMedals[i]=allMedals[number];
 				break;
 			}
 }

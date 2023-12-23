@@ -18,7 +18,7 @@ private:
 	Level* lvl;
 	//Audio* audio;
 	std::vector<GameObject*> game;
-	std::list<Message*> queueOfMessages;
+	std::list<Message> queueOfMessages;
 	Manager();
 	Manager(const Manager&);
 	~Manager();
@@ -31,7 +31,7 @@ public:
 	//std::vector<MyDrawable> getDrawables();
 	//std::vector<Object> getObjects();
 	void addObject(MyDrawable* object);
-	void sendMSGAll(Message* message);
+	void sendMSGAll();
 	void updateAll(float dt);
 	void startGame();
 	void endGame();
@@ -39,7 +39,9 @@ public:
 	void SendMessage(Message m);
 	b2World* getWorld();
 	Level* getLevel();
+	GameObject* getByFixture();
 	GameObject* getByName(std::string name);
+	std::vector<GameObject*> getVectorByName(std::string name);
 };
 
 
