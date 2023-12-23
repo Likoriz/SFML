@@ -42,6 +42,7 @@ public:
 	GameObject* getByFixture();
 	GameObject* getByName(std::string name);
 	std::vector<GameObject*> getVectorByName(std::string name);
+	void handleOwnMessage(Message m);
 };
 
 

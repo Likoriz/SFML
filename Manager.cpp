@@ -74,8 +74,11 @@ void Manager::addObject(MyDrawable* object)
 void Manager::sendMSGAll()
 {
 	for(auto msg:queueOfMessages)
-		msg.target->sendMessage(msg);
-	
+		if(msg.target!=nullptr)
+			msg.target->sendMessage(msg);
+		else
+			handleOwnMessage(msg);
+	queueOfMessages.clear();
 }
 
 void Manager::SendMessage(Message m)
@@ -132,6 +135,11 @@ std::vector<GameObject*> Manager::getVectorByName(std::string name)
 			vectToReturn.push_back(x);
 	}
 	return vectToReturn;
+}
+
+void Manager::handleOwnMessage(Message m)
+{
+
 }
 
 bool Manager::getPause()

@@ -45,6 +45,7 @@ int main()
 					M.type=Move;
 					M.ctx.move.speedX=0.0f;
 					M.ctx.move.speedY=-15.0f;
+					manager->SendMessage(M);
 					break;
 				case Keyboard::D://left
 					

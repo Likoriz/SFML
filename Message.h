@@ -8,7 +8,7 @@ class MyDrawable;
 struct Message
 {
 	MessageType type;
-	GameObject* target;
+	GameObject* target=nullptr;
 	union triggeredMessage
 	{
 		struct
