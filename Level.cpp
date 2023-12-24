@@ -99,7 +99,7 @@ bool Level::loadFromFile(string filename)
 			cout << "Layer information isn't found!" << endl;
 
 		TiXmlElement* tileElement;
-		tileElement	= layerDataElement->FirstChildElement("tile");
+		tileElement = layerDataElement->FirstChildElement("tile");
 
 		if (tileElement == nullptr)
 		{
@@ -167,10 +167,10 @@ bool Level::loadFromFile(string filename)
 
 				int width, height;
 
-				Sprite sprite;
-				sprite.setTexture(tilesetImage);
-				sprite.setTextureRect(Rect<int>(0, 0, 0, 0));
-				sprite.setPosition(x, y - tileHeight);
+				Sprite* sprite = new Sprite();
+				sprite->setTexture(tilesetImage);
+				sprite->setTextureRect(Rect<int>(0, 0, 0, 0));
+				sprite->setPosition(x, y - tileHeight);
 
 				if (objectElement->Attribute("gid") == nullptr)
 				{
@@ -181,7 +181,7 @@ bool Level::loadFromFile(string filename)
 				{
 					width = subRects[atoi(objectElement->Attribute("gid")) - firstTileID].width;
 					height = subRects[atoi(objectElement->Attribute("gid")) - firstTileID].height;
-					sprite.setTextureRect(subRects[atoi(objectElement->Attribute("gid")) - firstTileID]);
+					sprite->setTextureRect(subRects[atoi(objectElement->Attribute("gid")) - firstTileID]);
 				}
 
 				MyDrawable* object = new MyDrawable();
@@ -240,9 +240,23 @@ void Level::draw(sf::RenderWindow& window)
 			window.draw(layers[layer].getTile(tile));
 	}
 
-	std::vector<GameObject*> gameObjects=Manager::getInstance()->getGame();
-	for(auto x:gameObjects)
+	std::vector<GameObject*> gameObjects = Manager::getInstance()->getGame();
+	for (auto x : gameObjects)
 	{
-		window.draw(x->getDrawable()->getSprite());
+		if (x->getDrawable()->getName() != "block")
+			window.draw(*x->getDrawable()->getSprite());
+
+		if (x->getObject()->getBody())
+		{
+			b2Vec2 pos = x->getObject()->getBody()->GetPosition();
+			Rect<int> recti = x->getDrawable()->getRect();
+
+			RectangleShape rect(Vector2f(recti.width, recti.height));
+			rect.setPosition(pos.x - recti.width / 2 + 9, pos.y - recti.height / 2 + 9);
+			rect.setFillColor(Color::Transparent);
+			rect.setOutlineColor(Color::Black);
+			rect.setOutlineThickness(1);
+			window.draw(rect);
+		}
 	}
 }

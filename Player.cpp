@@ -16,10 +16,14 @@ void Player::attack()
 
 }
 
-//void Player::move()
-//{
-//
-//}
+void Player::move()
+{
+	b2Vec2 velocity = getObject()->getBody()->GetLinearVelocity();
+	velocity.y += Manager::getInstance()->getGravity();
+
+	b2Vec2 pos = getObject()->getBody()->GetPosition();
+	getDrawable()->getSprite()->setPosition(pos.x, pos.y);
+}
 
 Player::Player()
 {
@@ -62,8 +66,6 @@ void Player::sendMessage(Message m)
 		Object* playerBody = getObject();
 		b2Vec2 speed = { m.ctx.move.speedX, m.ctx.move.speedY };
 		playerBody->getBody()->SetLinearVelocity(speed);
-		b2Vec2 position = playerBody->getBody()->GetPosition();
-		playerDrawable->getSprite().setPosition(position.x, position.y);
 		break;
 	}
 	case DealDmg:

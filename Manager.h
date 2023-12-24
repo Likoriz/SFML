@@ -14,6 +14,7 @@ class Manager
 {
 private:
 	b2World* world;
+	float gravity;
 	static Manager* instance;
 	Level* lvl;
 	//Audio* audio;
@@ -26,10 +27,9 @@ private:
 public:
 	void setPause(bool state);
 	bool getPause();
+	float getGravity();
 	static Manager* getInstance();
 	static void Destroy();
-	//std::vector<MyDrawable> getDrawables();
-	//std::vector<Object> getObjects();
 	void addObject(MyDrawable* object);
 	void sendMSGAll();
 	void updateAll(float dt);

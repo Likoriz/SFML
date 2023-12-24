@@ -5,6 +5,7 @@
 #include "Player.h"
 
 using namespace sf;
+using namespace std;
 using namespace std::chrono;
 
 int main()
@@ -14,7 +15,7 @@ int main()
 	Vector2i screenSize(900, 450);
 
 	RenderWindow window;
-	window.create(VideoMode(screenSize.x, screenSize.y), "JoJo's O Pixel Adventure");
+	window.create(VideoMode(screenSize.x, screenSize.y), "JoJo's Omnipotent Pixel Adventure");
 
 	View view;
 	view.reset(FloatRect(0.0f, 0.0f, screenSize.x, screenSize.y));
@@ -25,11 +26,13 @@ int main()
 	manager->getLevel()->loadFromFile("Map/map.tmx");
 
 	Player* player;
+
 	steady_clock::time_point lastTime = steady_clock::now();
 	Message M;
-	M.target=Manager::getInstance()->getByName("player");
+	M.target = manager->getByName("player");
 	while (window.isOpen())
 	{
+		player = (Player*)manager->getByName("player");
 		Event event;
 		while (window.pollEvent(event))
 		{
@@ -42,16 +45,25 @@ int main()
 				switch (event.key.code)
 				{
 				case Keyboard::W://jump
-					M.type=Move;
-					M.ctx.move.speedX=0.0f;
-					M.ctx.move.speedY=-15.0f;
-					manager->SendMessage(M);
+					if (player->getObject()->getBody()->GetLinearVelocity().y == 0)
+					{
+						M.type = Move;
+						M.ctx.move.speedX = 0.0f;
+						M.ctx.move.speedY = -100.0f;
+						manager->SendMessage(M);
+					}
 					break;
 				case Keyboard::D://left
-					
+					M.type = Move;
+					M.ctx.move.speedX = 70.0f;
+					M.ctx.move.speedY = 50.0f;
+					manager->SendMessage(M);
 					break;
 				case Keyboard::A://right
-
+					M.type = Move;
+					M.ctx.move.speedX = -70.0f;
+					M.ctx.move.speedY = 50.0f;
+					manager->SendMessage(M);
 					break;
 				case Keyboard::Escape://menu
 					if (manager->getPause() == false)
@@ -62,7 +74,8 @@ int main()
 			case Event::MouseButtonPressed:
 				if (event.mouseButton.button == Mouse::Left)//attack
 				{
-
+					Vector2f mouseCoords = window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });
+					cout << "x: " << mouseCoords.x << " y: " << mouseCoords.y << endl;
 				}
 				else
 					if (event.mouseButton.button == Mouse::Right)//shoot
@@ -73,31 +86,27 @@ int main()
 			}
 		}
 
-		Manager::getInstance()->getWorld()->Step(1.0f / 60.0f, 1, 1);
+		manager->getWorld()->Step(1.0f / 60.0f, 6, 2);
 
-		//view.setCenter(120 + screenSize.x / 4, 360 + screenSize.y / 4);
-		//window.setView(view);
 		steady_clock::time_point currentTime = steady_clock::now();
 		duration<double> time_span = duration_cast<duration<double>>(currentTime - lastTime);
-		
+
 		window.clear(Color::White);
 
 		manager->getLevel()->draw(window);
-		player = (Player*)manager->getByName("player");
-		
+
 		if (manager->getPause() == false)
 		{
 			player->ShowInterface(window);
 
-			if (time_span.count() > 10.0)
+			if (time_span.count() > 5.0)
 			{
 				lastTime = currentTime;
 				for (int i = 0; i < 2; i++)
 					if (player->getActiveMedals()[i])
 						player->getActiveMedals()[i]->causeEffect();
 			}
-
-			//player.move();
+			player->move();
 		}
 		else
 		{

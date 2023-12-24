@@ -7,12 +7,13 @@
 #include "Box.h"
 #include "Arrow.h"
 #include <iostream>
+
 using namespace std;
 using namespace std::chrono;
 
 Manager* Manager::instance = nullptr;
 
-enum namesOfObjects { player, death, skill, slide, box, block, fall, disappear, walking, hiding, coin, arrow };
+enum namesOfObjects { player, usual, death, skill, slide, box, block, fall, disappear, walking, hiding, coin, arrow };
 
 
 Manager::~Manager()
@@ -25,8 +26,14 @@ Manager::Manager()
 {
 	lvl = new Level();
 	pause = false;
-	b2Vec2 gravity(0.0f, 1.0f);
+	gravity = 9.81f;
+	b2Vec2 gravity(0.0f, 200.0f);
 	world = new b2World(gravity);
+}
+
+float Manager::getGravity()
+{
+	return gravity;
 }
 
 Manager* Manager::getInstance()
@@ -60,7 +67,7 @@ void Manager::addObject(MyDrawable* object)
 		if (object->getName() == "walking")
 			newObject = new WalkingEnemy();
 		else
-			if (object->getName() == "death" || object->getName() == "block" || object->getName() == "skill" || object->getName() == "slide" || object->getName() == "fall" || object->getName() == "disappear")
+			if (object->getName() == "death" || object->getName() == "block" || object->getName() == "usual" || object->getName() == "skill" || object->getName() == "slide" || object->getName() == "fall" || object->getName() == "disappear")
 				newObject = new PlatformUsual();
 			else
 				if (object->getName() == "box")
@@ -119,6 +126,7 @@ Level* Manager::getLevel()
 {
 	return lvl;
 }
+
 GameObject* Manager::getByName(std::string name)
 {
 	std::vector<GameObject*> gameObjects = Manager::getInstance()->getGame();

@@ -4,7 +4,7 @@ class Bomb : public Entity
 {
 public:
 	void attack();
-	//void move();
+	void move();
 	void destruct();
 };
 

@@ -20,7 +20,7 @@ string MyDrawable::getPropertyString(string name)
 
 void MyDrawable::setName(string name_)
 {
-	name=name_;
+	name = name_;
 }
 
 string MyDrawable::getName()
@@ -33,7 +33,7 @@ string MyDrawable::getType()
 	return type;
 }
 
-Sprite MyDrawable::getSprite()
+Sprite* MyDrawable::getSprite()
 {
 	return sprite;
 }
@@ -50,20 +50,20 @@ map<string, string> MyDrawable::getProperties()
 
 void MyDrawable::setType(string type_)
 {
-	type=type_;
+	type = type_;
 }
 
-void MyDrawable::setSprite(Sprite sprite_)
+void MyDrawable::setSprite(Sprite* sprite_)
 {
-	sprite=sprite_;
+	sprite = sprite_;
 }
 
 void MyDrawable::setRect(Rect<int> rect_)
 {
 	rect.top = rect_.top;
-	rect.left=rect_.left;
-	rect.height=rect_.height;
-	rect.width=rect_.width;
+	rect.left = rect_.left;
+	rect.height = rect_.height;
+	rect.width = rect_.width;
 }
 
 void MyDrawable::setProperties(std::map<std::string, std::string> properties_)

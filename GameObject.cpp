@@ -8,19 +8,17 @@ void GameObject::setDrawable(MyDrawable* object)
 	drawable->setRect(object->getRect());
 	drawable->setSprite(object->getSprite());
 	drawable->setProperties(object->getProperties());
-	
+
 }
-
-
 
 void GameObject::setObject(Object* sourceObject)
 {
-	object=sourceObject;
+	object = sourceObject;
 }
 
 GameObject::GameObject()
 {
-	drawable=new MyDrawable();
+	drawable = new MyDrawable();
 }
 
 GameObject::GameObject(const GameObject&)
@@ -39,6 +37,11 @@ MyDrawable* GameObject::getDrawable()
 Object* GameObject::getObject()
 {
 	return object;
+}
+
+bool GameObject::getIsOnGround()
+{
+	return isOnGround;
 }
 
 

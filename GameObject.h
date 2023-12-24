@@ -10,9 +10,11 @@ class GameObject
 private:
 	MyDrawable* drawable;
 	Object* object;
+	bool isOnGround;
 public:
 	void setDrawable(MyDrawable* object);
 	MyDrawable* getDrawable();
+	bool getIsOnGround();
 	void setObject(Object* sourceObject);
 	Object* getObject();
 	/*virtual void Update(float dt) = 0;*/

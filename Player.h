@@ -25,7 +25,7 @@ public:
 	void ShowInterface(sf::RenderWindow& window);
 	void destruct();
 	void attack();
-	//void move();
+	void move();
 	void menu(sf::RenderWindow& window);
 	void receiveMedal(int number);
 	void receiveSkill(int skill);

@@ -9,8 +9,6 @@ bool Entity::checkRadius()
 	return false;
 }
 
-
-
 void Entity::setHP(int hp_)
 {
 	hp = hp_;
