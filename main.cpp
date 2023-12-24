@@ -24,7 +24,7 @@ int main()
 
 	manager->getLevel()->loadFromFile("Map/map.tmx");
 
-	Player player;
+	Player* player;
 	steady_clock::time_point lastTime = steady_clock::now();
 	Message M;
 	M.target=Manager::getInstance()->getByName("player");
@@ -83,24 +83,25 @@ int main()
 		window.clear(Color::White);
 
 		manager->getLevel()->draw(window);
+		player = (Player*)manager->getByName("player");
 		
 		if (manager->getPause() == false)
 		{
-			player.ShowInterface(window);
+			player->ShowInterface(window);
 
 			if (time_span.count() > 10.0)
 			{
 				lastTime = currentTime;
 				for (int i = 0; i < 2; i++)
-					if (player.getActiveMedals()[i])
-						player.getActiveMedals()[i]->causeEffect();
+					if (player->getActiveMedals()[i])
+						player->getActiveMedals()[i]->causeEffect();
 			}
 
 			//player.move();
 		}
 		else
 		{
-			player.menu(window);
+			player->menu(window);
 			manager->setPause(false);
 		}
 		manager->sendMSGAll();

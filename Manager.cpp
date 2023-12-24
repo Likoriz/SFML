@@ -12,7 +12,7 @@ using namespace std::chrono;
 
 Manager* Manager::instance = nullptr;
 
-enum namesOfObjects {player, death, skill, slide, box, block, fall, disappear, walking, hiding, coin, arrow};
+enum namesOfObjects { player, death, skill, slide, box, block, fall, disappear, walking, hiding, coin, arrow };
 
 
 Manager::~Manager()
@@ -54,18 +54,22 @@ void Manager::Destroy()
 void Manager::addObject(MyDrawable* object)
 {
 	GameObject* newObject;
-	if(object->getName()=="player")
+	if (object->getName() == "player")
 		newObject = new Player();
-	if(object->getName()=="walking")
-		newObject=new WalkingEnemy();
-	if(object->getName()=="death"||object->getName()=="block"||object->getName()=="skill"||object->getName()=="slide"||object->getName()=="fall"||object->getName()=="disappear")
-		newObject=new PlatformUsual();
-	if(object->getName()=="box")
-		newObject=new Box();
-	if(object->getName()=="arrow")
-		newObject=new Arrow();
 	else
-		newObject=new PlatformUsual();
+		if (object->getName() == "walking")
+			newObject = new WalkingEnemy();
+		else
+			if (object->getName() == "death" || object->getName() == "block" || object->getName() == "skill" || object->getName() == "slide" || object->getName() == "fall" || object->getName() == "disappear")
+				newObject = new PlatformUsual();
+			else
+				if (object->getName() == "box")
+					newObject = new Box();
+				else
+					if (object->getName() == "arrow")
+						newObject = new Arrow();
+					else
+						newObject = new PlatformUsual();
 	newObject->setDrawable(object);
 	newObject->setObject(new Object(object->getName(), object->getRect()));
 	game.push_back(newObject);
@@ -73,8 +77,8 @@ void Manager::addObject(MyDrawable* object)
 
 void Manager::sendMSGAll()
 {
-	for(auto msg:queueOfMessages)
-		if(msg.target!=nullptr)
+	for (auto msg : queueOfMessages)
+		if (msg.target != nullptr)
 			msg.target->sendMessage(msg);
 		else
 			handleOwnMessage(msg);
@@ -127,11 +131,11 @@ GameObject* Manager::getByName(std::string name)
 
 std::vector<GameObject*> Manager::getVectorByName(std::string name)
 {
-	std::vector<GameObject*> gameObjects=Manager::getInstance()->getGame();
+	std::vector<GameObject*> gameObjects = Manager::getInstance()->getGame();
 	std::vector<GameObject*> vectToReturn;
-	for(auto x:gameObjects)
+	for (auto x : gameObjects)
 	{
-		if(x->getDrawable()->getName()==name)
+		if (x->getDrawable()->getName() == name)
 			vectToReturn.push_back(x);
 	}
 	return vectToReturn;
