@@ -12,6 +12,7 @@ private:
 	Object* object;
 	bool isOnGround;
 public:
+	virtual void move() = 0;
 	void setDrawable(MyDrawable* object);
 	MyDrawable* getDrawable();
 	bool getIsOnGround();

@@ -42,7 +42,7 @@ Object::Object(string name, Rect<int> rect)
 		body = Manager::getInstance()->getWorld()->CreateBody(&bodyDef);
 		shape.SetAsBox(rect.width / 2, rect.height / 2);
 		fixtureDef.shape = &shape;
-		fixtureDef.density = 1.0f; fixtureDef.friction = 1.5f;
+		fixtureDef.density = 1.0f; fixtureDef.friction = 0.5f;
 		body->CreateFixture(&fixtureDef);
 	}
 
