@@ -2,7 +2,7 @@
 #include <iostream>;
 #include <SFML/Graphics.hpp>
 
-using namespace std::chrono; 
+using namespace std::chrono;
 using namespace std;
 using namespace sf;
 
@@ -69,7 +69,8 @@ void Player::sendMessage(Message m)
 			M.type = Delete;
 			M.ctx.destroy.objectToDelete = this;
 			Manager::getInstance()->SendMessage(M);
-			//exit(0);
+			cout << "The player is dead!";
+			exit(0);
 		}
 		break;
 	}
@@ -427,9 +428,9 @@ void Player::receiveMedal(int number)
 		allMedals[number]->setCollected(true);
 }
 
-void Player::receiveSkill(int skill)
+void Player::receiveSkill()
 {
-	skills->setSkill(skill);
+	skills->setSkill();
 }
 
 void Player::upgrade(int stat)
@@ -484,12 +485,12 @@ void Player::checkCollision(duration<double> time_span, steady_clock::time_point
 {
 	vector<GameObject*> coinsObjects = Manager::getInstance()->getVectorByName("coin");
 	vector<GameObject*> deathObjects = Manager::getInstance()->getVectorByName("death");
-	vector<GameObject*> skillObjects = Manager::getInstance()->getVectorByName("skill");
 	vector<GameObject*> walkingObjects = Manager::getInstance()->getVectorByName("walking");
 	vector<GameObject*> hidingObjects = Manager::getInstance()->getVectorByName("hiding");
+	vector<GameObject*> skillObjects = Manager::getInstance()->getVectorByName("skill");
 
 	Message m;
-  	for (b2ContactEdge* edge = getObject()->getBody()->GetContactList(); edge; edge = edge->next)
+	for (b2ContactEdge* edge = getObject()->getBody()->GetContactList(); edge; edge = edge->next)
 	{
 		b2Contact* contact = edge->contact;
 
@@ -534,5 +535,50 @@ void Player::checkCollision(duration<double> time_span, steady_clock::time_point
 					break;
 				}
 			}
+
+		for (auto x : deathObjects)
+			if (contact->GetFixtureA() == x->getObject()->getBody()->GetFixtureList() || contact->GetFixtureB() == x->getObject()->getBody()->GetFixtureList())
+			{
+				last_time = current_time;
+				Message m;
+				m.type = DealDmg;
+				m.target = this;
+				m.ctx.dealDmg.dmg = this->getHP();
+				Manager::getInstance()->SendMessage(m);
+				break;
+			}
+
+		for (auto x : skillObjects)
+		{
+			if (contact->GetFixtureA() == x->getObject()->getBody()->GetFixtureList() || contact->GetFixtureB() == x->getObject()->getBody()->GetFixtureList())
+			{
+				m.type = Delete;
+				m.ctx.destroy.objectToDelete = x;
+				Manager::getInstance()->SendMessage(m);
+
+				for (auto y : skillObjects)
+				{
+					if (x != y)
+					{
+						b2ContactEdge* edge = y->getObject()->getBody()->GetContactList();
+						while (edge)
+						{
+							b2Contact* otherContact = edge->contact;
+							if (otherContact->GetFixtureA() == y->getObject()->getBody()->GetFixtureList() || otherContact->GetFixtureB() == y->getObject()->getBody()->GetFixtureList())
+							{
+								m.type = Delete;
+								m.ctx.destroy.objectToDelete = y;
+								Manager::getInstance()->SendMessage(m);
+
+								receiveSkill();
+								break;
+							}
+							edge = edge->next;
+						}
+					}
+				}
+				break;
+			}
+		}
 	}
 }

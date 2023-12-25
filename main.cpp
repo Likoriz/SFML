@@ -62,7 +62,7 @@ int main()
 					break;
 				case Keyboard::D://left
 					M.type = Move;
-					if (player->getObject()->getBody()->GetLinearVelocity().y <= 0)
+					if (player->getObject()->getBody()->GetLinearVelocity().y >= 0)
 					{
 						M.ctx.move.speedX = 70.0f;
 						M.ctx.move.speedY = 0.0f;
@@ -73,7 +73,7 @@ int main()
 					break;
 				case Keyboard::A://right
 					M.type = Move;
-					if (player->getObject()->getBody()->GetLinearVelocity().y <= 0)
+					if (player->getObject()->getBody()->GetLinearVelocity().y >= 0)
 					{
 						M.ctx.move.speedX = -70.0f;
 						M.ctx.move.speedY = 0.0f;

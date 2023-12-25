@@ -27,7 +27,7 @@ public:
 	void attack();
 	void menu(sf::RenderWindow& window);
 	void receiveMedal(int number);
-	void receiveSkill(int skill);
+	void receiveSkill();
 	void upgrade(int stat);
 	void setText(sf::Text& text_);
 	Medal** getActiveMedals();

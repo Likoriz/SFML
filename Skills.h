@@ -10,7 +10,7 @@ private:
 	bool isAbleToWallJump;
 public:
 	Skills();
-	void setSkill(int skill);
+	void setSkill();
 	bool getSkill(int number);
 };
 
