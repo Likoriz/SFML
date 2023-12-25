@@ -3,6 +3,7 @@
 #include <vector>
 #include"Player.h"
 #include"WalkingEnemy.h"
+#include "HidingEnemy.h"
 #include "PlatformUsual.h"
 #include "Box.h"
 #include "Arrow.h"
@@ -26,14 +27,8 @@ Manager::Manager()
 {
 	lvl = new Level();
 	pause = false;
-	gravity = 9.81f;
 	b2Vec2 gravity(0.0f, 200.0f);
 	world = new b2World(gravity);
-}
-
-float Manager::getGravity()
-{
-	return gravity;
 }
 
 Manager* Manager::getInstance()
@@ -50,14 +45,6 @@ void Manager::Destroy()
 	if (instance) delete instance;
 }
 
-//std::vector<MyDrawable*> Manager::getDrawables()
-//{
-//	vector<MyDrawable*> tmpObjects;
-//	for(auto x:game)
-//		tmpObjects.push_back(x.);
-//	return tmpObjects;
-//}
-
 void Manager::addObject(MyDrawable* object)
 {
 	GameObject* newObject;
@@ -67,16 +54,19 @@ void Manager::addObject(MyDrawable* object)
 		if (object->getName() == "walking")
 			newObject = new WalkingEnemy();
 		else
-			if (object->getName() == "death" || object->getName() == "block" || object->getName() == "usual" || object->getName() == "skill" || object->getName() == "slide" || object->getName() == "fall" || object->getName() == "disappear")
-				newObject = new PlatformUsual();
+			if (object->getName() == "hiding")
+				newObject = new HidingEnemy();
 			else
-				if (object->getName() == "box")
-					newObject = new Box();
+				if (object->getName() == "death" || object->getName() == "block" || object->getName() == "usual" || object->getName() == "skill" || object->getName() == "slide" || object->getName() == "fall" || object->getName() == "disappear")
+					newObject = new PlatformUsual();
 				else
-					if (object->getName() == "arrow")
-						newObject = new Arrow();
+					if (object->getName() == "box")
+						newObject = new Box();
 					else
-						newObject = new PlatformUsual();
+						if (object->getName() == "arrow")
+							newObject = new Arrow();
+						else
+							newObject = new PlatformUsual();
 	newObject->setDrawable(object);
 	newObject->setObject(new Object(object->getName(), object->getRect()));
 	game.push_back(newObject);
@@ -97,11 +87,10 @@ void Manager::SendMessage(Message m)
 	queueOfMessages.push_back(m);
 }
 
-void Manager::updateAll(float dt)
+void Manager::updateAll()
 {
-	/*for(auto obj:game)
-		obj.*/
-
+	for (auto x : game)
+		x->update();
 }
 
 void Manager::startGame()

@@ -21,6 +21,17 @@ GameObject::GameObject()
 	drawable = new MyDrawable();
 }
 
+void GameObject::update()
+{
+	move();
+}
+
+void GameObject::move()
+{
+	b2Vec2 pos = getObject()->getBody()->GetPosition();
+	getDrawable()->getSprite()->setPosition(pos.x, pos.y);
+}
+
 GameObject::GameObject(const GameObject&)
 {
 }

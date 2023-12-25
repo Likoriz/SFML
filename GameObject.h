@@ -12,13 +12,13 @@ private:
 	Object* object;
 	bool isOnGround;
 public:
-	virtual void move() = 0;
+	void move();
 	void setDrawable(MyDrawable* object);
 	MyDrawable* getDrawable();
 	bool getIsOnGround();
 	void setObject(Object* sourceObject);
 	Object* getObject();
-	/*virtual void Update(float dt) = 0;*/
+	void update();
 	virtual void sendMessage(Message m)=0;
 	GameObject();
 	GameObject(const GameObject&);

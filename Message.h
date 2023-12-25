@@ -1,5 +1,5 @@
 #pragma once
-enum MessageType {Move,Death,Render,Create,DealDmg,Erase};
+enum MessageType {Move,Death,Render,Create,DealDmg,Erase,Delete};
 class GameObject;
 #include <vector>
 class MyDrawable;
@@ -13,7 +13,8 @@ struct Message
 	{
 		struct
 		{
-			float speedX,speedY;
+			bool setSpeedX, setSpeedY;
+			float speedX, speedY;
 		} move;
 		struct
 		{

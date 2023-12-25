@@ -1,8 +1,8 @@
 #include "Player.h"
 #include <iostream>;
 #include <SFML/Graphics.hpp>
-//#include "Manager.h"
 
+using namespace std::chrono; 
 using namespace std;
 using namespace sf;
 
@@ -16,15 +16,6 @@ void Player::attack()
 
 }
 
-void Player::move()
-{
-	b2Vec2 velocity = getObject()->getBody()->GetLinearVelocity();
-	velocity.y += Manager::getInstance()->getGravity();
-
-	b2Vec2 pos = getObject()->getBody()->GetPosition();
-	getDrawable()->getSprite()->setPosition(pos.x, pos.y);
-}
-
 Player::Player()
 {
 	setHP(100);
@@ -32,8 +23,7 @@ Player::Player()
 	setDEF(100);
 
 	coins = 10;
-	//curHp = getHP();
-	curHp = 10;
+	curHp = getHP();
 
 	activeMedals = new Medal * [2];
 	for (int i = 0; i < 2; i++)
@@ -74,7 +64,13 @@ void Player::sendMessage(Message m)
 		if (curHp > getHP())
 			curHp = getHP();
 		else if (curHp < 1)
-			exit(0);
+		{
+			Message M;
+			M.type = Delete;
+			M.ctx.destroy.objectToDelete = this;
+			Manager::getInstance()->SendMessage(M);
+			//exit(0);
+		}
 		break;
 	}
 	}
@@ -482,4 +478,61 @@ void Player::onMedal(int number)
 				activeMedals[i] = allMedals[number];
 				break;
 			}
+}
+
+void Player::checkCollision(duration<double> time_span, steady_clock::time_point& last_time, steady_clock::time_point current_time)
+{
+	vector<GameObject*> coinsObjects = Manager::getInstance()->getVectorByName("coin");
+	vector<GameObject*> deathObjects = Manager::getInstance()->getVectorByName("death");
+	vector<GameObject*> skillObjects = Manager::getInstance()->getVectorByName("skill");
+	vector<GameObject*> walkingObjects = Manager::getInstance()->getVectorByName("walking");
+	vector<GameObject*> hidingObjects = Manager::getInstance()->getVectorByName("hiding");
+
+	Message m;
+  	for (b2ContactEdge* edge = getObject()->getBody()->GetContactList(); edge; edge = edge->next)
+	{
+		b2Contact* contact = edge->contact;
+
+		for (auto x : coinsObjects)
+			if (contact->GetFixtureA() == x->getObject()->getBody()->GetFixtureList() || contact->GetFixtureB() == x->getObject()->getBody()->GetFixtureList())
+			{
+				m.type = Delete;
+				m.ctx.destroy.objectToDelete = x;
+				Manager::getInstance()->SendMessage(m);
+				coins++;
+				break;
+			}
+
+		for (auto x : walkingObjects)
+			if (contact->GetFixtureA() == x->getObject()->getBody()->GetFixtureList() || contact->GetFixtureB() == x->getObject()->getBody()->GetFixtureList())
+			{
+				if (time_span.count() > 3.0)
+				{
+					last_time = current_time;
+					Message m;
+					m.type = DealDmg;
+					m.target = this;
+					Entity* enemy = (Entity*)x;
+					m.ctx.dealDmg.dmg = enemy->getDMG();
+					Manager::getInstance()->SendMessage(m);
+					break;
+				}
+			}
+
+		for (auto x : hidingObjects)
+			if (contact->GetFixtureA() == x->getObject()->getBody()->GetFixtureList() || contact->GetFixtureB() == x->getObject()->getBody()->GetFixtureList())
+			{
+				if (time_span.count() > 3.0)
+				{
+					last_time = current_time;
+					Message m;
+					m.type = DealDmg;
+					m.target = this;
+					Entity* enemy = (Entity*)x;
+					m.ctx.dealDmg.dmg = enemy->getDMG();
+					Manager::getInstance()->SendMessage(m);
+					break;
+				}
+			}
+	}
 }

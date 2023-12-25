@@ -1,5 +1,12 @@
 #include "WalkingEnemy.h"
 
+WalkingEnemy::WalkingEnemy()
+{
+	setHP(50);
+	setDMG(20);
+	setDEF(50);
+}
+
 void WalkingEnemy::follow()
 {
 }
@@ -13,10 +20,6 @@ void WalkingEnemy::attack()
 }
 
 void WalkingEnemy::destruct()
-{
-}
-
-void WalkingEnemy::move()
 {
 }
 

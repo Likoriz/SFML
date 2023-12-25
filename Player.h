@@ -25,7 +25,6 @@ public:
 	void ShowInterface(sf::RenderWindow& window);
 	void destruct();
 	void attack();
-	void move();
 	void menu(sf::RenderWindow& window);
 	void receiveMedal(int number);
 	void receiveSkill(int skill);
@@ -36,5 +35,6 @@ public:
 	void offMedal(int number);
 	void onMedal(int number);
 	void sendMessage(Message m);
+	void checkCollision(std::chrono::duration<double> time_span, std::chrono::steady_clock::time_point& last_time, std::chrono::steady_clock::time_point current_time);
 };
 

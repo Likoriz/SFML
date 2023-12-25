@@ -2,7 +2,9 @@
 #include "Entity.h"
 class HidingEnemy : public Entity
 {
-private:
+public:
+	HidingEnemy();
+	void sendMessage(Message m);
 	void attack();
 	void hide();
 	void show();

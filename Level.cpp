@@ -246,17 +246,17 @@ void Level::draw(sf::RenderWindow& window)
 		if (x->getDrawable()->getName() != "block")
 			window.draw(*x->getDrawable()->getSprite());
 
-		if (x->getObject()->getBody())
-		{
-			b2Vec2 pos = x->getObject()->getBody()->GetPosition();
-			Rect<int> recti = x->getDrawable()->getRect();
+		//if (x->getObject()->getBody())
+		//{
+		//	b2Vec2 pos = x->getObject()->getBody()->GetPosition();
+		//	Rect<int> recti = x->getDrawable()->getRect();
 
-			RectangleShape rect(Vector2f(recti.width, recti.height));
-			rect.setPosition(pos.x - recti.width / 2 + 9, pos.y - recti.height / 2 + 9);
-			rect.setFillColor(Color::Transparent);
-			rect.setOutlineColor(Color::Black);
-			rect.setOutlineThickness(1);
-			window.draw(rect);
-		}
+		//	RectangleShape rect(Vector2f(recti.width, recti.height));
+		//	rect.setPosition(pos.x - recti.width / 2 + 9, pos.y - recti.height / 2 + 9);
+		//	rect.setFillColor(Color::Transparent);
+		//	rect.setOutlineColor(Color::Black);
+		//	rect.setOutlineThickness(1);
+		//	window.draw(rect);
+		//}
 	}
 }

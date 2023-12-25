@@ -3,11 +3,11 @@
 class WalkingEnemy : public Entity
 {
 public:
+	WalkingEnemy();
 	void follow();
 	void leave();
 	void attack();
 	void destruct();
-	void move();
 	void sendMessage(Message m);
 };
 

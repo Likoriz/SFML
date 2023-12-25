@@ -28,6 +28,8 @@ int main()
 	Player* player;
 
 	steady_clock::time_point lastTime = steady_clock::now();
+	steady_clock::time_point lastDmg = steady_clock::now();
+
 	Message M;
 	M.target = manager->getByName("player");
 	while (window.isOpen())
@@ -48,21 +50,36 @@ int main()
 					if (player->getObject()->getBody()->GetLinearVelocity().y == 0)
 					{
 						M.type = Move;
-						M.ctx.move.speedX = 0.0f;
-						M.ctx.move.speedY = -100.0f;
+						if (player->getObject()->getBody()->GetLinearVelocity().x == 0)
+						{
+							M.ctx.move.speedX = 0.0f;
+							M.ctx.move.speedY = -100.0f;
+						}
+						else
+							M.ctx.move.speedY = -100.0f;
 						manager->SendMessage(M);
 					}
 					break;
 				case Keyboard::D://left
 					M.type = Move;
-					M.ctx.move.speedX = 70.0f;
-					M.ctx.move.speedY = 50.0f;
+					if (player->getObject()->getBody()->GetLinearVelocity().y <= 0)
+					{
+						M.ctx.move.speedX = 70.0f;
+						M.ctx.move.speedY = 0.0f;
+					}
+					else
+						M.ctx.move.speedX = 70.0f;
 					manager->SendMessage(M);
 					break;
 				case Keyboard::A://right
 					M.type = Move;
-					M.ctx.move.speedX = -70.0f;
-					M.ctx.move.speedY = 50.0f;
+					if (player->getObject()->getBody()->GetLinearVelocity().y <= 0)
+					{
+						M.ctx.move.speedX = -70.0f;
+						M.ctx.move.speedY = 0.0f;
+					}
+					else
+						M.ctx.move.speedX = -70.0f;
 					manager->SendMessage(M);
 					break;
 				case Keyboard::Escape://menu
@@ -75,7 +92,7 @@ int main()
 				if (event.mouseButton.button == Mouse::Left)//attack
 				{
 					Vector2f mouseCoords = window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });
-					cout << "x: " << mouseCoords.x << " y: " << mouseCoords.y << endl;
+
 				}
 				else
 					if (event.mouseButton.button == Mouse::Right)//shoot
@@ -90,6 +107,7 @@ int main()
 
 		steady_clock::time_point currentTime = steady_clock::now();
 		duration<double> time_span = duration_cast<duration<double>>(currentTime - lastTime);
+		duration<double> timeDmg = duration_cast<duration<double>>(currentTime - lastDmg);
 
 		window.clear(Color::White);
 
@@ -107,6 +125,7 @@ int main()
 						player->getActiveMedals()[i]->causeEffect();
 			}
 			player->move();
+			player->checkCollision(timeDmg, lastDmg, currentTime);
 		}
 		else
 		{
@@ -114,6 +133,8 @@ int main()
 			manager->setPause(false);
 		}
 		manager->sendMSGAll();
+		manager->updateAll();
+
 		window.display();
 	}
 
