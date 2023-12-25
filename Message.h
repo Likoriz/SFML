@@ -13,7 +13,6 @@ struct Message
 	{
 		struct
 		{
-			bool setSpeedX, setSpeedY;
 			float speedX, speedY;
 		} move;
 		struct

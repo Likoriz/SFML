@@ -55,4 +55,7 @@ bool GameObject::getIsOnGround()
 	return isOnGround;
 }
 
-
+void GameObject::setIsOnGround(bool flag)
+{
+	isOnGround = flag;
+}

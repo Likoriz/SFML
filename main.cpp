@@ -50,36 +50,22 @@ int main()
 					if (player->getObject()->getBody()->GetLinearVelocity().y == 0)
 					{
 						M.type = Move;
-						if (player->getObject()->getBody()->GetLinearVelocity().x == 0)
-						{
-							M.ctx.move.speedX = 0.0f;
-							M.ctx.move.speedY = -100.0f;
-						}
-						else
-							M.ctx.move.speedY = -100.0f;
+						M.ctx.move.speedX = player->getObject()->getBody()->GetLinearVelocity().x;
+						M.ctx.move.speedY = -100.0f;
+
 						manager->SendMessage(M);
 					}
 					break;
-				case Keyboard::D://left
+				case Keyboard::D://right
 					M.type = Move;
-					if (player->getObject()->getBody()->GetLinearVelocity().y >= 0)
-					{
-						M.ctx.move.speedX = 70.0f;
-						M.ctx.move.speedY = 0.0f;
-					}
-					else
-						M.ctx.move.speedX = 70.0f;
+					M.ctx.move.speedX = 70.0f;
+					M.ctx.move.speedY = player->getObject()->getBody()->GetLinearVelocity().y;
 					manager->SendMessage(M);
 					break;
-				case Keyboard::A://right
+				case Keyboard::A://left
 					M.type = Move;
-					if (player->getObject()->getBody()->GetLinearVelocity().y >= 0)
-					{
-						M.ctx.move.speedX = -70.0f;
-						M.ctx.move.speedY = 0.0f;
-					}
-					else
-						M.ctx.move.speedX = -70.0f;
+					M.ctx.move.speedX = -70.0f;
+					M.ctx.move.speedY = player->getObject()->getBody()->GetLinearVelocity().y;
 					manager->SendMessage(M);
 					break;
 				case Keyboard::Escape://menu

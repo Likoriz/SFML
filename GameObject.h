@@ -16,6 +16,7 @@ public:
 	void setDrawable(MyDrawable* object);
 	MyDrawable* getDrawable();
 	bool getIsOnGround();
+	void setIsOnGround(bool flag);
 	void setObject(Object* sourceObject);
 	Object* getObject();
 	void update();

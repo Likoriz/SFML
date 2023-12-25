@@ -14,7 +14,6 @@ Level::Level()
 	tileWidth = 0;
 	tileHeight = 0;
 	firstTileID = 0;
-	//drawBounds = { 0, 0, 0, 0 };
 	vector<Layer> layers = {};
 }
 
@@ -199,23 +198,23 @@ bool Level::loadFromFile(string filename)
 				TiXmlElement* properties;
 				properties = objectElement->FirstChildElement("properties");
 
-				if (properties != nullptr)///////////////////////////////////////////////////////////////////
-				{
-					TiXmlElement* prop;
-					prop = properties->FirstChildElement("property");
+				//if (properties != nullptr)///////////////////////////////////////////////////////////////////
+				//{
+				//	TiXmlElement* prop;
+				//	prop = properties->FirstChildElement("property");
 
-					if (prop != nullptr)
-						while (prop)
-						{
-							string propertyName = prop->Attribute("name");
-							string propertyValue = prop->Attribute("value");
-							std::map<string, string>tmpProperties;
-							tmpProperties.emplace(propertyName, propertyValue);
-							object->setProperties(tmpProperties);
+				//	if (prop != nullptr)
+				//		while (prop)
+				//		{
+				//			string propertyName = prop->Attribute("name");
+				//			string propertyValue = prop->Attribute("value");
+				//			std::map<string, string>tmpProperties;
+				//			tmpProperties.emplace(propertyName, propertyValue);
+				//			object->setProperties(tmpProperties);
 
-							prop = prop->NextSiblingElement("property");
-						}
-				}////////////////////////////////////////////////////////////////////////////////////////////
+				//			prop = prop->NextSiblingElement("property");
+				//		}
+				//}////////////////////////////////////////////////////////////////////////////////////////////
 
 				Manager::getInstance()->addObject(object);
 				objectElement = objectElement->NextSiblingElement("object");

@@ -58,10 +58,12 @@ void Player::sendMessage(Message m)
 	{
 	case Move:
 	{
-		MyDrawable* playerDrawable = getDrawable();
-		Object* playerBody = getObject();
-		b2Vec2 speed = { m.ctx.move.speedX, m.ctx.move.speedY };
-		playerBody->getBody()->SetLinearVelocity(speed);
+		b2Body* playerBody = getObject()->getBody();
+
+		b2Vec2 speed;
+		speed = { m.ctx.move.speedX, m.ctx.move.speedY };
+
+		playerBody->SetLinearVelocity(speed);
 		break;
 	}
 	case DealDmg:
