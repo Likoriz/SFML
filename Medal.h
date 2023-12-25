@@ -8,7 +8,6 @@ private:
 	std::string name;
 	float lastTimeTriggered;
 public:
-	Medal();
 	virtual void causeEffect() = 0;
 	bool getCollected();
 	void setCollected(bool state);

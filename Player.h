@@ -22,8 +22,8 @@ private:
 	Skills* skills;
 public:
 	Player();
-	void ShowInterface(sf::RenderWindow& window);
 	void destruct();
+	void ShowInterface(sf::RenderWindow& window);
 	void attack();
 	void menu(sf::RenderWindow& window);
 	void receiveMedal(int number);

@@ -14,5 +14,4 @@ void Medal1::causeEffect()//regeneration
 	heal.target = Manager::getInstance()->getByName("player");
 	heal.ctx.dealDmg.dmg = -5;
 	Manager::getInstance()->SendMessage(heal);
-
 }

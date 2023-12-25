@@ -8,7 +8,13 @@ using namespace sf;
 
 void Player::destruct()
 {
+	delete[] activeMedals;
 
+	for (int i = 0; i < 6; i++)
+		delete[] allMedals[i];
+	delete allMedals;
+
+	delete skills;
 }
 
 void Player::attack()
@@ -22,7 +28,7 @@ Player::Player()
 	setDMG(20);
 	setDEF(100);
 
-	coins = 10;
+	coins = 0;
 	curHp = getHP();
 
 	activeMedals = new Medal * [2];

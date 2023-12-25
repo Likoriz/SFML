@@ -1,11 +1,6 @@
 #include "Medal.h"
 using namespace std;
 
-Medal::Medal()
-{
-	isCollected = false;
-}
-
 bool Medal::getCollected()
 {
 	return isCollected;
