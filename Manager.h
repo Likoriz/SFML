@@ -30,7 +30,7 @@ public:
 	static void Destroy();
 	void addObject(MyDrawable* object);
 	void sendMSGAll();
-	void updateAll();
+	void updateAll(std::chrono::duration<double> time_span, std::chrono::steady_clock::time_point& last_time, std::chrono::steady_clock::time_point current_time);
 	void startGame();
 	void endGame();
 	std::vector<GameObject*> getGame();

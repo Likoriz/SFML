@@ -118,16 +118,15 @@ int main()
 					if (player->getActiveMedals()[i])
 						player->getActiveMedals()[i]->causeEffect();
 			}
-			player->move();
-			player->checkCollision(timeDmg, lastDmg, currentTime);
+
+			manager->sendMSGAll();
+			manager->updateAll(timeDmg, lastDmg, currentTime);
 		}
 		else
 		{
 			player->menu(window);
 			manager->setPause(false);
 		}
-		manager->sendMSGAll();
-		manager->updateAll();
 
 		window.display();
 	}

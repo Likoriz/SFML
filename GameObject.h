@@ -19,7 +19,7 @@ public:
 	void setIsOnGround(bool flag);
 	void setObject(Object* sourceObject);
 	Object* getObject();
-	void update();
+	void update(std::chrono::duration<double> time_span, std::chrono::steady_clock::time_point& last_time, std::chrono::steady_clock::time_point current_time);
 	virtual void sendMessage(Message m)=0;
 	GameObject();
 	GameObject(const GameObject&);

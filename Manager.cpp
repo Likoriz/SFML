@@ -86,10 +86,10 @@ void Manager::SendMessage(Message m)
 	queueOfMessages.push_back(m);
 }
 
-void Manager::updateAll()
+void Manager::updateAll(duration<double> time_span, steady_clock::time_point& last_time, steady_clock::time_point current_time)
 {
 	for (auto x : game)
-		x->update();
+		x->update(time_span, last_time, current_time);
 }
 
 void Manager::startGame()

@@ -1,5 +1,8 @@
-#include "GameObject.h"
+//#include "GameObject.h"
+#include "Entity.h"
+
 using namespace std;
+using namespace std::chrono;
 
 void GameObject::setDrawable(MyDrawable* object)
 {
@@ -21,9 +24,11 @@ GameObject::GameObject()
 	drawable = new MyDrawable();
 }
 
-void GameObject::update()
+void GameObject::update(duration<double> time_span, steady_clock::time_point& last_time, steady_clock::time_point current_time)
 {
 	move();
+	Entity* object = (Entity*)this;
+	object->checkCollision(time_span, last_time, current_time);
 }
 
 void GameObject::move()
