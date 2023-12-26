@@ -22,6 +22,7 @@ private:
 	Skills* skills;
 public:
 	Player();
+	bool getObtainedSkill(int skill);
 	void destruct();
 	void ShowInterface(sf::RenderWindow& window);
 	void attack();

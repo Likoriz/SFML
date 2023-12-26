@@ -441,6 +441,11 @@ void Player::receiveSkill()
 	skills->setSkill();
 }
 
+bool Player::getObtainedSkill(int skill)
+{
+	return skills->getSkill(skill);
+}
+
 void Player::upgrade(int stat)
 {
 	if (coins >= 2)

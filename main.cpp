@@ -5,6 +5,8 @@
 #include "Player.h"
 #include"WalkingEnemy.h"
 
+enum Skill { CLIMB = 0, DOUBLE, TRIPLE, DASH, WALL };
+
 using namespace sf;
 using namespace std;
 using namespace std::chrono;
@@ -32,6 +34,8 @@ int main()
 	steady_clock::time_point lastDmg = steady_clock::now();
 
 	Message M;
+
+	bool jumped;
 	M.target = manager->getByName("player");
 	while (window.isOpen())
 	{
@@ -50,15 +54,26 @@ int main()
 				case Keyboard::W://jump
 					if (player->getObject()->getBody()->GetLinearVelocity().y == 0)
 					{
+						jumped = true;
 						M.type = Move;
 						M.ctx.move.speedX = player->getObject()->getBody()->GetLinearVelocity().x;
 						M.ctx.move.speedY = -100.0f;
 
 						manager->SendMessage(M);
 					}
+					else
+						if (player->getObtainedSkill(DOUBLE) && jumped)
+						{
+							jumped = false;
+							M.type = Move;
+							M.ctx.move.speedX = player->getObject()->getBody()->GetLinearVelocity().x;
+							M.ctx.move.speedY = -100.0f;
+
+							manager->SendMessage(M);
+						}
 					break;
 				case Keyboard::D://right
-					if (player->getObject()->getBody()->GetLinearVelocity().y != 0)
+					if (player->getObject()->getBody()->GetLinearVelocity().y != 0 || player->getObject()->getBody()->GetContactList() == nullptr)
 						window.setKeyRepeatEnabled(false);
 					else
 						window.setKeyRepeatEnabled(true);
@@ -68,7 +83,7 @@ int main()
 					manager->SendMessage(M);
 					break;
 				case Keyboard::A://left
-					if (player->getObject()->getBody()->GetLinearVelocity().y != 0)
+					if (player->getObject()->getBody()->GetLinearVelocity().y != 0 || player->getObject()->getBody()->GetContactList() == nullptr)
 						window.setKeyRepeatEnabled(false);
 					else
 						window.setKeyRepeatEnabled(true);
@@ -135,6 +150,9 @@ int main()
 				((WalkingEnemy*)x)->triggerMove(x);
 			}
 		}
+		//if (time_span.count() < 1000 / 60)
+		//	sf::sleep(sf::milliseconds(1000 / 60 - time_span.count()));
+
 		window.display();
 	}
 
