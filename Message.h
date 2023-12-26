@@ -1,5 +1,5 @@
 #pragma once
-enum MessageType {Move,Death,Render,Create,DealDmg,Erase};
+enum MessageType {Move,Death,Render,Create,DealDmg,Erase,Jump};
 class GameObject;
 #include <vector>
 class MyDrawable;

@@ -28,6 +28,8 @@ Player::Player(MyDrawable* object)
 	setDMG(20);
 	setDEF(100);
 
+	jumped = false;
+
 	coins = 0;
 	curHp = getHP();
 
@@ -86,7 +88,45 @@ void Player::sendMessage(Message m)
 		}
 		break;
 	}
+	case Jump:
+	{
+		if (getObject()->getBody()->GetLinearVelocity().y == 0)
+		{
+			jumped = true;
+			auto vel = getObject()->getBody()->GetLinearVelocity();
+			vel.y = -100.0f;
+			getObject()->getBody()->SetLinearVelocity(vel);
+		}
+		else
+			if (getObtainedSkill(DOUBLE) && jumped)
+			{
+				jumped = false;
+				auto vel = getObject()->getBody()->GetLinearVelocity();
+				vel.y = -100.0f;
+				getObject()->getBody()->SetLinearVelocity(vel);
+			}
 	}
+	}
+}
+
+void Player::update(duration<double> time_span, steady_clock::time_point& last_time, steady_clock::time_point current_time)
+{
+	if (sf::Keyboard::isKeyPressed(Keyboard::D))
+	{
+		auto vel = getObject()->getBody()->GetLinearVelocity();
+		vel.x = 70.0f;
+		getObject()->getBody()->SetLinearVelocity(vel);
+	}
+	else
+		if (sf::Keyboard::isKeyPressed(Keyboard::A))
+		{
+			auto vel = getObject()->getBody()->GetLinearVelocity();
+			vel.x = -70.0f;
+			getObject()->getBody()->SetLinearVelocity(vel);
+		}
+	move();
+	Entity* object = (Entity*)this;
+	object->checkCollision(time_span, last_time, current_time);
 }
 
 void Player::menu(RenderWindow& window)

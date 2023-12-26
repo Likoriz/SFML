@@ -14,6 +14,8 @@ private:
 	enum Stat { HP = 0, DAMAGE, DEFENSE };
 	enum Skill { CLIMB = 0, DOUBLE, TRIPLE, DASH, WALL };
 
+	bool jumped;
+
 	sf::Font font;
 	int curHp;
 	Medal** activeMedals;
@@ -22,6 +24,7 @@ private:
 	Skills* skills;
 public:
 	Player(MyDrawable* object);
+	void update(std::chrono::duration<double> time_span, std::chrono::steady_clock::time_point& last_time, std::chrono::steady_clock::time_point current_time);
 	bool getObtainedSkill(int skill);
 	void destruct();
 	void ShowInterface(sf::RenderWindow& window);
