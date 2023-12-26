@@ -28,6 +28,19 @@ void WalkingEnemy::destruct()
 {
 }
 
+void WalkingEnemy::triggerMove(GameObject* target)
+{
+	Message M;
+	if(rand()%2)
+		M.ctx.move.speedX=-45.0f;
+	else
+		M.ctx.move.speedX=45.0f;
+	M.type=Move;
+	M.target=target;
+	M.ctx.move.speedY=target->getObject()->getBody()->GetLinearVelocity().y;
+	Manager::getInstance()->SendMessage(M);
+}
+
 
 void WalkingEnemy::sendMessage(Message m)
 {

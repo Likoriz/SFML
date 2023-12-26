@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Manager.h"
 #include "Player.h"
+#include"WalkingEnemy.h"
 
 using namespace sf;
 using namespace std;
@@ -131,14 +132,7 @@ int main()
 		{
 			if(x->getObject()->getBody()->GetLinearVelocity().x==0 &&x->getObject()->getBody()->GetLinearVelocity().y==0)
 			{
-				if(rand()%2)
-					M.ctx.move.speedX=-45.0f;
-				else
-					M.ctx.move.speedX=45.0f;
-				M.type=Move;
-				M.target=x;
-				M.ctx.move.speedY=x->getObject()->getBody()->GetLinearVelocity().y;
-				manager->SendMessage(M);
+				((WalkingEnemy*)x)->triggerMove(x);
 			}
 		}
 		window.display();
