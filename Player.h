@@ -20,8 +20,11 @@ private:
 	Medal** allMedals;
 	int coins;
 	Skills* skills;
+	bool jumped;
 public:
 	Player();
+	bool isOnGround();
+	void update(std::chrono::duration<double> time_span, std::chrono::steady_clock::time_point& last_time, std::chrono::steady_clock::time_point current_time);
 	bool getObtainedSkill(int skill);
 	void destruct();
 	void ShowInterface(sf::RenderWindow& window);

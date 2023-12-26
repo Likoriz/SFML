@@ -28,6 +28,8 @@ Player::Player()
 	setDMG(20);
 	setDEF(100);
 
+	jumped = false;
+
 	coins = 0;
 	curHp = getHP();
 
@@ -82,7 +84,71 @@ void Player::sendMessage(Message m)
 		}
 		break;
 	}
+	case Jump:
+	{
+		if (getObject()->getBody()->GetLinearVelocity().y == 0)
+		{
+			jumped = true;
+			auto vel = getObject()->getBody()->GetLinearVelocity();
+			vel.y = -100.0f;
+			getObject()->getBody()->SetLinearVelocity(vel);
+		}
+		else
+			if (getObtainedSkill(DOUBLE) && jumped)
+			{
+				jumped = false;
+				auto vel = getObject()->getBody()->GetLinearVelocity();
+				vel.y = -100.0f;
+				getObject()->getBody()->SetLinearVelocity(vel);
+			}
 	}
+	}
+}
+
+bool Player::isOnGround()
+{
+	//b2Fixture* sensorFixture = nullptr;
+	//b2PolygonShape sensorShape;
+	//sensorShape.SetAsBox(0.5f, 0.1f, b2Vec2(0, -1.0f), 0);
+
+	//b2FixtureDef sensorFixtureDef;
+	//sensorFixtureDef.shape = &sensorShape;
+	//sensorFixtureDef.isSensor = true;
+	//sensorFixture = getObject()->getBody()->CreateFixture(&sensorFixtureDef);
+
+	//bool isOnGround = false;
+	//for (b2ContactEdge* ce = getObject()->getBody()->GetContactList(); ce; ce = ce->next) {
+	//	b2Contact* c = ce->contact;
+	//	if (c->IsTouching() && (c->GetFixtureA() == sensorFixture || c->GetFixtureB() == sensorFixture)) {
+	//		isOnGround = true;
+	//		break;
+	//	}
+	//}
+
+	//getObject()->getBody()->DestroyFixture(sensorFixture);
+
+	//return isOnGround;
+	return 0;
+}
+
+void Player::update(duration<double> time_span, steady_clock::time_point& last_time, steady_clock::time_point current_time)
+{
+	if (sf::Keyboard::isKeyPressed(Keyboard::D))
+	{
+		auto vel = getObject()->getBody()->GetLinearVelocity();
+		vel.x = 70.0f;
+		getObject()->getBody()->SetLinearVelocity(vel);
+	}
+	else
+		if (sf::Keyboard::isKeyPressed(Keyboard::A))
+		{
+			auto vel = getObject()->getBody()->GetLinearVelocity();
+			vel.x = -70.0f;
+			getObject()->getBody()->SetLinearVelocity(vel);
+		}
+	move();
+	Entity* object = (Entity*)this;
+	object->checkCollision(time_span, last_time, current_time);
 }
 
 void Player::menu(RenderWindow& window)

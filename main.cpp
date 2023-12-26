@@ -35,7 +35,6 @@ int main()
 
 	Message M;
 
-	bool jumped;
 	M.target = manager->getByName("player");
 	while (window.isOpen())
 	{
@@ -52,44 +51,7 @@ int main()
 				switch (event.key.code)
 				{
 				case Keyboard::W://jump
-					if (player->getObject()->getBody()->GetLinearVelocity().y == 0)
-					{
-						jumped = true;
-						M.type = Move;
-						M.ctx.move.speedX = player->getObject()->getBody()->GetLinearVelocity().x;
-						M.ctx.move.speedY = -100.0f;
-
-						manager->SendMessage(M);
-					}
-					else
-						if (player->getObtainedSkill(DOUBLE) && jumped)
-						{
-							jumped = false;
-							M.type = Move;
-							M.ctx.move.speedX = player->getObject()->getBody()->GetLinearVelocity().x;
-							M.ctx.move.speedY = -100.0f;
-
-							manager->SendMessage(M);
-						}
-					break;
-				case Keyboard::D://right
-					if (player->getObject()->getBody()->GetLinearVelocity().y != 0 || player->getObject()->getBody()->GetContactList() == nullptr)
-						window.setKeyRepeatEnabled(false);
-					else
-						window.setKeyRepeatEnabled(true);
-					M.type = Move;
-					M.ctx.move.speedX = 70.0f;
-					M.ctx.move.speedY = player->getObject()->getBody()->GetLinearVelocity().y;
-					manager->SendMessage(M);
-					break;
-				case Keyboard::A://left
-					if (player->getObject()->getBody()->GetLinearVelocity().y != 0 || player->getObject()->getBody()->GetContactList() == nullptr)
-						window.setKeyRepeatEnabled(false);
-					else
-						window.setKeyRepeatEnabled(true);
-					M.type = Move;
-					M.ctx.move.speedX = -70.0f;
-					M.ctx.move.speedY = player->getObject()->getBody()->GetLinearVelocity().y;
+					M.type = Jump;
 					manager->SendMessage(M);
 					break;
 				case Keyboard::Escape://menu
@@ -150,8 +112,6 @@ int main()
 				((WalkingEnemy*)x)->triggerMove(x);
 			}
 		}
-		//if (time_span.count() < 1000 / 60)
-		//	sf::sleep(sf::milliseconds(1000 / 60 - time_span.count()));
 
 		window.display();
 	}
