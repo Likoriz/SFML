@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="50" height="25" tilewidth="18" tileheight="18" infinite="0" nextlayerid="4" nextobjectid="261">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="50" height="25" tilewidth="18" tileheight="18" infinite="0" nextlayerid="4" nextobjectid="262">
  <tileset firstgid="1" name="tileset" tilewidth="18" tileheight="18" tilecount="3500" columns="70">
   <image source="../Resources/tileset.png" width="1260" height="900"/>
  </tileset>
@@ -1279,7 +1279,6 @@
   <object id="114" name="block" x="756" y="72" width="144" height="36"/>
   <object id="115" name="block" x="828" y="54" width="72" height="18"/>
   <object id="116" name="block" x="882" y="0" width="18" height="450"/>
-  <object id="117" name="block" x="666" y="252" width="234" height="54"/>
   <object id="118" name="block" x="648" y="270" width="18" height="36"/>
   <object id="119" name="block" x="630" y="288" width="18" height="54"/>
   <object id="120" name="block" x="846" y="342" width="54" height="108"/>
@@ -1326,12 +1325,9 @@
   <object id="201" name="coin" gid="552" x="864" y="324" width="18" height="18"/>
   <object id="202" name="coin" gid="552" x="648" y="342" width="18" height="18"/>
   <object id="203" name="coin" gid="552" x="540" y="342" width="18" height="18"/>
-  <object id="208" name="skill" gid="412" x="324" y="342" width="18" height="18"/>
-  <object id="209" name="skill" gid="412" x="702" y="342" width="18" height="18"/>
-  <object id="210" name="skill" gid="412" x="666" y="234" width="18" height="18"/>
-  <object id="211" name="skill" gid="482" x="324" y="360" width="18" height="18"/>
-  <object id="212" name="skill" gid="482" x="702" y="360" width="18" height="18"/>
-  <object id="213" name="skill" gid="482" x="666" y="252" width="18" height="18"/>
+  <object id="208" name="skill" gid="412" x="324" y="360" width="18" height="18"/>
+  <object id="209" name="skill" gid="412" x="702" y="360" width="18" height="18"/>
+  <object id="210" name="skill" gid="412" x="666" y="252" width="18" height="18"/>
   <object id="216" name="block" x="414" y="414" width="54" height="18"/>
   <object id="230" name="coin" gid="552" x="522" y="72" width="18" height="18"/>
   <object id="232" name="walking" gid="829" x="792" y="342" width="18" height="18"/>
@@ -1362,8 +1358,9 @@
   <object id="258" name="coin" gid="552" x="864" y="342" width="18" height="18"/>
   <object id="259" name="coin" gid="552" x="846" y="324" width="18" height="18"/>
   <object id="260" name="coin" gid="552" x="846" y="342" width="18" height="18"/>
+  <object id="261" name="block" x="666" y="252" width="234" height="54"/>
  </objectgroup>
- <layer id="2" name="tiles" width="50" height="25" locked="1">
+ <layer id="2" name="tiles" width="50" height="25">
   <data>
    <tile gid="700"/>
    <tile gid="700"/>

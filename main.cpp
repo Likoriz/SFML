@@ -57,12 +57,20 @@ int main()
 					}
 					break;
 				case Keyboard::D://right
+					if (player->getObject()->getBody()->GetLinearVelocity().y != 0)
+						window.setKeyRepeatEnabled(false);
+					else
+						window.setKeyRepeatEnabled(true);
 					M.type = Move;
 					M.ctx.move.speedX = 70.0f;
 					M.ctx.move.speedY = player->getObject()->getBody()->GetLinearVelocity().y;
 					manager->SendMessage(M);
 					break;
 				case Keyboard::A://left
+					if (player->getObject()->getBody()->GetLinearVelocity().y != 0)
+						window.setKeyRepeatEnabled(false);
+					else
+						window.setKeyRepeatEnabled(true);
 					M.type = Move;
 					M.ctx.move.speedX = -70.0f;
 					M.ctx.move.speedY = player->getObject()->getBody()->GetLinearVelocity().y;

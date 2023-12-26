@@ -563,28 +563,7 @@ void Player::checkCollision(duration<double> time_span, steady_clock::time_point
 				m.type = Erase;
 				m.ctx.erase.objectToDelete = x;
 				Manager::getInstance()->SendMessage(m);
-
-				/*for (auto y : skillObjects)
-				{
-					if (x != y)
-					{
-						b2ContactEdge* edge = y->getObject()->getBody()->GetContactList();
-						while (edge)
-						{
-							b2Contact* otherContact = edge->contact;
-							if (otherContact->GetFixtureA() == y->getObject()->getBody()->GetFixtureList() || otherContact->GetFixtureB() == y->getObject()->getBody()->GetFixtureList())
-							{
-								m.type = Erase;
-								m.ctx.erase.objectToDelete = y;
-								Manager::getInstance()->SendMessage(m);
-
-								receiveSkill();
-								break;
-							}
-							edge = edge->next;
-						}
-					}
-				}*/
+				receiveSkill();
 				break;
 			}
 		}

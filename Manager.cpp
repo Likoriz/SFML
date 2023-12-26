@@ -16,7 +16,6 @@ Manager* Manager::instance = nullptr;
 
 enum namesOfObjects { player, usual, death, skill, slide, box, block, fall, disappear, walking, hiding, coin, arrow };
 
-
 Manager::~Manager()
 {
 	for (auto x : game)
