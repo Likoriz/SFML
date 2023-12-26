@@ -51,11 +51,13 @@ Object::Object(string name, Rect<int> rect)
 
 Object::Object()
 {
-
+	
 }
 
 Object::~Object()
 {
+	Manager::getInstance()->getWorld()->DestroyBody(body);
+
 }
 
 int Object::getSpeed()

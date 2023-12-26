@@ -10,6 +10,7 @@ private:
 	sf::Sprite* sprite;
 	std::map<std::string, std::string> properties;
 public:
+	~MyDrawable();
 	int getPropertyInt(std::string name);
 	float getPropertyFloat(std::string name);
 	std::string getPropertyString(std::string name);

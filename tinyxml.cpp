@@ -991,7 +991,7 @@ bool TiXmlDocument::LoadFile( FILE* file, TiXmlEncoding encoding )
 		return false;
 	}
 
-	// Delete the existing data:
+	// Erase the existing data:
 	Clear();
 	location.Clear();
 

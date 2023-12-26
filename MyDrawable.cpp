@@ -3,6 +3,12 @@
 using namespace std;
 using namespace sf;
 
+MyDrawable::~MyDrawable()
+{
+	if(sprite)
+	delete sprite;
+}
+
 int MyDrawable::getPropertyInt(string name)
 {
 	return 0;

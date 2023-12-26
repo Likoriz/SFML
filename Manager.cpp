@@ -140,7 +140,19 @@ std::vector<GameObject*> Manager::getVectorByName(std::string name)
 
 void Manager::handleOwnMessage(Message m)
 {
-
+	switch(m.type)
+	{
+	case Create:
+		addObject(m.ctx.create.newObject);
+		break;
+	case Erase:
+		if(m.ctx.erase.objectToDelete)
+		{
+			auto it=std::remove(game.begin(), game.end(), m.ctx.erase.objectToDelete);
+			game.erase(it, game.end());
+			delete m.ctx.erase.objectToDelete;
+		}
+	}
 }
 
 bool Manager::getPause()

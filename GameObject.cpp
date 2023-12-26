@@ -38,6 +38,8 @@ GameObject::GameObject(const GameObject&)
 
 GameObject::~GameObject()
 {
+	delete drawable;
+	delete object;
 }
 
 MyDrawable* GameObject::getDrawable()

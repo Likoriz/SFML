@@ -74,8 +74,8 @@ void Player::sendMessage(Message m)
 		else if (curHp < 1)
 		{
 			Message M;
-			M.type = Delete;
-			M.ctx.destroy.objectToDelete = this;
+			M.type = Erase;
+			M.ctx.erase.objectToDelete = this;
 			Manager::getInstance()->SendMessage(M);
 			cout << "The player is dead!";
 			exit(0);
@@ -505,8 +505,8 @@ void Player::checkCollision(duration<double> time_span, steady_clock::time_point
 		for (auto x : coinsObjects)
 			if (contact->GetFixtureA() == x->getObject()->getBody()->GetFixtureList() || contact->GetFixtureB() == x->getObject()->getBody()->GetFixtureList())
 			{
-				m.type = Delete;
-				m.ctx.destroy.objectToDelete = x;
+				m.type = Erase;
+				m.ctx.erase.objectToDelete = x;
 				Manager::getInstance()->SendMessage(m);
 				coins++;
 				break;
@@ -560,11 +560,11 @@ void Player::checkCollision(duration<double> time_span, steady_clock::time_point
 		{
 			if (contact->GetFixtureA() == x->getObject()->getBody()->GetFixtureList() || contact->GetFixtureB() == x->getObject()->getBody()->GetFixtureList())
 			{
-				m.type = Delete;
-				m.ctx.destroy.objectToDelete = x;
+				m.type = Erase;
+				m.ctx.erase.objectToDelete = x;
 				Manager::getInstance()->SendMessage(m);
 
-				for (auto y : skillObjects)
+				/*for (auto y : skillObjects)
 				{
 					if (x != y)
 					{
@@ -574,8 +574,8 @@ void Player::checkCollision(duration<double> time_span, steady_clock::time_point
 							b2Contact* otherContact = edge->contact;
 							if (otherContact->GetFixtureA() == y->getObject()->getBody()->GetFixtureList() || otherContact->GetFixtureB() == y->getObject()->getBody()->GetFixtureList())
 							{
-								m.type = Delete;
-								m.ctx.destroy.objectToDelete = y;
+								m.type = Erase;
+								m.ctx.erase.objectToDelete = y;
 								Manager::getInstance()->SendMessage(m);
 
 								receiveSkill();
@@ -584,7 +584,7 @@ void Player::checkCollision(duration<double> time_span, steady_clock::time_point
 							edge = edge->next;
 						}
 					}
-				}
+				}*/
 				break;
 			}
 		}

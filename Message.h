@@ -1,5 +1,5 @@
 #pragma once
-enum MessageType {Move,Death,Render,Create,DealDmg,Erase,Delete};
+enum MessageType {Move,Death,Render,Create,DealDmg,Erase};
 class GameObject;
 #include <vector>
 class MyDrawable;
@@ -21,7 +21,7 @@ struct Message
 		} death;
 		struct
 		{
-			GameObject* newObject;
+			MyDrawable* newObject;
 		} create;
 		struct
 		{
@@ -31,6 +31,6 @@ struct Message
 		struct
 		{
 			GameObject* objectToDelete;
-		} destroy;
+		}erase;
 	}ctx;
 };
