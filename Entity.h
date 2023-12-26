@@ -11,6 +11,7 @@ private:
 public:
 	Entity(std::string name);
 	Entity() {};
+	~Entity();
 	virtual void destruct() = 0;
 	bool checkRadius();
 	virtual void attack() = 0;

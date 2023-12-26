@@ -2,6 +2,13 @@
 
 Entity::Entity(std::string name)
 {
+
+}
+
+Entity::~Entity()
+{
+	delete getDrawable();
+	delete getObject();
 }
 
 bool Entity::checkRadius()

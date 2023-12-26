@@ -2,6 +2,9 @@
 #include "Entity.h"
 class WalkingEnemy : public Entity
 {
+private:
+	int health;
+	bool isDead;
 public:
 	WalkingEnemy();
 	void follow();

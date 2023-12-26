@@ -8,6 +8,8 @@ WalkingEnemy::WalkingEnemy()
 	setHP(50);
 	setDMG(20);
 	setDEF(50);
+	health=50;
+	isDead=false;
 }
 
 void WalkingEnemy::follow()
@@ -26,9 +28,40 @@ void WalkingEnemy::destruct()
 {
 }
 
+
 void WalkingEnemy::sendMessage(Message m)
 {
+	if(!isDead)
+	{
+		switch(m.type)
+		{
+		case Move:
+		{
+			b2Body* enemyBody=getObject()->getBody();
 
+			b2Vec2 speed;
+			speed={m.ctx.move.speedX, m.ctx.move.speedY};
+
+			enemyBody->SetLinearVelocity(speed);
+			break;
+		}
+		case DealDmg:
+		{
+			health-=m.ctx.dealDmg.dmg;
+			if(health>getHP())
+				health=getHP();
+			else if(health<1)
+			{
+				isDead=true;
+				Message M;
+				M.type=Erase;
+				M.ctx.erase.objectToDelete=this;
+				Manager::getInstance()->SendMessage(M);
+			}
+			break;
+		}
+		}
+	}
 }
 
 void WalkingEnemy::checkCollision(duration<double> time_span, steady_clock::time_point& last_time, steady_clock::time_point current_time)
@@ -53,3 +86,4 @@ void WalkingEnemy::checkCollision(duration<double> time_span, steady_clock::time
 			}
 	}
 }
+
