@@ -6,7 +6,7 @@ private:
 	int health;
 	bool isDead;
 public:
-	HidingEnemy();
+	HidingEnemy(MyDrawable* object);
 	void sendMessage(Message m);
 	void attack();
 	void hide();

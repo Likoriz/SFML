@@ -6,7 +6,7 @@ private:
 	int health;
 	bool isDead;
 public:
-	WalkingEnemy();
+	WalkingEnemy(MyDrawable* object);
 	void follow();
 	void leave();
 	void attack();

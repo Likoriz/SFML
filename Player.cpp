@@ -22,7 +22,7 @@ void Player::attack()
 
 }
 
-Player::Player()
+Player::Player(MyDrawable* object)
 {
 	setHP(100);
 	setDMG(20);
@@ -50,6 +50,10 @@ Player::Player()
 
 	if (!font.loadFromFile("Resources/AmaticSC-Regular.ttf"))
 		cout << "Failed to load font!" << endl;
+	setDrawable(object);
+	Rect<int> rect=object->getRect();
+	Vector2i tileSize=Manager::getInstance()->getLevel()->getTileSize();
+	setObject(new Object(b2_dynamicBody, rect.left, rect.top-tileSize.y,rect,true,1.0,1.0));
 }
 
 void Player::sendMessage(Message m)

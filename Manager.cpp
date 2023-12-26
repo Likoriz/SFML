@@ -48,26 +48,25 @@ void Manager::addObject(MyDrawable* object)
 {
 	GameObject* newObject;
 	if (object->getName() == "player")
-		newObject = new Player();
+		newObject = new Player(object);
 	else
 		if (object->getName() == "walking")
-			newObject = new WalkingEnemy();
+			newObject = new WalkingEnemy(object);
 		else
 			if (object->getName() == "hiding")
-				newObject = new HidingEnemy();
+				newObject = new HidingEnemy(object);
 			else
 				if (object->getName() == "death" || object->getName() == "block" || object->getName() == "usual" || object->getName() == "skill" || object->getName() == "slide" || object->getName() == "fall" || object->getName() == "disappear")
-					newObject = new PlatformUsual();
+					newObject = new PlatformUsual(object);
 				else
 					if (object->getName() == "box")
-						newObject = new Box();
+						newObject = new Box(object);
 					else
 						if (object->getName() == "arrow")
-							newObject = new Arrow();
+							newObject = new Arrow(object);
 						else
-							newObject = new PlatformUsual();
-	newObject->setDrawable(object);
-	newObject->setObject(new Object(object->getName(), object->getRect()));
+							newObject = new PlatformUsual(object);
+	
 	game.push_back(newObject);
 }
 
@@ -89,7 +88,8 @@ void Manager::SendMessage(Message m)
 void Manager::updateAll(duration<double> time_span, steady_clock::time_point& last_time, steady_clock::time_point current_time)
 {
 	for (auto x : game)
-		x->update(time_span, last_time, current_time);
+		if(x->getObject()->getBody()->GetType()==b2_dynamicBody)
+			x->update(time_span, last_time, current_time);
 }
 
 void Manager::startGame()

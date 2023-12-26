@@ -21,7 +21,7 @@ private:
 	int coins;
 	Skills* skills;
 public:
-	Player();
+	Player(MyDrawable* object);
 	bool getObtainedSkill(int skill);
 	void destruct();
 	void ShowInterface(sf::RenderWindow& window);

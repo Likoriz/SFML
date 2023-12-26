@@ -3,6 +3,7 @@
 class Arrow : public Entity
 {
 public:
+	Arrow(MyDrawable* object);
 	void attack();
 	void move();
 	void destruct();

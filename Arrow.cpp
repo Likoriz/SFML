@@ -1,6 +1,15 @@
 #include "Arrow.h"
 
 using namespace std::chrono;
+using namespace sf;
+
+Arrow::Arrow(MyDrawable* object)
+{
+	setDrawable(object);
+	Rect<int> rect=object->getRect();
+	Vector2i tileSize=Manager::getInstance()->getLevel()->getTileSize();
+	setObject(new Object(b2_dynamicBody, rect.left, rect.top-tileSize.y, rect, true, 1.0, 1.0));
+}
 
 void Arrow::attack()
 {
