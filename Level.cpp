@@ -239,8 +239,8 @@ void Level::draw(sf::RenderWindow& window)
 			window.draw(layers[layer].getTile(tile));
 	}
 
-	std::vector<GameObject*> gameObjects = Manager::getInstance()->getGame();
-	for (auto x : gameObjects)
+	std::vector<GameObject*>* gameObjects = Manager::getInstance()->getGame();
+	for (auto x : *gameObjects)
 	{
 		if (x->getDrawable()->getName() != "block")
 			window.draw(*x->getDrawable()->getSprite());

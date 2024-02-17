@@ -107,13 +107,13 @@ int main()
 			player->menu(window);
 			manager->setPause(false);
 		}
-		//for(auto x:manager->getVectorByName("walking"))
-		//{
-		//	if(x->getObject()->getBody()->GetLinearVelocity().x==0&&x->getObject()->getBody()->GetLinearVelocity().y==0)
-		//	{
-		//		((WalkingEnemy*)x)->triggerMove(x);
-		//	}
-		//}
+		for(auto x:manager->getVectorByName("walking"))
+		{
+			if(x->getObject()->getBody()->GetLinearVelocity().x==0&&x->getObject()->getBody()->GetLinearVelocity().y==0)
+			{
+				((WalkingEnemy*)x)->triggerMove(x);
+			}
+		}
 
 		window.display();
 	}
