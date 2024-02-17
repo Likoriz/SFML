@@ -14,7 +14,7 @@ private:
 	enum Stat { HP = 0, DAMAGE, DEFENSE };
 	enum Skill { CLIMB = 0, DOUBLE, TRIPLE, DASH, WALL };
 
-	bool jumped;
+	bool canJump;
 	bool isOnGround;
 
 	sf::Font font;

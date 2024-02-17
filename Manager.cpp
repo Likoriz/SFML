@@ -49,27 +49,22 @@ void Manager::addObject(MyDrawable* object)
 	GameObject* newObject;
 	if (object->getName() == "player")
 		newObject = new Player(object);
+	else if (object->getName() == "walking")
+		newObject = new WalkingEnemy(object);
+	else if (object->getName() == "hiding")
+		newObject = new HidingEnemy(object);
+	else if (object->getName() == "death" || object->getName() == "block" || object->getName() == "usual" || object->getName() == "skill" || object->getName() == "slide" || object->getName() == "fall" || object->getName() == "disappear")
+		newObject = new PlatformUsual(object);
+	else if (object->getName() == "box")
+		newObject = new Box(object);
+	else if (object->getName() == "arrow")
+		newObject = new Arrow(object);
 	else
-		if (object->getName() == "walking")
-			newObject = new WalkingEnemy(object);
-		else
-			if (object->getName() == "hiding")
-				newObject = new HidingEnemy(object);
-			else
-				if (object->getName() == "death" || object->getName() == "block" || object->getName() == "usual" || object->getName() == "skill" || object->getName() == "slide" || object->getName() == "fall" || object->getName() == "disappear")
-					newObject = new PlatformUsual(object);
-				else
-					if (object->getName() == "box")
-						newObject = new Box(object);
-					else
-						if (object->getName() == "arrow")
-							newObject = new Arrow(object);
-						else
-						{
-							newObject = new PlatformUsual(object);
-							//newObject->getObject()->getBody()->SetUserData((void*)"barrier");
-						}
-	
+	{
+		newObject = new PlatformUsual(object);
+		//newObject->getObject()->getBody()->SetUserData((void*)"barrier");
+	}
+
 	game.push_back(newObject);
 }
 
@@ -91,7 +86,7 @@ void Manager::SendMessage(Message m)
 void Manager::updateAll(duration<double> time_span, steady_clock::time_point& last_time, steady_clock::time_point current_time)
 {
 	for (auto x : game)
-		if(x->getObject()->getBody()->GetType()==b2_dynamicBody)
+		if (x->getObject()->getBody()->GetType() == b2_dynamicBody)
 			x->update(time_span, last_time, current_time);
 }
 
@@ -142,15 +137,15 @@ std::vector<GameObject*> Manager::getVectorByName(std::string name)
 
 void Manager::handleOwnMessage(Message m)
 {
-	switch(m.type)
+	switch (m.type)
 	{
 	case Create:
 		addObject(m.ctx.create.newObject);
 		break;
 	case Erase:
-		if(m.ctx.erase.objectToDelete)
+		if (m.ctx.erase.objectToDelete)
 		{
-			auto it=std::remove(game.begin(), game.end(), m.ctx.erase.objectToDelete);
+			auto it = std::remove(game.begin(), game.end(), m.ctx.erase.objectToDelete);
 			game.erase(it, game.end());
 			delete m.ctx.erase.objectToDelete;
 		}

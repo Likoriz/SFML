@@ -195,8 +195,8 @@ bool Level::loadFromFile(string filename)
 				objectRect.width = width;
 				object->setRect(objectRect);
 
-				TiXmlElement* properties;
-				properties = objectElement->FirstChildElement("properties");
+				//TiXmlElement* properties;
+				//properties = objectElement->FirstChildElement("properties");
 
 				//if (properties != nullptr)///////////////////////////////////////////////////////////////////
 				//{
@@ -250,12 +250,12 @@ void Level::draw(sf::RenderWindow& window)
 			b2Vec2 pos = x->getObject()->getBody()->GetPosition();
 			Rect<int> recti = x->getDrawable()->getRect();
 
-			RectangleShape Rect(Vector2f(8, 2));
-			Rect.setPosition(pos.x - 4 + 9, pos.y + 9 + 9);
-			Rect.setFillColor(Color::Transparent);
-			Rect.setOutlineColor(Color::Red);
-			Rect.setOutlineThickness(1);
-			window.draw(Rect);
+			//RectangleShape Rect(Vector2f(8, 2));
+			//Rect.setPosition(pos.x - 4 + 9, pos.y + 9 + 9);
+			//Rect.setFillColor(Color::Transparent);
+			//Rect.setOutlineColor(Color::Red);
+			//Rect.setOutlineThickness(1);
+			//window.draw(Rect);
 
 			RectangleShape rect(Vector2f(recti.width, recti.height));
 			rect.setPosition(pos.x - recti.width / 2 + 9, pos.y - recti.height / 2 + 9);

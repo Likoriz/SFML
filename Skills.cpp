@@ -5,30 +5,11 @@ Skills::Skills()
 	isAbleToClimb = false;
 	isAbleToDoubleJump = false;
 	isAbleToTripleJump = false;
-	isAbleToDash = false;
-	isAbleToWallJump = false;
+	isAbleToDash = true;
 }
 
 void Skills::setSkill()
 {
-	//switch (skill)
-	//{
-	//case CLIMB:
-	//	isAbleToClimb = true;
-	//	break;
-	//case DOUBLE:
-	//	isAbleToDoubleJump = true;
-	//	break;
-	//case TRIPLE:
-	//	isAbleToTripleJump = true;
-	//	break;
-	//case DASH:
-	//	isAbleToDash = true;
-	//	break;
-	//case WALL:
-	//	isAbleToWallJump = true;
-	//	break;
-	//}
 	if (!isAbleToDoubleJump)
 	{
 		isAbleToDoubleJump = true;
@@ -49,11 +30,6 @@ void Skills::setSkill()
 		isAbleToClimb = true;
 		return;
 	}
-	else if (!isAbleToWallJump)
-	{
-		isAbleToWallJump = true;
-		return;
-	}
 }
 
 bool Skills::getSkill(int number)
@@ -68,8 +44,6 @@ bool Skills::getSkill(int number)
 		return isAbleToTripleJump;
 	case DASH:
 		return isAbleToDash;
-	case WALL:
-		return isAbleToWallJump;
 	default:
 		return false;
 	}

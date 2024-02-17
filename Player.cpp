@@ -28,7 +28,7 @@ Player::Player(MyDrawable* object)
 	setDMG(20);
 	setDEF(100);
 
-	jumped = false;
+	canJump = false;
 	isOnGround = true;
 
 	coins = 0;
@@ -47,7 +47,7 @@ Player::Player(MyDrawable* object)
 	allMedals[5] = new Medal6();
 
 	receiveMedal(0);
-	receiveMedal(1);
+
 
 	skills = new Skills();
 
@@ -91,72 +91,50 @@ void Player::sendMessage(Message m)
 	}
 	case Jump:
 	{
-		if (getObject()->getBody()->GetLinearVelocity().y == 0 && isOnGround)
+		//if (!isOnGround && getObject()->getBody()->GetLinearVelocity().x != 0)
+		//{
+		//	auto vel = getObject()->getBody()->GetLinearVelocity();
+		//	vel.y = -100.0f;
+		//	getObject()->getBody()->SetLinearVelocity(vel);
+		//}
+
+		if (/*getObject()->getBody()->GetLinearVelocity().y == 0 && */isOnGround)
 		{
 			isOnGround = false;
-			jumped = true;
 			auto vel = getObject()->getBody()->GetLinearVelocity();
 			vel.y = -100.0f;
 			getObject()->getBody()->SetLinearVelocity(vel);
 		}
 		else
-			if (getObtainedSkill(DOUBLE) && jumped)
+			if (getObtainedSkill(DOUBLE) && canJump)
 			{
-				jumped = false;
+				canJump = false;
 				auto vel = getObject()->getBody()->GetLinearVelocity();
 				vel.y = -100.0f;
 				getObject()->getBody()->SetLinearVelocity(vel);
 			}
 
-		//if (getObject()->getBody()->GetLinearVelocity().y == 0)
-		//	isOnGround = true;
-
-			/*b2ContactEdge* edge = getObject()->getBody()->GetContactList();
-			b2Contact* contact = edge->contact;
-			b2Fixture* fixtureA = contact->GetFixtureA();
-			b2Fixture* fixtureB = contact->GetFixtureB();
-			b2Fixture* bottom = nullptr;
-			if (fixtureA->IsSensor())
-				bottom = fixtureA;
-			else
-				bottom = fixtureB;*/
-
-				//vector<GameObject*> blocks = Manager::getInstance()->getVectorByName("block");
-		b2Body* bodies = Manager::getInstance()->getWorld()->GetBodyList();
-		for (b2ContactEdge* edge = getObject()->getBody()->GetContactList(); edge; edge = edge->next)
+		bool touchingSensor = false;
+		b2Body* mybody = getObject()->getBody();
+		for (b2ContactEdge* edge = mybody->GetContactList(); edge; edge = edge->next)
 		{
 			b2Contact* contact = edge->contact;
-			while (bodies != nullptr)
+
+			if (contact->GetFixtureA()->IsSensor() && contact->GetFixtureA()->GetBody() == mybody ||
+				contact->GetFixtureB()->IsSensor() && contact->GetFixtureB()->GetBody() == mybody)
 			{
-				//string com = (const char*)bodies->GetUserData();
-				//if ((const char*)bodies->GetUserData() != "barrier")
-				if (contact->GetFixtureA() == bodies->GetFixtureList() || contact->GetFixtureB() == bodies->GetFixtureList())
-				{
-					cout << "Got contact" << endl;
-					//if (contact->GetFixtureA()->IsSensor() || contact->GetFixtureB()->IsSensor())
-					//{
-					isOnGround = true;
-					break;
-					//}
-				}
-				bodies = bodies->GetNext();
+				touchingSensor = true;
+				break;
 			}
-			//for (auto x : blocks)
-			//{
-			//	if (contact->GetFixtureA() == x->getObject()->getBody()->GetFixtureList() || contact->GetFixtureB() == x->getObject()->getBody()->GetFixtureList())
-			//	{
-			//		cout << "Got contact" << endl;
-			//		//if (contact->GetFixtureA()->IsSensor() || contact->GetFixtureB()->IsSensor())
-			//		//{
-			//			isOnGround = true;
-			//			break;
-			//		//}
-			//	}
-			//}
 		}
-		cout << endl;
-		break;
+
+		if (touchingSensor)
+		{
+			isOnGround = true;
+			canJump = true;
+		}
 	}
+	break;
 	}
 }
 
@@ -168,13 +146,21 @@ void Player::update(duration<double> time_span, steady_clock::time_point& last_t
 		vel.x = 70.0f;
 		getObject()->getBody()->SetLinearVelocity(vel);
 	}
-	else
-		if (sf::Keyboard::isKeyPressed(Keyboard::A))
+	else if (sf::Keyboard::isKeyPressed(Keyboard::A))
+	{
+		auto vel = getObject()->getBody()->GetLinearVelocity();
+		vel.x = -70.0f;
+		getObject()->getBody()->SetLinearVelocity(vel);
+	}
+	else if (sf::Keyboard::isKeyPressed(Keyboard::LShift))
+		if (time_span.count() > 1.0)
 		{
+			last_time = current_time;
 			auto vel = getObject()->getBody()->GetLinearVelocity();
-			vel.x = -70.0f;
+			vel.x *= 5.0f;
 			getObject()->getBody()->SetLinearVelocity(vel);
 		}
+
 	move();
 	Entity* object = (Entity*)this;
 	object->checkCollision(time_span, last_time, current_time);
@@ -225,17 +211,16 @@ void Player::menu(RenderWindow& window)
 #pragma endregion BASICS
 
 #pragma region SKILLS
-	Text textSkills, textClimb, textDouble, textTriple, textDash, textWall;
-	string abClimb, abDouble, abTriple, abDash, abWall;
+	Text textSkills, textClimb, textDouble, textTriple, textDash;
+	string abClimb, abDouble, abTriple, abDash;
 
-	setText(textSkills); setText(textClimb); setText(textDouble); setText(textTriple); setText(textDash); setText(textWall);
+	setText(textSkills); setText(textClimb); setText(textDouble); setText(textTriple); setText(textDash);
 
 	textSkills.setPosition(250, 110);
 	textClimb.setPosition(250, 150);
 	textDouble.setPosition(250, 170);
 	textTriple.setPosition(250, 190);
 	textDash.setPosition(250, 210);
-	textWall.setPosition(250, 230);
 
 	if (skills->getSkill(CLIMB))
 		abClimb = "YES";
@@ -257,17 +242,11 @@ void Player::menu(RenderWindow& window)
 	else
 		abDash = "NO";
 
-	if (skills->getSkill(WALL))
-		abWall = "YES";
-	else
-		abWall = "NO";
-
 	textSkills.setString("SKILLS");
 	textClimb.setString("Climbing: " + abClimb);
 	textDouble.setString("Double Jumping: " + abDouble);
 	textTriple.setString("Triple Jumping: " + abTriple);
 	textDash.setString("Dashing: " + abDash);
-	textWall.setString("Wall Jumping: " + abWall);
 #pragma endregion SKILLS
 
 #pragma region MEDALS
@@ -356,36 +335,26 @@ void Player::menu(RenderWindow& window)
 				if (event.mouseButton.button == Mouse::Left)
 					if (buttonHp.getGlobalBounds().contains(mouseCoords))
 						upgrade(HP);
-					else
-						if (buttonDmg.getGlobalBounds().contains(mouseCoords))
-							upgrade(DAMAGE);
-						else
-							if (buttonDef.getGlobalBounds().contains(mouseCoords))
-								upgrade(DEFENSE);
-							else
-								if (buttonA1.getGlobalBounds().contains(mouseCoords))
-									offMedal(0);
-								else
-									if (buttonA2.getGlobalBounds().contains(mouseCoords))
-										offMedal(1);
-									else
-										if (button1.getGlobalBounds().contains(mouseCoords))
-											onMedal(0);
-										else
-											if (button2.getGlobalBounds().contains(mouseCoords))
-												onMedal(1);
-											else
-												if (button3.getGlobalBounds().contains(mouseCoords))
-													onMedal(2);
-												else
-													if (button4.getGlobalBounds().contains(mouseCoords))
-														onMedal(3);
-													else
-														if (button5.getGlobalBounds().contains(mouseCoords))
-															onMedal(4);
-														else
-															if (button6.getGlobalBounds().contains(mouseCoords))
-																onMedal(5);
+					else if (buttonDmg.getGlobalBounds().contains(mouseCoords))
+						upgrade(DAMAGE);
+					else if (buttonDef.getGlobalBounds().contains(mouseCoords))
+						upgrade(DEFENSE);
+					else if (buttonA1.getGlobalBounds().contains(mouseCoords))
+						offMedal(0);
+					else if (buttonA2.getGlobalBounds().contains(mouseCoords))
+						offMedal(1);
+					else if (button1.getGlobalBounds().contains(mouseCoords))
+						onMedal(0);
+					else if (button2.getGlobalBounds().contains(mouseCoords))
+						onMedal(1);
+					else if (button3.getGlobalBounds().contains(mouseCoords))
+						onMedal(2);
+					else if (button4.getGlobalBounds().contains(mouseCoords))
+						onMedal(3);
+					else if (button5.getGlobalBounds().contains(mouseCoords))
+						onMedal(4);
+					else if (button6.getGlobalBounds().contains(mouseCoords))
+						onMedal(5);
 				break;
 			}
 		}
@@ -462,7 +431,7 @@ void Player::menu(RenderWindow& window)
 #pragma endregion DRAWBASICS
 
 #pragma region DRAWSKILLS
-		window.draw(textSkills); window.draw(textClimb); window.draw(textDouble); window.draw(textTriple); window.draw(textDash); window.draw(textWall);
+		window.draw(textSkills); window.draw(textClimb); window.draw(textDouble); window.draw(textTriple); window.draw(textDash);
 #pragma endregion DRAWSKILLS
 
 #pragma region DRAWMEDALS
@@ -596,63 +565,64 @@ void Player::checkCollision(duration<double> time_span, steady_clock::time_point
 	//vector<GameObject*> walkingObjects = Manager::getInstance()->getVectorByName("walking");
 	//vector<GameObject*> hidingObjects = Manager::getInstance()->getVectorByName("hiding");
 	//vector<GameObject*> skillObjects = Manager::getInstance()->getVectorByName("skill");
-	vector<GameObject*> gameObjects = Manager::getInstance()->getGame();
+	vector<GameObject*>* gameObjects = Manager::getInstance()->getGame();
 
 	Message m;
 	for (b2ContactEdge* edge = getObject()->getBody()->GetContactList(); edge; edge = edge->next)
 	{
 		b2Contact* contact = edge->contact;
 
-		for (auto x : gameObjects)
+		for (auto x : *gameObjects)
 		{
 			if (contact->GetFixtureA() == x->getObject()->getBody()->GetFixtureList() || contact->GetFixtureB() == x->getObject()->getBody()->GetFixtureList())
-			{
-				if (x->getDrawable()->getName() == "coin")
+				if (!contact->GetFixtureA()->IsSensor() && !contact->GetFixtureB()->IsSensor())
 				{
-					m.type = Erase;
-					m.ctx.erase.objectToDelete = x;
-					Manager::getInstance()->SendMessage(m);
-					coins++;
-					break;
-				}
-				else
-					if (x->getDrawable()->getName() == "walking" || x->getDrawable()->getName() == "hiding")
+					if (x->getDrawable()->getName() == "coin")
 					{
-						if (time_span.count() > 3.0)
-						{
-							last_time = current_time;
-							Message m;
-							m.type = DealDmg;
-							m.target = this;
-							Entity* enemy = (Entity*)x;
-							m.ctx.dealDmg.dmg = enemy->getDMG();
-							Manager::getInstance()->SendMessage(m);
-							break;
-						}
+						m.type = Erase;
+						m.ctx.erase.objectToDelete = x;
+						Manager::getInstance()->SendMessage(m);
+						coins++;
+						break;
 					}
 					else
-						if (x->getDrawable()->getName() == "death")
+						if (x->getDrawable()->getName() == "walking" || x->getDrawable()->getName() == "hiding")
 						{
+							if (time_span.count() > 3.0)
 							{
 								last_time = current_time;
 								Message m;
 								m.type = DealDmg;
 								m.target = this;
-								m.ctx.dealDmg.dmg = this->getHP();
+								Entity* enemy = (Entity*)x;
+								m.ctx.dealDmg.dmg = enemy->getDMG();
 								Manager::getInstance()->SendMessage(m);
 								break;
 							}
 						}
 						else
-							if (x->getDrawable()->getName() == "skill")
+							if (x->getDrawable()->getName() == "death")
 							{
-								m.type = Erase;
-								m.ctx.erase.objectToDelete = x;
-								Manager::getInstance()->SendMessage(m);
-								receiveSkill();
-								break;
+								{
+									last_time = current_time;
+									Message m;
+									m.type = DealDmg;
+									m.target = this;
+									m.ctx.dealDmg.dmg = this->getHP();
+									Manager::getInstance()->SendMessage(m);
+									break;
+								}
 							}
-			}
+							else
+								if (x->getDrawable()->getName() == "skill")
+								{
+									m.type = Erase;
+									m.ctx.erase.objectToDelete = x;
+									Manager::getInstance()->SendMessage(m);
+									receiveSkill();
+									break;
+								}
+				}
 		}
 	}
 }

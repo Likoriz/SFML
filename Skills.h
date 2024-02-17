@@ -2,12 +2,11 @@
 class Skills
 {
 private:
-	enum Skill { CLIMB = 0, DOUBLE, TRIPLE, DASH, WALL };
+	enum Skill { CLIMB = 0, DOUBLE, TRIPLE, DASH};
 	bool isAbleToClimb;
 	bool isAbleToDoubleJump;
 	bool isAbleToTripleJump;
 	bool isAbleToDash;
-	bool isAbleToWallJump;
 public:
 	Skills();
 	void setSkill();

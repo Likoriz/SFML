@@ -36,7 +36,7 @@ int main()
 
 	Message M;
 
-	bool jumped;
+	bool canJump;
 	M.target = manager->getByName("player");
 	while (window.isOpen())
 	{
