@@ -65,7 +65,10 @@ void Manager::addObject(MyDrawable* object)
 						if (object->getName() == "arrow")
 							newObject = new Arrow(object);
 						else
+						{
 							newObject = new PlatformUsual(object);
+							//newObject->getObject()->getBody()->SetUserData((void*)"barrier");
+						}
 	
 	game.push_back(newObject);
 }

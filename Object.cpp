@@ -54,13 +54,23 @@ Object::Object(b2BodyType bodyType, int _x, int _y, Rect<int> rect, bool rotatio
 	bodyDef.type=bodyType;
 	bodyDef.position.Set(_x, _y);
 	bodyDef.fixedRotation=rotation;
+	this;
 	body=Manager::getInstance()->getWorld()->CreateBody(&bodyDef);
 	shape.SetAsBox(rect.width/2, rect.height/2);
-	if(friction)
+	if(friction)//player only
 	{
 		fixtureDef.shape=&shape;
 		fixtureDef.density=density; fixtureDef.friction=friction;
 		body->CreateFixture(&fixtureDef);
+
+		b2PolygonShape sensorShape;
+		sensorShape.SetAsBox(4, 1, b2Vec2(0, -9), 0);
+		//sensorShape.SetAsBox(1.0f, 1.0f);
+		//sensorShape.SetAsBox(rect.width / 2, rect.height / 2);
+		b2FixtureDef sensorFixtureDef;
+		sensorFixtureDef.shape = &sensorShape;
+		sensorFixtureDef.isSensor = true;
+		body->CreateFixture(&sensorFixtureDef);
 	}
 	else
 		body->CreateFixture(&shape, 1.0f);

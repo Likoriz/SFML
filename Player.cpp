@@ -29,6 +29,7 @@ Player::Player(MyDrawable* object)
 	setDEF(100);
 
 	jumped = false;
+	isOnGround = true;
 
 	coins = 0;
 	curHp = getHP();
@@ -53,9 +54,9 @@ Player::Player(MyDrawable* object)
 	if (!font.loadFromFile("Resources/AmaticSC-Regular.ttf"))
 		cout << "Failed to load font!" << endl;
 	setDrawable(object);
-	Rect<int> rect=object->getRect();
-	Vector2i tileSize=Manager::getInstance()->getLevel()->getTileSize();
-	setObject(new Object(b2_dynamicBody, rect.left, rect.top-tileSize.y,rect,true,1.0,1.0));
+	Rect<int> rect = object->getRect();
+	Vector2i tileSize = Manager::getInstance()->getLevel()->getTileSize();
+	setObject(new Object(b2_dynamicBody, rect.left, rect.top - tileSize.y, rect, true, 1.0, 1.0));
 }
 
 void Player::sendMessage(Message m)
@@ -90,8 +91,9 @@ void Player::sendMessage(Message m)
 	}
 	case Jump:
 	{
-		if (getObject()->getBody()->GetLinearVelocity().y == 0)
+		if (getObject()->getBody()->GetLinearVelocity().y == 0 && isOnGround)
 		{
+			isOnGround = false;
 			jumped = true;
 			auto vel = getObject()->getBody()->GetLinearVelocity();
 			vel.y = -100.0f;
@@ -105,6 +107,55 @@ void Player::sendMessage(Message m)
 				vel.y = -100.0f;
 				getObject()->getBody()->SetLinearVelocity(vel);
 			}
+
+		//if (getObject()->getBody()->GetLinearVelocity().y == 0)
+		//	isOnGround = true;
+
+			/*b2ContactEdge* edge = getObject()->getBody()->GetContactList();
+			b2Contact* contact = edge->contact;
+			b2Fixture* fixtureA = contact->GetFixtureA();
+			b2Fixture* fixtureB = contact->GetFixtureB();
+			b2Fixture* bottom = nullptr;
+			if (fixtureA->IsSensor())
+				bottom = fixtureA;
+			else
+				bottom = fixtureB;*/
+
+				//vector<GameObject*> blocks = Manager::getInstance()->getVectorByName("block");
+		b2Body* bodies = Manager::getInstance()->getWorld()->GetBodyList();
+		for (b2ContactEdge* edge = getObject()->getBody()->GetContactList(); edge; edge = edge->next)
+		{
+			b2Contact* contact = edge->contact;
+			while (bodies != nullptr)
+			{
+				//string com = (const char*)bodies->GetUserData();
+				//if ((const char*)bodies->GetUserData() != "barrier")
+				if (contact->GetFixtureA() == bodies->GetFixtureList() || contact->GetFixtureB() == bodies->GetFixtureList())
+				{
+					cout << "Got contact" << endl;
+					//if (contact->GetFixtureA()->IsSensor() || contact->GetFixtureB()->IsSensor())
+					//{
+					isOnGround = true;
+					break;
+					//}
+				}
+				bodies = bodies->GetNext();
+			}
+			//for (auto x : blocks)
+			//{
+			//	if (contact->GetFixtureA() == x->getObject()->getBody()->GetFixtureList() || contact->GetFixtureB() == x->getObject()->getBody()->GetFixtureList())
+			//	{
+			//		cout << "Got contact" << endl;
+			//		//if (contact->GetFixtureA()->IsSensor() || contact->GetFixtureB()->IsSensor())
+			//		//{
+			//			isOnGround = true;
+			//			break;
+			//		//}
+			//	}
+			//}
+		}
+		cout << endl;
+		break;
 	}
 	}
 }
@@ -540,80 +591,67 @@ void Player::onMedal(int number)
 
 void Player::checkCollision(duration<double> time_span, steady_clock::time_point& last_time, steady_clock::time_point current_time)
 {
-	vector<GameObject*> coinsObjects = Manager::getInstance()->getVectorByName("coin");
-	vector<GameObject*> deathObjects = Manager::getInstance()->getVectorByName("death");
-	vector<GameObject*> walkingObjects = Manager::getInstance()->getVectorByName("walking");
-	vector<GameObject*> hidingObjects = Manager::getInstance()->getVectorByName("hiding");
-	vector<GameObject*> skillObjects = Manager::getInstance()->getVectorByName("skill");
+	//vector<GameObject*> coinsObjects = Manager::getInstance()->getVectorByName("coin");
+	//vector<GameObject*> deathObjects = Manager::getInstance()->getVectorByName("death");
+	//vector<GameObject*> walkingObjects = Manager::getInstance()->getVectorByName("walking");
+	//vector<GameObject*> hidingObjects = Manager::getInstance()->getVectorByName("hiding");
+	//vector<GameObject*> skillObjects = Manager::getInstance()->getVectorByName("skill");
+	vector<GameObject*> gameObjects = Manager::getInstance()->getGame();
 
 	Message m;
 	for (b2ContactEdge* edge = getObject()->getBody()->GetContactList(); edge; edge = edge->next)
 	{
 		b2Contact* contact = edge->contact;
 
-		for (auto x : coinsObjects)
-			if (contact->GetFixtureA() == x->getObject()->getBody()->GetFixtureList() || contact->GetFixtureB() == x->getObject()->getBody()->GetFixtureList())
-			{
-				m.type = Erase;
-				m.ctx.erase.objectToDelete = x;
-				Manager::getInstance()->SendMessage(m);
-				coins++;
-				break;
-			}
-
-		for (auto x : walkingObjects)
-			if (contact->GetFixtureA() == x->getObject()->getBody()->GetFixtureList() || contact->GetFixtureB() == x->getObject()->getBody()->GetFixtureList())
-			{
-				if (time_span.count() > 3.0)
-				{
-					last_time = current_time;
-					Message m;
-					m.type = DealDmg;
-					m.target = this;
-					Entity* enemy = (Entity*)x;
-					m.ctx.dealDmg.dmg = enemy->getDMG();
-					Manager::getInstance()->SendMessage(m);
-					break;
-				}
-			}
-
-		for (auto x : hidingObjects)
-			if (contact->GetFixtureA() == x->getObject()->getBody()->GetFixtureList() || contact->GetFixtureB() == x->getObject()->getBody()->GetFixtureList())
-			{
-				if (time_span.count() > 3.0)
-				{
-					last_time = current_time;
-					Message m;
-					m.type = DealDmg;
-					m.target = this;
-					Entity* enemy = (Entity*)x;
-					m.ctx.dealDmg.dmg = enemy->getDMG();
-					Manager::getInstance()->SendMessage(m);
-					break;
-				}
-			}
-
-		for (auto x : deathObjects)
-			if (contact->GetFixtureA() == x->getObject()->getBody()->GetFixtureList() || contact->GetFixtureB() == x->getObject()->getBody()->GetFixtureList())
-			{
-				last_time = current_time;
-				Message m;
-				m.type = DealDmg;
-				m.target = this;
-				m.ctx.dealDmg.dmg = this->getHP();
-				Manager::getInstance()->SendMessage(m);
-				break;
-			}
-
-		for (auto x : skillObjects)
+		for (auto x : gameObjects)
 		{
 			if (contact->GetFixtureA() == x->getObject()->getBody()->GetFixtureList() || contact->GetFixtureB() == x->getObject()->getBody()->GetFixtureList())
 			{
-				m.type = Erase;
-				m.ctx.erase.objectToDelete = x;
-				Manager::getInstance()->SendMessage(m);
-				receiveSkill();
-				break;
+				if (x->getDrawable()->getName() == "coin")
+				{
+					m.type = Erase;
+					m.ctx.erase.objectToDelete = x;
+					Manager::getInstance()->SendMessage(m);
+					coins++;
+					break;
+				}
+				else
+					if (x->getDrawable()->getName() == "walking" || x->getDrawable()->getName() == "hiding")
+					{
+						if (time_span.count() > 3.0)
+						{
+							last_time = current_time;
+							Message m;
+							m.type = DealDmg;
+							m.target = this;
+							Entity* enemy = (Entity*)x;
+							m.ctx.dealDmg.dmg = enemy->getDMG();
+							Manager::getInstance()->SendMessage(m);
+							break;
+						}
+					}
+					else
+						if (x->getDrawable()->getName() == "death")
+						{
+							{
+								last_time = current_time;
+								Message m;
+								m.type = DealDmg;
+								m.target = this;
+								m.ctx.dealDmg.dmg = this->getHP();
+								Manager::getInstance()->SendMessage(m);
+								break;
+							}
+						}
+						else
+							if (x->getDrawable()->getName() == "skill")
+							{
+								m.type = Erase;
+								m.ctx.erase.objectToDelete = x;
+								Manager::getInstance()->SendMessage(m);
+								receiveSkill();
+								break;
+							}
 			}
 		}
 	}

@@ -15,6 +15,7 @@ private:
 	enum Skill { CLIMB = 0, DOUBLE, TRIPLE, DASH, WALL };
 
 	bool jumped;
+	bool isOnGround;
 
 	sf::Font font;
 	int curHp;
