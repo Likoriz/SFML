@@ -100,9 +100,9 @@ void Manager::endGame()
 {
 }
 
-std::vector<GameObject*> Manager::getGame()
+std::vector<GameObject*>* Manager::getGame()
 {
-	return game;
+	return &game;
 }
 
 b2World* Manager::getWorld()
@@ -117,8 +117,8 @@ Level* Manager::getLevel()
 
 GameObject* Manager::getByName(std::string name)
 {
-	std::vector<GameObject*> gameObjects = Manager::getInstance()->getGame();
-	for (auto x : gameObjects)
+	std::vector<GameObject*>* gameObjects = Manager::getInstance()->getGame();
+	for (auto x : *gameObjects)
 	{
 		if (x->getDrawable()->getName() == name)
 			return x;
@@ -127,9 +127,9 @@ GameObject* Manager::getByName(std::string name)
 
 std::vector<GameObject*> Manager::getVectorByName(std::string name)
 {
-	std::vector<GameObject*> gameObjects = Manager::getInstance()->getGame();
+	std::vector<GameObject*>* gameObjects = Manager::getInstance()->getGame();
 	std::vector<GameObject*> vectToReturn;
-	for (auto x : gameObjects)
+	for (auto x : *gameObjects)
 	{
 		if (x->getDrawable()->getName() == name)
 			vectToReturn.push_back(x);

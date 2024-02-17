@@ -7,6 +7,7 @@ private:
 	bool isDead;
 public:
 	WalkingEnemy(MyDrawable* object);
+	void update(std::chrono::duration<double> time_span, std::chrono::steady_clock::time_point& last_time, std::chrono::steady_clock::time_point current_time);
 	void follow();
 	void leave();
 	void attack();

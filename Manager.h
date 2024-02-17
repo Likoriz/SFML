@@ -33,7 +33,7 @@ public:
 	void updateAll(std::chrono::duration<double> time_span, std::chrono::steady_clock::time_point& last_time, std::chrono::steady_clock::time_point current_time);
 	void startGame();
 	void endGame();
-	std::vector<GameObject*> getGame();
+	std::vector<GameObject*>* getGame();
 	void SendMessage(Message m);
 	b2World* getWorld();
 	Level* getLevel();
