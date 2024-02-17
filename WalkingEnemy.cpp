@@ -17,11 +17,14 @@ WalkingEnemy::WalkingEnemy(MyDrawable* object)
 	setObject(new Object(b2_dynamicBody, rect.left+tileSize.x/2*(rect.width/tileSize.x-1), rect.top+tileSize.y/2*(rect.height/tileSize.y-1), rect, true));
 }
 
-//void WalkingEnemy::update(std::chrono::duration<double> time_span, std::chrono::steady_clock::time_point& last_time, std::chrono::steady_clock::time_point current_time)
-//{
-//	if(getObject()->getBody()->GetLinearVelocity().x==0&&getObject()->getBody()->GetLinearVelocity().y==0)
-//		triggerMove(this);
-//}
+void WalkingEnemy::update(std::chrono::duration<double> time_span, std::chrono::steady_clock::time_point& last_time, std::chrono::steady_clock::time_point current_time)
+{
+	if(getObject()->getBody()->GetLinearVelocity().x==0&&getObject()->getBody()->GetLinearVelocity().y==0)
+		triggerMove(this);
+	move();
+	Entity* object=(Entity*)this;
+	object->checkCollision(time_span, last_time, current_time);
+}
 
 void WalkingEnemy::follow()
 {
