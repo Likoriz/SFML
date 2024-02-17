@@ -10,7 +10,7 @@ void GameObject::setDrawable(MyDrawable* object)
 	drawable->setType(object->getType());
 	drawable->setRect(object->getRect());
 	drawable->setSprite(object->getSprite());
-	drawable->setProperties(object->getProperties());
+	//drawable->setProperties(object->getProperties());
 
 }
 
@@ -58,14 +58,4 @@ MyDrawable* GameObject::getDrawable()
 Object* GameObject::getObject()
 {
 	return object;
-}
-
-bool GameObject::getIsOnGround()
-{
-	return isOnGround;
-}
-
-void GameObject::setIsOnGround(bool flag)
-{
-	isOnGround = flag;
 }
