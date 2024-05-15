@@ -54,11 +54,10 @@ Object::Object(b2BodyType bodyType, int _x, int _y, Rect<int> rect, bool rotatio
 	bodyDef.type=bodyType;
 	bodyDef.position.Set(_x, _y);
 	bodyDef.fixedRotation=rotation;
-	this;
 	body=Manager::getInstance()->getWorld()->CreateBody(&bodyDef);
 	shape.SetAsBox(rect.width/2, rect.height/2);
 	
-	if(friction)//player only
+	if(friction && bodyType == b2_dynamicBody)//player only
 	{
 		fixtureDef.shape=&shape;
 		fixtureDef.density=density; fixtureDef.friction=friction;
@@ -66,25 +65,26 @@ Object::Object(b2BodyType bodyType, int _x, int _y, Rect<int> rect, bool rotatio
 
 		b2PolygonShape sensorSBottom, sensorSLeft, sensorSRight;
 
-		sensorSBottom.SetAsBox(4, 1, b2Vec2(0, 8), 0);
-		sensorSLeft.SetAsBox(1.0f, 4.0f, b2Vec2(-8.0f, 0.0f), 0);
-		sensorSRight.SetAsBox(1.0f, 4.0f, b2Vec2(8.0f, 0.0f), 0);
-
-		b2FixtureDef sensorFDBottom, sensorFDLeft, sensorFDRight;
+		sensorSBottom.SetAsBox(4.0f, 1.0f, b2Vec2(0, 8), 0);
+		b2FixtureDef sensorFDBottom;
 		sensorFDBottom.shape = &sensorSBottom;
-		sensorFDLeft.shape = &sensorSLeft;
-		sensorFDRight.shape = &sensorSRight;
-		
 		sensorFDBottom.isSensor = true;
-		sensorFDLeft.isSensor = true;
-		sensorFDRight.isSensor = true;
-		
 		body->CreateFixture(&sensorFDBottom);
-		body->CreateFixture(&sensorFDLeft);
-		body->CreateFixture(&sensorFDRight);
 	}
-	else
-		body->CreateFixture(&shape, 1.0f);
+	else if (friction)
+	{
+		fixtureDef.shape = &shape;
+		fixtureDef.density = density; 
+		fixtureDef.friction = friction;
+		body->CreateFixture(&fixtureDef);
+	}
+	else//blocks
+	{
+		fixtureDef.shape = &shape;
+		fixtureDef.density = 1.0; 
+		fixtureDef.friction = 1.0;
+		body->CreateFixture(&fixtureDef);
+	}
 }
 
 Object::~Object()

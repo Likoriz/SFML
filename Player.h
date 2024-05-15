@@ -16,6 +16,8 @@ private:
 
 	bool canJump;
 	bool isOnGround;
+	bool touchingSensor;
+	bool sensors;
 
 	sf::Font font;
 	int curHp;
@@ -26,7 +28,6 @@ private:
 public:
 	Player(MyDrawable* object);
 	void update(std::chrono::duration<double> time_span, std::chrono::steady_clock::time_point& last_time, std::chrono::steady_clock::time_point current_time);
-	bool getObtainedSkill(int skill);
 	void destruct();
 	void ShowInterface(sf::RenderWindow& window);
 	void attack();
@@ -34,12 +35,19 @@ public:
 	void receiveMedal(int number);
 	void receiveSkill();
 	void upgrade(int stat);
-	void setText(sf::Text& text_);
-	Medal** getActiveMedals();
-	void setButton(sf::RectangleShape& button, sf::Color color);
 	void offMedal(int number);
 	void onMedal(int number);
 	void sendMessage(Message m);
 	void checkCollision(std::chrono::duration<double> time_span, std::chrono::steady_clock::time_point& last_time, std::chrono::steady_clock::time_point current_time);
+	
+	void setText(sf::Text& text_);
+	void setButton(sf::RectangleShape& button, sf::Color color);
+	void setCurHP(int hp);
+	void setCoins(int c);
+	
+	bool getObtainedSkill(int skill);
+	Medal** getActiveMedals();
+	int getCurHP();
+	int getCoins();
 };
 

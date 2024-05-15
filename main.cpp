@@ -71,6 +71,7 @@ int main()
 				else
 					if (event.mouseButton.button == Mouse::Right)//shoot
 					{
+						Vector2f mouseCoords = window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });
 
 					}
 				break;
@@ -91,14 +92,6 @@ int main()
 		{
 			player->ShowInterface(window);
 
-			if (time_span.count() > 5.0)
-			{
-				lastTime = currentTime;
-				for (int i = 0; i < 2; i++)
-					if (player->getActiveMedals()[i])
-						player->getActiveMedals()[i]->causeEffect();
-			}
-
 			manager->updateAll(timeDmg, lastDmg, currentTime);
 			manager->sendMSGAll();
 		}
@@ -107,13 +100,6 @@ int main()
 			player->menu(window);
 			manager->setPause(false);
 		}
-		//for(auto x:manager->getVectorByName("walking"))
-		//{
-		//	if(x->getObject()->getBody()->GetLinearVelocity().x==0&&x->getObject()->getBody()->GetLinearVelocity().y==0)
-		//	{
-		//		((WalkingEnemy*)x)->triggerMove(x);
-		//	}
-		//}
 
 		window.display();
 	}

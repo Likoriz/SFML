@@ -55,3 +55,13 @@ int Entity::getRadius()
 {
 	return radius;
 }
+
+void Entity::setInvicibility(bool flag)
+{
+	isInvincible = flag;
+}
+
+bool Entity::getInvincibility()
+{
+	return isInvincible;
+}

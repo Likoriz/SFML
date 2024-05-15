@@ -7,7 +7,7 @@ Medal1::Medal1()
 	setCollected(false);
 }
 
-void Medal1::causeEffect()//regeneration
+void Medal1::causeEffect()
 {
 	Message heal;
 	heal.type = DealDmg;

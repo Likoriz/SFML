@@ -27,6 +27,7 @@ Player::Player(MyDrawable* object)
 	setHP(100);
 	setDMG(20);
 	setDEF(100);
+	setRadius(50);
 
 	canJump = false;
 	isOnGround = true;
@@ -53,6 +54,7 @@ Player::Player(MyDrawable* object)
 
 	if (!font.loadFromFile("Resources/AmaticSC-Regular.ttf"))
 		cout << "Failed to load font!" << endl;
+
 	setDrawable(object);
 	Rect<int> rect = object->getRect();
 	Vector2i tileSize = Manager::getInstance()->getLevel()->getTileSize();
@@ -75,7 +77,9 @@ void Player::sendMessage(Message m)
 	}
 	case DealDmg:
 	{
-		curHp -= m.ctx.dealDmg.dmg;
+		if (getInvincibility() == false)
+			curHp -= m.ctx.dealDmg.dmg;
+
 		if (curHp > getHP())
 			curHp = getHP();
 		else if (curHp < 1)
@@ -91,30 +95,24 @@ void Player::sendMessage(Message m)
 	}
 	case Jump:
 	{
-		//if (!isOnGround && getObject()->getBody()->GetLinearVelocity().x != 0)
-		//{
-		//	auto vel = getObject()->getBody()->GetLinearVelocity();
-		//	vel.y = -100.0f;
-		//	getObject()->getBody()->SetLinearVelocity(vel);
-		//}
-
-		if (/*getObject()->getBody()->GetLinearVelocity().y == 0 && */isOnGround)
+		if (isOnGround)
 		{
 			isOnGround = false;
+			touchingSensor = false;
 			auto vel = getObject()->getBody()->GetLinearVelocity();
 			vel.y = -100.0f;
 			getObject()->getBody()->SetLinearVelocity(vel);
 		}
 		else
-			if (getObtainedSkill(DOUBLE) && canJump)
+			if (getObtainedSkill(TRIPLE) && canJump)
 			{
 				canJump = false;
+				touchingSensor = false;
 				auto vel = getObject()->getBody()->GetLinearVelocity();
 				vel.y = -100.0f;
 				getObject()->getBody()->SetLinearVelocity(vel);
 			}
 
-		bool touchingSensor = false;
 		b2Body* mybody = getObject()->getBody();
 		for (b2ContactEdge* edge = mybody->GetContactList(); edge; edge = edge->next)
 		{
@@ -134,7 +132,6 @@ void Player::sendMessage(Message m)
 			canJump = true;
 		}
 	}
-	break;
 	}
 }
 
@@ -152,14 +149,34 @@ void Player::update(duration<double> time_span, steady_clock::time_point& last_t
 		vel.x = -70.0f;
 		getObject()->getBody()->SetLinearVelocity(vel);
 	}
-	else if (sf::Keyboard::isKeyPressed(Keyboard::LShift))
-		if (time_span.count() > 1.0)
+	else if (sf::Keyboard::isKeyPressed(Keyboard::LShift) && getObtainedSkill(DASH))
+		if (time_span.count() > 3.0)
 		{
 			last_time = current_time;
 			auto vel = getObject()->getBody()->GetLinearVelocity();
 			vel.x *= 5.0f;
 			getObject()->getBody()->SetLinearVelocity(vel);
 		}
+
+	if (time_span.count() > 5.0)
+	{
+		if (Manager::getInstance()->getPause() == false)
+		{
+			last_time = current_time;
+			for (int i = 0; i < 2; i++)
+				if (getActiveMedals()[i])
+					getActiveMedals()[i]->causeEffect();
+		}
+	}
+
+	if (getActiveMedals()[0])
+	{
+		if (getActiveMedals()[0]->getName() == "Two Ends")
+			getActiveMedals()[0]->causeEffect();
+	}
+	else if (getActiveMedals()[1])
+		if (getActiveMedals()[1]->getName() == "Two Ends")
+			getActiveMedals()[1]->causeEffect();
 
 	move();
 	Entity* object = (Entity*)this;
@@ -503,6 +520,26 @@ void Player::receiveMedal(int number)
 void Player::receiveSkill()
 {
 	skills->setSkill();
+
+	if (getObtainedSkill(CLIMB) && !sensors)
+	{
+		b2PolygonShape sensorSLeft, sensorSRight;
+
+		sensorSLeft.SetAsBox(1.0f, 4.0f, b2Vec2(-8.0f, 0.0f), 0);
+		sensorSRight.SetAsBox(1.0f, 4.0f, b2Vec2(8.0f, 0.0f), 0);
+
+		b2FixtureDef sensorFDLeft, sensorFDRight;
+		sensorFDLeft.shape = &sensorSLeft;
+		sensorFDRight.shape = &sensorSRight;
+
+		sensorFDLeft.isSensor = true;
+		sensorFDRight.isSensor = true;
+
+		getObject()->getBody()->CreateFixture(&sensorFDLeft);
+		getObject()->getBody()->CreateFixture(&sensorFDRight);
+
+		sensors = true;
+	}
 }
 
 bool Player::getObtainedSkill(int skill)
@@ -540,7 +577,22 @@ Medal** Player::getActiveMedals()
 void Player::offMedal(int number)
 {
 	if (number > -1 && number < 2)
+	{
+		if (activeMedals[number]->getName() == "Boost HP")
+		{
+			setHP(getHP() - 50);
+			if (getCurHP() > getHP())
+				setCurHP(getHP());
+
+			activeMedals[number]->setTriggered(false);
+		}
+		else if (activeMedals[number]->getName() == "Boost DMG")
+		{
+			setDMG(getDMG() - 50);
+			activeMedals[number]->setTriggered(false);
+		}
 		activeMedals[number] = nullptr;
+	}
 }
 
 void Player::onMedal(int number)
@@ -625,4 +677,24 @@ void Player::checkCollision(duration<double> time_span, steady_clock::time_point
 				}
 		}
 	}
+}
+
+int Player::getCurHP()
+{
+	return curHp;
+}
+
+void Player::setCurHP(int hp)
+{
+	curHp = hp;
+}
+
+int Player::getCoins()
+{
+	return coins;
+}
+
+void Player::setCoins(int c)
+{
+	coins = c;
 }

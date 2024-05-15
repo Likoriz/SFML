@@ -5,6 +5,9 @@
 #include"WalkingEnemy.h"
 #include "HidingEnemy.h"
 #include "PlatformUsual.h"
+#include "PlatformSliding.h"
+#include "PlatformDisappearing.h"
+#include "PlatformFalling.h"
 #include "Box.h"
 #include "Arrow.h"
 #include <iostream>
@@ -53,17 +56,20 @@ void Manager::addObject(MyDrawable* object)
 		newObject = new WalkingEnemy(object);
 	else if (object->getName() == "hiding")
 		newObject = new HidingEnemy(object);
-	else if (object->getName() == "death" || object->getName() == "block" || object->getName() == "usual" || object->getName() == "skill" || object->getName() == "slide" || object->getName() == "fall" || object->getName() == "disappear")
+	else if (object->getName() == "death" || object->getName() == "block" || object->getName() == "usual" || object->getName() == "skill")
 		newObject = new PlatformUsual(object);
+	else if (object->getName() == "slide")
+		newObject = new PlatformSliding(object);
+	else if (object->getName() == "disappear")
+		newObject = new PlatformDisappearing(object);
+	else if (object->getName() == "fall")
+		newObject = new PlatformFalling(object);
 	else if (object->getName() == "box")
 		newObject = new Box(object);
 	else if (object->getName() == "arrow")
 		newObject = new Arrow(object);
 	else
-	{
 		newObject = new PlatformUsual(object);
-		//newObject->getObject()->getBody()->SetUserData((void*)"barrier");
-	}
 
 	game.push_back(newObject);
 }

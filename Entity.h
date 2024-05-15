@@ -26,6 +26,9 @@ public:
 	int getDEF();
 	int getRadius();
 
+	void setInvicibility(bool flag);
+	bool getInvincibility();
+
 	virtual void checkCollision(std::chrono::duration<double> time_span, std::chrono::steady_clock::time_point& last_time, std::chrono::steady_clock::time_point current_time) = 0;
 };
 

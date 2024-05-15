@@ -1,11 +1,12 @@
 #include "Skills.h"
+#include <box2d\box2d.h>
 
 Skills::Skills()
 {
 	isAbleToClimb = false;
-	isAbleToDoubleJump = false;
+	isAbleToDoubleJump = true;
 	isAbleToTripleJump = false;
-	isAbleToDash = true;
+	isAbleToDash = false;
 }
 
 void Skills::setSkill()

@@ -20,3 +20,13 @@ string Medal::getName()
 {
 	return name;
 }
+
+bool Medal::getTriggered()
+{
+	return isTriggered;
+}
+
+void Medal::setTriggered(bool flag)
+{
+	isTriggered = flag;
+}
