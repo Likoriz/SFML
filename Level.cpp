@@ -4,6 +4,7 @@
 #include "tinyxml.h"
 #include "Manager.h"
 #include "GameObject.h"
+#include "PlatformDisappearing.h"
 using namespace std;
 using namespace sf;
 
@@ -195,27 +196,6 @@ bool Level::loadFromFile(string filename)
 				objectRect.width = width;
 				object->setRect(objectRect);
 
-				//TiXmlElement* properties;
-				//properties = objectElement->FirstChildElement("properties");
-
-				//if (properties != nullptr)///////////////////////////////////////////////////////////////////
-				//{
-				//	TiXmlElement* prop;
-				//	prop = properties->FirstChildElement("property");
-
-				//	if (prop != nullptr)
-				//		while (prop)
-				//		{
-				//			string propertyName = prop->Attribute("name");
-				//			string propertyValue = prop->Attribute("value");
-				//			std::map<string, string>tmpProperties;
-				//			tmpProperties.emplace(propertyName, propertyValue);
-				//			object->setProperties(tmpProperties);
-
-				//			prop = prop->NextSiblingElement("property");
-				//		}
-				//}////////////////////////////////////////////////////////////////////////////////////////////
-
 				Manager::getInstance()->addObject(object);
 				objectElement = objectElement->NextSiblingElement("object");
 			}
@@ -243,28 +223,16 @@ void Level::draw(sf::RenderWindow& window)
 	for (auto x : *gameObjects)
 	{
 		if (x->getDrawable()->getName() != "block")
-			window.draw(*x->getDrawable()->getSprite());
-
-		//if (x->getObject()->getBody() && x->getDrawable()->getName() == "player")
-		//{
-		//	b2Vec2 pos = x->getObject()->getBody()->GetPosition();
-		//	Rect<int> recti = x->getDrawable()->getRect();
-
-		//	//RectangleShape Rect(Vector2f(8, 2));
-		//	//Rect.setPosition(pos.x - 4 + 9, pos.y + 9 + 9);
-		//	//Rect.setFillColor(Color::Transparent);
-		//	//Rect.setOutlineColor(Color::Red);
-		//	//Rect.setOutlineThickness(1);
-		//	//window.draw(Rect);
-
-		//	//RectangleShape rect(Vector2f(recti.width, recti.height));
-		//	//rect.setPosition(pos.x - recti.width / 2 + 9, pos.y - recti.height / 2 + 9);
-		//	//rect.setFillColor(Color::Transparent);
-		//	//rect.setOutlineColor(Color::Black);
-		//	//rect.setOutlineThickness(1);
-		//	//window.draw(rect);
-		//}
-
+		{
+			if (x->getDrawable()->getName() == "disappear")
+			{
+				PlatformDisappearing* object = dynamic_cast<PlatformDisappearing*>(x);
+				if (object->getIsShown())
+					window.draw(*x->getDrawable()->getSprite());
+			}
+			else
+				window.draw(*x->getDrawable()->getSprite());
+		}
 
 	}
 }

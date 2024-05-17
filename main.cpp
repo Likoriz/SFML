@@ -66,13 +66,13 @@ int main()
 				if (event.mouseButton.button == Mouse::Left)//attack
 				{
 					Vector2f mouseCoords = window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });
-
+					player->attack();
 				}
 				else
 					if (event.mouseButton.button == Mouse::Right)//shoot
 					{
 						Vector2f mouseCoords = window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });
-
+						player->attack();
 					}
 				break;
 			}

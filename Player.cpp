@@ -179,8 +179,7 @@ void Player::update(duration<double> time_span, steady_clock::time_point& last_t
 			getActiveMedals()[1]->causeEffect();
 
 	move();
-	Entity* object = (Entity*)this;
-	object->checkCollision(time_span, last_time, current_time);
+	checkCollision(time_span, last_time, current_time);
 }
 
 void Player::menu(RenderWindow& window)
@@ -612,11 +611,6 @@ void Player::onMedal(int number)
 
 void Player::checkCollision(duration<double> time_span, steady_clock::time_point& last_time, steady_clock::time_point current_time)
 {
-	//vector<GameObject*> coinsObjects = Manager::getInstance()->getVectorByName("coin");
-	//vector<GameObject*> deathObjects = Manager::getInstance()->getVectorByName("death");
-	//vector<GameObject*> walkingObjects = Manager::getInstance()->getVectorByName("walking");
-	//vector<GameObject*> hidingObjects = Manager::getInstance()->getVectorByName("hiding");
-	//vector<GameObject*> skillObjects = Manager::getInstance()->getVectorByName("skill");
 	vector<GameObject*>* gameObjects = Manager::getInstance()->getGame();
 
 	Message m;
@@ -637,43 +631,38 @@ void Player::checkCollision(duration<double> time_span, steady_clock::time_point
 						coins++;
 						break;
 					}
-					else
-						if (x->getDrawable()->getName() == "walking" || x->getDrawable()->getName() == "hiding")
+					else if (x->getDrawable()->getName() == "walking" || x->getDrawable()->getName() == "hiding")
+					{
+						if (time_span.count() > 3.0)
 						{
-							if (time_span.count() > 3.0)
-							{
-								last_time = current_time;
-								Message m;
-								m.type = DealDmg;
-								m.target = this;
-								Entity* enemy = (Entity*)x;
-								m.ctx.dealDmg.dmg = enemy->getDMG();
-								Manager::getInstance()->SendMessage(m);
-								break;
-							}
+							last_time = current_time;
+							Message m;
+							m.type = DealDmg;
+							m.target = this;
+							Entity* enemy = (Entity*)x;
+							m.ctx.dealDmg.dmg = enemy->getDMG();
+							Manager::getInstance()->SendMessage(m);
+							break;
 						}
-						else
-							if (x->getDrawable()->getName() == "death")
-							{
-								{
-									last_time = current_time;
-									Message m;
-									m.type = DealDmg;
-									m.target = this;
-									m.ctx.dealDmg.dmg = this->getHP();
-									Manager::getInstance()->SendMessage(m);
-									break;
-								}
-							}
-							else
-								if (x->getDrawable()->getName() == "skill")
-								{
-									m.type = Erase;
-									m.ctx.erase.objectToDelete = x;
-									Manager::getInstance()->SendMessage(m);
-									receiveSkill();
-									break;
-								}
+					}
+					else if (x->getDrawable()->getName() == "death")
+					{
+						last_time = current_time;
+						Message m;
+						m.type = DealDmg;
+						m.target = this;
+						m.ctx.dealDmg.dmg = this->getHP();
+						Manager::getInstance()->SendMessage(m);
+						break;
+					}
+					else if (x->getDrawable()->getName() == "skill")
+					{
+						m.type = Erase;
+						m.ctx.erase.objectToDelete = x;
+						Manager::getInstance()->SendMessage(m);
+						receiveSkill();
+						break;
+					}
 				}
 		}
 	}

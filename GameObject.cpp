@@ -1,5 +1,6 @@
 //#include "GameObject.h"
 #include "Entity.h"
+#include "PlatformDisappearing.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -27,7 +28,7 @@ GameObject::GameObject()
 void GameObject::update(duration<double> time_span, steady_clock::time_point& last_time, steady_clock::time_point current_time)
 {
 	move();
-	if(drawable->getName()!="box")
+	if(drawable->getName()!="box" && object->getBody()->GetType() == b2_dynamicBody)
 	{
 		Entity* object=(Entity*)this;
 		object->checkCollision(time_span, last_time, current_time);

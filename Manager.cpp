@@ -92,8 +92,7 @@ void Manager::SendMessage(Message m)
 void Manager::updateAll(duration<double> time_span, steady_clock::time_point& last_time, steady_clock::time_point current_time)
 {
 	for (auto x : game)
-		if (x->getObject()->getBody()->GetType() == b2_dynamicBody)
-			x->update(time_span, last_time, current_time);
+		x->update(time_span, last_time, current_time);
 }
 
 void Manager::startGame()

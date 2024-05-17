@@ -1,7 +1,6 @@
 #include "Object.h"
 #include "Manager.h"
 
-
 using namespace std;
 using namespace sf;
 
