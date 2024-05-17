@@ -34,7 +34,7 @@ void WalkingEnemy::leave()
 {
 }
 
-void WalkingEnemy::attack()
+void WalkingEnemy::attack(Message m)
 {
 }
 

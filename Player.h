@@ -30,7 +30,7 @@ public:
 	void update(std::chrono::duration<double> time_span, std::chrono::steady_clock::time_point& last_time, std::chrono::steady_clock::time_point current_time);
 	void destruct();
 	void ShowInterface(sf::RenderWindow& window);
-	void attack();
+	void attack(Message m);
 	void menu(sf::RenderWindow& window);
 	void receiveMedal(int number);
 	void receiveSkill();

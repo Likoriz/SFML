@@ -8,7 +8,7 @@ private:
 public:
 	HidingEnemy(MyDrawable* object);
 	void sendMessage(Message m);
-	void attack();
+	void attack(Message m);
 	void hide();
 	void show();
 	void destruct();

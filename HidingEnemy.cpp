@@ -52,7 +52,7 @@ void HidingEnemy::sendMessage(Message m)
 	}
 }
 
-void HidingEnemy::attack()
+void HidingEnemy::attack(Message m)
 {
 }
 

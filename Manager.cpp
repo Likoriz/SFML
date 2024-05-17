@@ -56,8 +56,6 @@ void Manager::addObject(MyDrawable* object)
 		newObject = new WalkingEnemy(object);
 	else if (object->getName() == "hiding")
 		newObject = new HidingEnemy(object);
-	else if (object->getName() == "death" || object->getName() == "block" || object->getName() == "usual" || object->getName() == "skill")
-		newObject = new PlatformUsual(object);
 	else if (object->getName() == "slide")
 		newObject = new PlatformSliding(object);
 	else if (object->getName() == "disappear")

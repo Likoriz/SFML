@@ -92,20 +92,6 @@ Object::~Object()
 
 }
 
-int Object::getSpeed()
-{
-	return 0;
-}
-
-void Object::setSpeed()
-{
-}
-
-bool Object::getJumpable()
-{
-	return false;
-}
-
 b2Body* Object::getBody()
 {
 	return body;

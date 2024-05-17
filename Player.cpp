@@ -17,16 +17,47 @@ void Player::destruct()
 	delete skills;
 }
 
-void Player::attack()
+void Player::attack(Message m)
 {
+	if (m.type == DealDmg)
+	{
+		b2Body* body = getObject()->getBody();
+		b2Vec2 center = body->GetPosition();
+		int r = getRadius();
 
+		vector<GameObject*>* gameObjects = Manager::getInstance()->getGame();
+
+		for (auto x : *gameObjects)
+		{
+			b2Body* enemy = x->getObject()->getBody();
+			if (enemy != body)
+			{
+				b2Vec2 bodyPosition = enemy->GetPosition();
+				float distance = (bodyPosition - center).Length();
+
+				string name = x->getDrawable()->getName();
+				if (name == "walking" || name == "hiding")
+					if (distance <= r)
+					{
+						m.type = DealDmg;
+						m.target = x;
+						m.ctx.dealDmg.dmg = getDMG();
+						Manager::getInstance()->SendMessage(m);
+					}
+			}
+		}
+	}
+	else if (m.type == Create)
+	{
+
+	}
 }
 
 Player::Player(MyDrawable* object)
 {
 	setHP(100);
 	setDMG(20);
-	setDEF(100);
+	setDEF(10);
 	setRadius(50);
 
 	canJump = false;
@@ -77,7 +108,9 @@ void Player::sendMessage(Message m)
 	}
 	case DealDmg:
 	{
-		if (getInvincibility() == false)
+		if (getInvincibility() == false && m.ctx.dealDmg.dmg > 0)
+			curHp -= max((int)(m.ctx.dealDmg.dmg - getDEF()), 1);
+		else if (m.ctx.dealDmg.dmg < 0)
 			curHp -= m.ctx.dealDmg.dmg;
 
 		if (curHp > getHP())
@@ -499,6 +532,15 @@ void Player::ShowInterface(sf::RenderWindow& window)
 	string cCoins = to_string(coins);
 	text.setString("Coins: " + cCoins);
 	text.setPosition(0, 20);
+	window.draw(text);
+
+	string status;
+	if (getInvincibility())
+		status = "Invincible";
+	else
+		status = "None";
+	text.setString(status);
+	text.setPosition(0, 40);
 	window.draw(text);
 }
 

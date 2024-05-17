@@ -21,6 +21,5 @@ public:
 	GameObject();
 	GameObject(const GameObject&);
 	~GameObject();
-	
 };
 

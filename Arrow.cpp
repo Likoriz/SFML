@@ -11,11 +11,7 @@ Arrow::Arrow(MyDrawable* object)
 	setObject(new Object(b2_dynamicBody, rect.left, rect.top-tileSize.y, rect, true, 1.0, 1.0));
 }
 
-void Arrow::attack()
-{
-}
-
-void Arrow::move()
+void Arrow::attack(Message m)
 {
 }
 

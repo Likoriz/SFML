@@ -10,7 +10,7 @@ public:
 	void update(std::chrono::duration<double> time_span, std::chrono::steady_clock::time_point& last_time, std::chrono::steady_clock::time_point current_time);
 	void follow();
 	void leave();
-	void attack();
+	void attack(Message m);
 	void destruct();
 	void triggerMove(GameObject* target);
 	void sendMessage(Message m);

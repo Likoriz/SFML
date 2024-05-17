@@ -13,8 +13,7 @@ public:
 	Entity() {};
 	~Entity();
 	virtual void destruct() = 0;
-	bool checkRadius();
-	virtual void attack() = 0;
+	virtual void attack(Message m) = 0;
 
 	void setHP(int hp_);
 	void setDMG(int dmg);
